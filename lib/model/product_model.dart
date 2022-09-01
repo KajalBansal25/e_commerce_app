@@ -25,6 +25,7 @@ class ProductModel {
   String? title;
   double? price;
   String? description;
+  bool isFavourite = false;
   Category? category;
   String? image;
   Rating? rating;
@@ -48,6 +49,14 @@ class ProductModel {
         "image": image,
         "rating": rating?.toJson(),
       };
+
+  favourite() {
+    if (isFavourite == false) {
+      isFavourite = true;
+    } else if (isFavourite == true) {
+      isFavourite = false;
+    }
+  }
 }
 
 enum Category { MEN_S_CLOTHING, JEWELERY, ELECTRONICS, WOMEN_S_CLOTHING }

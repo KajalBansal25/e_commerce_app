@@ -48,30 +48,48 @@ class _ProductCardState extends State<ProductCard> {
           elevation: 5,
           child: Column(
             children: [
-              SizedBox(
-                height: 220,
-                child: Stack(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Image.network(
-                          fit: BoxFit.cover, '${_productModel![index!].image}'),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+              Stack(
+                children: [
+                  SizedBox(
+                    height: 230,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        IconButton(
-                          icon: Icon(Icons.favorite_outline,
-                              color: Color.fromARGB(255, 255, 17, 0)),
-                          onPressed: () {
-                            // ignore: avoid_print
-                            print("heart pressed");
-                          },
-                        )
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Image.network(
+                              fit: BoxFit.contain,
+                              height: 180,
+                              '${_productModel![index!].image}'),
+                        ),
                       ],
                     ),
-                  ],
-                ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      _productModel![index!].isFavourite == false
+                          ? IconButton(
+                              icon: const Icon(Icons.favorite_outline,
+                                  color: Color.fromARGB(255, 255, 17, 0)),
+                              onPressed: () {
+                                setState(() {
+                                  _productModel![index!].favourite();
+                                });
+                              },
+                            )
+                          : IconButton(
+                              icon: const Icon(Icons.favorite,
+                                  color: Color.fromARGB(255, 255, 17, 0)),
+                              onPressed: () {
+                                setState(() {
+                                  _productModel![index!].favourite();
+                                });
+                              },
+                            )
+                    ],
+                  ),
+                ],
               ),
               Column(
                 children: [

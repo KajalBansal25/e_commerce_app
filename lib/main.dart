@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/screen/favourite_screen.dart';
 import 'package:e_commerce_app/screen/product_page.dart';
 import 'package:flutter/material.dart';
 
@@ -23,18 +24,28 @@ class _MyAppState extends State<MyApp> {
       home: DefaultTabController(
           length: 4,
           child: Scaffold(
-            body: TabBarView(children: [
+            body: const TabBarView(children: [
               ProductPage(),
-              Container(
-                child: Icon(Icons.favorite),
-              ),
+              FavouritePage(),
+              // Icon(Icons.favorite),
               CartScreen(),
-              Container(
-                child: Icon(Icons.person),
-              )
+              Icon(Icons.person)
             ]),
             bottomNavigationBar: Container(
-              color: Colors.black,
+              height: 60,
+              foregroundDecoration: const BoxDecoration(
+                  backgroundBlendMode: BlendMode.plus,
+                  color: Colors.transparent),
+
+              // color: Colors.white,
+              decoration: BoxDecoration(
+                  color: Colors.blueGrey,
+                  border: Border.all(
+                    color: Colors.transparent,
+                  ),
+                  borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(25),
+                      topLeft: Radius.circular(25))),
               child: const TabBar(
                 tabs: [
                   Tab(
@@ -50,11 +61,12 @@ class _MyAppState extends State<MyApp> {
                     icon: Icon(Icons.person_outlined),
                   ),
                 ],
-                labelColor: Colors.white,
+                labelColor: Colors.black,
                 unselectedLabelColor: Colors.white,
+                // indicator: Decoration(),
                 indicatorSize: TabBarIndicatorSize.tab,
                 indicatorPadding: EdgeInsets.all(5.0),
-                indicatorColor: Colors.blue,
+                indicatorColor: Colors.transparent,
               ),
             ),
           )),

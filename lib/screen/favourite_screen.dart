@@ -5,14 +5,14 @@ import '../widgets/product_card.dart';
 import '../constants/api_service.dart';
 import '../model/product_model.dart';
 
-class ProductPage extends StatefulWidget {
-  const ProductPage({Key? key}) : super(key: key);
+class FavouritePage extends StatefulWidget {
+  const FavouritePage({Key? key}) : super(key: key);
 
   @override
-  State<ProductPage> createState() => _ProductPageState();
+  State<FavouritePage> createState() => _FavouritePageState();
 }
 
-class _ProductPageState extends State<ProductPage>
+class _FavouritePageState extends State<FavouritePage>
     with AutomaticKeepAliveClientMixin {
   late List<ProductModel>? _productModel = [];
 
