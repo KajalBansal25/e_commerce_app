@@ -1,8 +1,9 @@
 import 'dart:developer';
 
-import 'package:e_commerce_app/constants/api_constants.dart';
-import 'package:e_commerce_app/model/product_model.dart';
 import 'package:http/http.dart' as http;
+
+import '../model/product_model.dart';
+import 'api_constants.dart';
 
 class ApiService {
   Future<List<ProductModel>?> getProducts() async {

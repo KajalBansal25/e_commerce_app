@@ -24,146 +24,152 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Colors.black12,
-        title: const Text(
-          "Cart Screen",
-          style: TextStyle(
-            color: Colors.black,
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0.0,
+          backgroundColor: Colors.black12,
+          title: const Text(
+            "Cart Screen",
+            style: TextStyle(
+              color: Colors.black,
+            ),
           ),
         ),
-      ),
-      body: _productModel == null || _productModel!.isEmpty
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  height: 600,
-                  child: SingleChildScrollView(
-                    child: Column(
-                        children: _productModel!
-                            .map(
-                              (product) => Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10.0, vertical: 10.0),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Image(
-                                      image: NetworkImage("${product.image}"),
-                                      width: 100,
-                                      height: 100,
-                                    ),
-                                    Column(
+        body: _productModel == null || _productModel!.isEmpty
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      height: 600,
+                      child: SingleChildScrollView(
+                        child: Column(
+                            children: _productModel!
+                                .map(
+                                  (product) => Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10.0, vertical: 10.0),
+                                    child: Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
+                                        Image(
+                                          image:
+                                              NetworkImage("${product.image}"),
+                                          width: 100,
+                                          height: 100,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            SizedBox(
+                                              width: 120.0,
+                                              child: Text(
+                                                '${product.title}',
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                softWrap: false,
+                                                style: const TextStyle(
+                                                    fontSize: 16,
+                                                    color: Colors.grey),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            SizedBox(
+                                              width: 120.0,
+                                              child: Text(
+                                                'Size: ${product.category}',
+                                                style: const TextStyle(
+                                                    color: Color.fromRGBO(
+                                                        180, 180, 180, 1.0)),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            Text('${product.price}'),
+                                          ],
+                                        ),
                                         const SizedBox(
-                                          height: 10,
+                                          width: 100,
                                         ),
-                                        SizedBox(
-                                          width: 120.0,
-                                          child: Text(
-                                            '${product.title}',
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            softWrap: false,
-                                            style: const TextStyle(
-                                                fontSize: 16,
-                                                color: Colors.grey),
-                                          ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: const [
+                                            SizedBox(
+                                              height: 10.0,
+                                            ),
+                                            Icon(
+                                              Icons.add,
+                                              size: 15.0,
+                                            ),
+                                            SizedBox(
+                                              height: 10.0,
+                                            ),
+                                            Icon(
+                                              Icons.remove,
+                                              size: 15.0,
+                                            ),
+                                            SizedBox(
+                                              height: 10.0,
+                                            ),
+                                            Icon(
+                                              Icons.add,
+                                              size: 15.0,
+                                            )
+                                          ],
                                         ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        SizedBox(
-                                          width: 120.0,
-                                          child: Text(
-                                            'Size: ${product.category}',
-                                            style: const TextStyle(
-                                                color: Color.fromRGBO(
-                                                    180, 180, 180, 1.0)),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text('${product.price}'),
                                       ],
                                     ),
-                                    const SizedBox(
-                                      width: 100,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: const [
-                                        SizedBox(
-                                          height: 10.0,
-                                        ),
-                                        Icon(
-                                          Icons.add,
-                                          size: 15.0,
-                                        ),
-                                        SizedBox(
-                                          height: 10.0,
-                                        ),
-                                        Icon(
-                                          Icons.remove,
-                                          size: 15.0,
-                                        ),
-                                        SizedBox(
-                                          height: 10.0,
-                                        ),
-                                        Icon(
-                                          Icons.add,
-                                          size: 15.0,
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            )
-                            .toList()),
-                  ),
-                ),
-                Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 10.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Text('Total'),
-                          Text('Rs. 1560'),
-                        ],
+                                  ),
+                                )
+                                .toList()),
                       ),
                     ),
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 140.0, vertical: 15.0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.0),
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20.0, vertical: 10.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: const [
+                              Text('Total'),
+                              Text('Rs. 1560'),
+                            ],
+                          ),
                         ),
-                      ),
-                      child: const Text('Order now'),
+                        ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 140.0, vertical: 15.0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                          ),
+                          child: const Text('Order now'),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10.0,
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 10.0,
-                ),
-              ],
-            ),
+              ),
+      ),
     );
   }
 }
