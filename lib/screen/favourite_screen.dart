@@ -48,8 +48,8 @@ class _FavouritePageState extends State<FavouritePage>
                       padding: const EdgeInsets.fromLTRB(8, 16, 8, 0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Padding(
+                        children: const [
+                          Padding(
                             padding: EdgeInsets.all(8.0),
                             child: Text(
                               "Product Detail Page",
@@ -57,26 +57,10 @@ class _FavouritePageState extends State<FavouritePage>
                                   fontWeight: FontWeight.bold, fontSize: 22),
                             ),
                           ),
-                          const SizedBox(
+                          SizedBox(
                             height: 20,
                           ),
-                          Expanded(
-                            child: GridView.builder(
-                                // itemCount: _productModel?.length,
-                                itemCount: _productModel!.length,
-                                gridDelegate:
-                                    const SliverGridDelegateWithMaxCrossAxisExtent(
-                                        maxCrossAxisExtent: 200,
-                                        mainAxisExtent: 350,
-                                        childAspectRatio: 2 / 3,
-                                        crossAxisSpacing: 10,
-                                        mainAxisSpacing: 10),
-                                itemBuilder: ((context, index) {
-                                  return ProductCard(
-                                    index: index,
-                                  );
-                                })),
-                          )
+                          Expanded(child: ProductCard())
                         ],
                       ),
                     ),
