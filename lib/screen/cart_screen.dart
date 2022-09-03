@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/constants/api_service.dart';
 import 'package:e_commerce_app/model/product_model.dart';
+import 'package:e_commerce_app/screen/payment_screen.dart';
 import 'package:flutter/material.dart';
 
 class CartScreen extends StatefulWidget {
@@ -167,7 +168,13 @@ class _CartScreenState extends State<CartScreen>
                                 ),
                               ),
                               ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const PaymentScreen()));
+                                },
                                 style: ElevatedButton.styleFrom(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 140.0, vertical: 15.0),
@@ -175,7 +182,7 @@ class _CartScreenState extends State<CartScreen>
                                     borderRadius: BorderRadius.circular(12.0),
                                   ),
                                 ),
-                                child: const Text('Order now'),
+                                child: const Text('Payment'),
                               ),
                             ],
                           ),
