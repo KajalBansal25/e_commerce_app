@@ -1,75 +1,80 @@
-import 'package:e_commerce_app/screen/favourite_screen.dart';
-import 'package:e_commerce_app/screen/product_page.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 import 'package:e_commerce_app/screen/cart_screen.dart';
+import 'package:e_commerce_app/screen/favourite_screen.dart';
+import 'package:e_commerce_app/screen/homeScreen.dart';
+import 'package:e_commerce_app/screen/product_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MyApp(
+    tabindex: 0,
+  ));
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final int tabindex;
+
+  const MyApp({
+    Key? key,
+    required this.tabindex,
+  }) : super(key: key);
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState(tabindex);
 }
 
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
+
+  var _selectedIndex;
+  static const List<Widget> _pages = <Widget>[
+    HomeScreen(),
+    FavouritePage(),
+    CartScreen(),
+    Icon(Icons.person),
+  ];
+
+  _MyAppState(this._selectedIndex);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      home: DefaultTabController(
-          length: 4,
-          child: Scaffold(
-            body: const TabBarView(children: [
-              ProductPage(),
-              FavouritePage(),
-              // Icon(Icons.favorite),
-              CartScreen(),
-              Icon(Icons.person)
-            ]),
-            bottomNavigationBar: Container(
-              height: 60,
-              foregroundDecoration: const BoxDecoration(
-                  backgroundBlendMode: BlendMode.plus,
-                  color: Colors.transparent),
-
-              // color: Colors.white,
-              decoration: BoxDecoration(
-                  color: Colors.blueGrey,
-                  border: Border.all(
-                    color: Colors.transparent,
-                  ),
-                  borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(25),
-                      topLeft: Radius.circular(25))),
-              child: const TabBar(
-                tabs: [
-                  Tab(
-                    icon: Icon(Icons.home),
-                  ),
-                  Tab(
-                    icon: Icon(Icons.favorite),
-                  ),
-                  Tab(
-                    icon: Icon(Icons.shopping_cart_outlined),
-                  ),
-                  Tab(
-                    icon: Icon(Icons.person_outlined),
-                  ),
-                ],
-                labelColor: Colors.black,
-                unselectedLabelColor: Colors.white,
-                // indicator: Decoration(),
-                indicatorSize: TabBarIndicatorSize.tab,
-                indicatorPadding: EdgeInsets.all(5.0),
-                indicatorColor: Colors.transparent,
-              ),
-            ),
-          )),
+      home: Scaffold(
+        body: IndexedStack(
+          index: _selectedIndex,
+          children: _pages,
+        ),
+        bottomNavigationBar: Container(
+          color: Colors.amber,
+          child: BottomNavigationBar(
+            showUnselectedLabels: false,
+            // fixedColor: Colors.red,
+            unselectedItemColor: Colors.grey,
+            iconSize: 30,
+            backgroundColor: Colors.red,
+            selectedItemColor: Colors.black,
+            elevation: 100,
+            currentIndex: _selectedIndex,
+            onTap: _onItemTapped,
+            items: const [
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.favorite), label: 'Favourites'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.shopping_cart_outlined), label: 'Cart'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.person), label: 'Profile'),
+            ],
+          ),
+        ),
+      ),
     );
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 }

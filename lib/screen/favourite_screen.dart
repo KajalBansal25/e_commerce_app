@@ -48,19 +48,22 @@ class _FavouritePageState extends State<FavouritePage>
                       padding: const EdgeInsets.fromLTRB(8, 16, 8, 0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Padding(
+                        children: [
+                          const Padding(
                             padding: EdgeInsets.all(8.0),
                             child: Text(
-                              "Product Detail Page",
+                              "Your Favourites",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 22),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
-                          Expanded(child: ProductCard())
+                          Expanded(
+                              child: ProductCard(
+                            productModel: _productModel,
+                          ))
                         ],
                       ),
                     ),

@@ -1,36 +1,44 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import '../model/product_model.dart';
 
 import '../constants/api_service.dart';
 import '../model/product_model.dart';
+import '../model/product_model.dart';
+import '../screen/deatils_of_product_page.dart';
 
 class ProductCard extends StatefulWidget {
-  const ProductCard({Key? key}) : super(key: key);
+  const ProductCard({
+    Key? key,
+    required this.productModel,
+  }) : super(key: key);
   // final int? index;
+  final List<ProductModel>? productModel;
   @override
-  State<ProductCard> createState() => _ProductCardState();
+  State<ProductCard> createState() => _ProductCardState(productModel);
 }
 
 class _ProductCardState extends State<ProductCard> {
-  late List<ProductModel>? _productModel = [];
+  final List<ProductModel>? _productModel;
+
+  _ProductCardState(this._productModel);
   // final int? index;
   // _ProductCardState(this.index);
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _getData();
-  }
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   _getData();
+  // }
 
-  void _getData() async {
-    _productModel = (await ApiService().getProducts())!;
-    Future.delayed(const Duration(seconds: 1)).then(
-      (value) => setState(() {}),
-    );
-  }
+  // void _getData() async {
+  //   _productModel = (await ApiService().getProducts())!;
+  //   Future.delayed(const Duration(seconds: 1)).then(
+  //     (value) => setState(() {}),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +47,10 @@ class _ProductCardState extends State<ProductCard> {
       itemBuilder: (context, index) {
         return GestureDetector(
           onTap: () {
-            // ignore: avoid_print
-            print("card pressed");
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const CustomDetailPage()));
           },
           child: Container(
             child: Card(

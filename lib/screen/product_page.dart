@@ -1,6 +1,7 @@
+import 'package:badges/badges.dart';
+import 'package:e_commerce_app/main.dart';
+import 'package:e_commerce_app/screen/cart_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import '../widgets/product_card.dart';
 import '../constants/api_service.dart';
 import '../model/product_model.dart';
@@ -30,7 +31,7 @@ class _ProductPageState extends State<ProductPage>
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Shop App",
+      // title: "Shop App",
       home: SafeArea(
         top: true,
         child: Scaffold(
@@ -47,21 +48,49 @@ class _ProductPageState extends State<ProductPage>
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(8, 16, 8, 0),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text(
-                              "Product Detail Page",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 22),
-                            ),
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  Navigator.pop(
+                                    context,
+                                  );
+                                },
+                                icon: const Icon(Icons.arrow_back_ios_rounded),
+                              ),
+                              Text(
+                                "${_productModel![0].category}",
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 22),
+                              ),
+                              Badge(
+                                padding: EdgeInsets.all(5),
+                                position: BadgePosition.center(),
+                                // stackFit: ,
+                                child: IconButton(
+                                  padding: EdgeInsets.all(0),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                MyApp(tabindex: 2)));
+                                  },
+                                  icon:
+                                      const Icon(Icons.shopping_cart_outlined),
+                                ),
+                              ),
+                            ],
                           ),
                           SizedBox(
                             height: 20,
                           ),
                           Expanded(
-                            child: ProductCard(),
+                            child: ProductCard(
+                              productModel: _productModel,
+                            ),
                           )
                         ],
                       ),
