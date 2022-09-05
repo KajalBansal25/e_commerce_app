@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:e_commerce_app/screen/profile_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:e_commerce_app/screen/cart_screen.dart';
@@ -32,7 +33,7 @@ class _MyAppState extends State<MyApp> {
     HomeScreen(),
     FavouritePage(),
     CartScreen(),
-    Icon(Icons.person),
+    ProfilePage(),
   ];
 
   _MyAppState(this._selectedIndex);
