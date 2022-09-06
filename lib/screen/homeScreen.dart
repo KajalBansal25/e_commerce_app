@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:e_commerce_app/constants/api_service.dart';
 import 'package:e_commerce_app/model/product_model.dart';
 import 'package:e_commerce_app/screen/product_page.dart';
@@ -21,6 +22,14 @@ class _HomeScreenState extends State<HomeScreen> {
     _getData();
   }
 
+  List<String> images = [
+    "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+    "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
+    "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg",
+    "https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg",
+    "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg"
+  ];
+
   void _getData() async {
     _productModel = (await ApiService().getProducts())!;
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
@@ -32,13 +41,49 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Image(
-                  height: 400.0,
-                  width: 400,
-                  image: NetworkImage(
-                      "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg")),
+              const Text(
+                'Dla',
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              SizedBox(
+                // height: MediaQuery.of(context).size.height * 0.5,
+                width: MediaQuery.of(context).size.width * 0.8,
+                child: CarouselSlider(
+                  items: images.map<Widget>((index) {
+                    return Builder(builder: (BuildContext context) {
+                      return Container(
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: NetworkImage(index),
+                                  fit: BoxFit.contain)));
+                    });
+                  }).toList(),
+                  options: CarouselOptions(
+                    // height: MediaQuery.of(context).size.height * 0.5,
+                    aspectRatio: 1 / 1,
+                    viewportFraction: 1,
+                    enlargeCenterPage: true,
+                    // autoPlay: true,r
+
+                    onPageChanged: (position, reason) {
+                      print(reason);
+                      print(CarouselPageChangedReason.controller);
+                    },
+                    enableInfiniteScroll: true,
+                  ),
+                ),
+              ),
+              // Row(
+              //   children: indicators(images.length, activePage),
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              // ),
+
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Row(
@@ -125,4 +170,17 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  // List<Widget> indicators(imagesLength, currentIndex) {
+  //   return List<Widget>.generate(imagesLength, (index) {
+  //     return Container(
+  //       margin: EdgeInsets.all(3),
+  //       width: 10,
+  //       height: 10,
+  //       decoration: BoxDecoration(
+  //           color: currentIndex == index ? Colors.black : Colors.grey,
+  //           shape: BoxShape.circle),
+  //     );
+  //   });
+  // }
 }

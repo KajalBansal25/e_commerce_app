@@ -240,7 +240,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                 ),
                                 onPressed: () {
-                                  Navigator.pop(context);
+                                  // Navigator.pop(context);
                                 },
                                 child: const Text(
                                   'LOG OUT',

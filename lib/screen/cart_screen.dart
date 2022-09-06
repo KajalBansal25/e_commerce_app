@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/constants/api_service.dart';
 import 'package:e_commerce_app/model/product_model.dart';
+import 'package:e_commerce_app/screen/deatils_of_product_page.dart';
 import 'package:e_commerce_app/screen/payment_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -65,88 +66,98 @@ class _CartScreenState extends State<CartScreen>
                                         (product) => Padding(
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 10.0, vertical: 10.0),
-                                          child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Image(
-                                                image: NetworkImage(
-                                                    "${product.image}"),
-                                                width: 100,
-                                                height: 100,
-                                              ),
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  const SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 120.0,
-                                                    child: Text(
-                                                      '${product.title}',
-                                                      maxLines: 1,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      softWrap: false,
-                                                      style: const TextStyle(
-                                                          fontSize: 16,
-                                                          color: Colors.grey),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const CustomDetailPage()));
+                                            },
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Image(
+                                                  image: NetworkImage(
+                                                      "${product.image}"),
+                                                  width: 100,
+                                                  height: 100,
+                                                ),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    const SizedBox(
+                                                      height: 10,
                                                     ),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 120.0,
-                                                    child: Text(
-                                                      'Size: ${product.category}',
-                                                      style: const TextStyle(
-                                                          color: Color.fromRGBO(
-                                                              180,
-                                                              180,
-                                                              180,
-                                                              1.0)),
+                                                    SizedBox(
+                                                      width: 120.0,
+                                                      child: Text(
+                                                        '${product.title}',
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        softWrap: false,
+                                                        style: const TextStyle(
+                                                            fontSize: 16,
+                                                            color: Colors.grey),
+                                                      ),
                                                     ),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  Text('${product.price}'),
-                                                ],
-                                              ),
-                                              const SizedBox(
-                                                width: 100,
-                                              ),
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: const [
-                                                  SizedBox(
-                                                    height: 10.0,
-                                                  ),
-                                                  Icon(
-                                                    Icons.add,
-                                                    size: 15.0,
-                                                  ),
-                                                  SizedBox(
-                                                    height: 10.0,
-                                                  ),
-                                                  Icon(
-                                                    Icons.remove,
-                                                    size: 15.0,
-                                                  ),
-                                                  SizedBox(
-                                                    height: 10.0,
-                                                  ),
-                                                  Icon(
-                                                    Icons.add,
-                                                    size: 15.0,
-                                                  )
-                                                ],
-                                              ),
-                                            ],
+                                                    const SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 120.0,
+                                                      child: Text(
+                                                        'Size: ${product.category}',
+                                                        style: const TextStyle(
+                                                            color:
+                                                                Color.fromRGBO(
+                                                                    180,
+                                                                    180,
+                                                                    180,
+                                                                    1.0)),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    Text('${product.price}'),
+                                                  ],
+                                                ),
+                                                const SizedBox(
+                                                  width: 100,
+                                                ),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: const [
+                                                    SizedBox(
+                                                      height: 10.0,
+                                                    ),
+                                                    Icon(
+                                                      Icons.add,
+                                                      size: 15.0,
+                                                    ),
+                                                    SizedBox(
+                                                      height: 10.0,
+                                                    ),
+                                                    Icon(
+                                                      Icons.remove,
+                                                      size: 15.0,
+                                                    ),
+                                                    SizedBox(
+                                                      height: 10.0,
+                                                    ),
+                                                    Icon(
+                                                      Icons.add,
+                                                      size: 15.0,
+                                                    )
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       )
