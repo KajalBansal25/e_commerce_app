@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 
 import '../model/product_model.dart';
 import '../model/single_product_model.dart';
+import '../model/user_data_modal.dart';
 import 'api_constants.dart';
 
 class ApiService {
@@ -31,6 +32,18 @@ class ApiService {
       }
     } catch (e) {
       log(e.toString());
+    }
+    return null;
+  }
+
+  Future<Userdata?> getUserData() async {
+    try {
+      var url = Uri.parse('https://fakestoreapi.com/users/1');
+      var response = await http.get(url);
+      Userdata model = userdataFromJson(response.body);
+      return model;
+    } catch (e) {
+      log('try and catch : ${e.toString()}');
     }
     return null;
   }
