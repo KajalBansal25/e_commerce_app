@@ -1,8 +1,8 @@
+import 'package:e_commerce_app/screen/product_image_preview_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:expandable/expandable.dart';
 import 'package:e_commerce_app/model/single_product_model.dart';
 import 'package:e_commerce_app/constants/api_service.dart';
-import 'package:flutter/widgets.dart';
 
 import '../main.dart';
 
@@ -15,17 +15,37 @@ class CustomDetailPage extends StatefulWidget {
 
 class _CustomDetailPageState extends State<CustomDetailPage> {
   late Welcome? _userModel = Welcome();
-
+  final List<String> reportList = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+  String selectedChoice = "S";
   @override
   void initState() {
     super.initState();
-    print('${_userModel?.image}');
     _getData();
   }
 
   void _getData() async {
     _userModel = (await ApiService().getSingleProducts())!;
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+  }
+
+  _buildChoiceList() {
+    List<Widget> choices = [];
+    for (var item in reportList) {
+      choices.add(Container(
+        padding: const EdgeInsets.all(2.0),
+        child: ChoiceChip(
+          label: Text(item),
+          selectedColor: Colors.grey.shade600,
+          selected: selectedChoice == item,
+          onSelected: (selected) {
+            setState(() {
+              selectedChoice = item;
+            });
+          },
+        ),
+      ));
+    }
+    return choices;
   }
 
   @override
@@ -70,11 +90,20 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Image(
-                                  image: NetworkImage("${_userModel?.image}"),
-                                  height: 350,
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ProductImagePreviewScreen()));
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Image(
+                                    image: NetworkImage("${_userModel?.image}"),
+                                    height: 350,
+                                  ),
                                 ),
                               ),
                               Padding(
@@ -92,16 +121,16 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                                       child: Text(
                                         '${_userModel?.title}',
                                         softWrap: true,
-                                        maxLines: 2,
-                                        // overflow: TextOverflow.ellipsis,
+                                        maxLines: 3,
+                                        overflow: TextOverflow.visible,
                                         style: const TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 20,
+                                          fontSize: 15,
                                         ),
                                       ),
                                     ),
                                     Text(
-                                      '${_userModel?.price}',
+                                      '\$ ${_userModel?.price}',
                                       style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20,
@@ -112,67 +141,40 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(
-                                    left: 30, right: 30, top: 10),
-                                child: ExpandablePanel(
-                                  header: const Text(
+                                    left: 15, right: 15, top: 10),
+                                child: ExpansionTile(
+                                  title: const Text(
                                     'Description',
                                     style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15,
-                                    ),
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w500),
                                   ),
-                                  collapsed: Text(
-                                    '${_userModel?.description}',
-                                    softWrap: true,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  expanded: Text('${_userModel?.description}'),
+                                  children: <Widget>[
+                                    ListTile(
+                                      title: Text(
+                                        '${_userModel?.description}',
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 30.0),
+                                child: Text(
+                                  'Size',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 30.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Text(
-                                      'Size',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    SizedBox(
-                                      width: 80.0,
-                                      child: SingleChildScrollView(
-                                        scrollDirection: Axis.horizontal,
-                                        child: Row(
-                                          children: [
-                                            IconButton(
-                                                onPressed: () {},
-                                                icon: const Text('M'),
-                                                padding:
-                                                    const EdgeInsets.all(0.0)),
-                                            IconButton(
-                                                onPressed: () {},
-                                                icon: const Text('L'),
-                                                padding:
-                                                    const EdgeInsets.all(0.0)),
-                                            IconButton(
-                                                onPressed: () {},
-                                                icon: const Text('XL'),
-                                                padding:
-                                                    const EdgeInsets.all(0.0)),
-                                            IconButton(
-                                                onPressed: () {},
-                                                icon: const Text('XXL'),
-                                                padding:
-                                                    const EdgeInsets.all(0.0)),
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                  ],
+                                    horizontal: 22.0),
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Wrap(
+                                    children: _buildChoiceList(),
+                                  ),
                                 ),
                               ),
                             ],
@@ -188,17 +190,18 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Container(
+                                SizedBox(
                                   width: 65,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(40.0),
-                                      color: Colors.blue),
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(5.0),
-                                    child: Icon(
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(60),
+                                      ),
+                                    ),
+                                    onPressed: () {},
+                                    child: const Icon(
                                       Icons.favorite_border,
-                                      size: 25.0,
-                                      color: Colors.white,
+                                      size: 30,
                                     ),
                                   ),
                                 ),
