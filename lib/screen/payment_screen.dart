@@ -160,14 +160,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                 padding:
                                     MaterialStateProperty.all(EdgeInsets.zero)),
                             onPressed: () {
-                              _determinePosition();
-                            },
-                            child: const Text('Use Current Location')),
-                        TextButton(
-                            style: ButtonStyle(
-                                padding:
-                                    MaterialStateProperty.all(EdgeInsets.zero)),
-                            onPressed: () {
                               showModalBottomSheet(
                                   isScrollControlled: true,
                                   context: context,
@@ -210,27 +202,51 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                           const SizedBox(
                                             height: 10,
                                           ),
-                                          ElevatedButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  house = houseTextField.text;
-                                                  floor = floorTextField.text;
-                                                  city = cityTextField.text;
-                                                  country =
-                                                      countryTextField.text;
-                                                  countryTextField.clear();
-                                                  houseTextField.clear();
-                                                  floorTextField.clear();
-                                                  cityTextField.clear();
-                                                });
-                                                Navigator.pop(context);
-                                              },
-                                              style: ButtonStyle(
-                                                  backgroundColor:
-                                                      MaterialStateProperty.all(
-                                                          Colors.black)),
-                                              child:
-                                                  const Text('Save Address')),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              TextButton(
+                                                  style: ButtonStyle(
+                                                      padding:
+                                                          MaterialStateProperty
+                                                              .all(EdgeInsets
+                                                                  .zero)),
+                                                  onPressed: () {
+                                                    _determinePosition();
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: const Text(
+                                                      'Use Current Location')),
+                                              const SizedBox(
+                                                width: 20,
+                                              ),
+                                              ElevatedButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      house =
+                                                          houseTextField.text;
+                                                      floor =
+                                                          floorTextField.text;
+                                                      city = cityTextField.text;
+                                                      country =
+                                                          countryTextField.text;
+                                                      countryTextField.clear();
+                                                      houseTextField.clear();
+                                                      floorTextField.clear();
+                                                      cityTextField.clear();
+                                                    });
+                                                    Navigator.pop(context);
+                                                  },
+                                                  style: ButtonStyle(
+                                                      backgroundColor:
+                                                          MaterialStateProperty
+                                                              .all(Colors
+                                                                  .black)),
+                                                  child: const Text(
+                                                      'Save Address')),
+                                            ],
+                                          ),
                                         ],
                                       ),
                                     );
