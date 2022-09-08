@@ -1,0 +1,194 @@
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:e_commerce_app/screen/category_screen.dart';
+import 'package:e_commerce_app/screen/product_page.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final CarouselController _controller = CarouselController();
+
+  List<String>? images = [
+    "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+    "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
+    "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg",
+    "https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg",
+    "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg"
+  ];
+
+  List<String>? categoryImages = [
+    "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
+    "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg",
+    "https://fakestoreapi.com/img/71kWymZ+c+L._AC_SX679_.jpg",
+    "https://fakestoreapi.com/img/51eg55uWmdL._AC_UX679_.jpg",
+  ];
+
+  List<String>? categoryName = [
+    "men's clothing",
+    "jewelery",
+    "electronics",
+    "women's clothing"
+  ];
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _controller.stopAutoPlay();
+  }
+
+  var _currentIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Text(
+                'Dla',
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.8,
+                child:
+                CarouselSlider(
+                  items: images?.map<Widget>((index) {
+                    return Builder(builder: (BuildContext context) {
+                      return Container(
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: NetworkImage(index),
+                                  fit: BoxFit.contain)));
+                    });
+                  }).toList(),
+                  carouselController: _controller,
+                  options: CarouselOptions(
+                    aspectRatio: 1 / 1,
+                    viewportFraction: 1,
+                    enlargeCenterPage: true,
+                    autoPlay: true,
+                    onPageChanged: (position, reason) {
+                      if (kDebugMode) {
+                        print(reason);
+                        print(CarouselPageChangedReason.controller);
+                      }
+                      setState(() {
+                        _currentIndex = position;
+                      });
+                    },
+                    enableInfiniteScroll: true,
+                  ),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: indicators(images?.length, _currentIndex),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Categories ',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    GestureDetector(
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ProductPage())),
+                      child: Row(
+                        children: const [
+                          Text(
+                            'All Products',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          Icon(Icons.play_arrow)
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 300,
+                width: double.infinity,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) => GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CategoryScreen(
+                                    category: categoryName![index],
+                                  )));
+                    },
+                    child: Card(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 10.0, vertical: 20.0),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Image(
+                                fit: BoxFit.contain,
+                                height: 200,
+                                width: 200,
+                                image: NetworkImage(categoryImages![index])),
+                            const SizedBox(
+                              height: 10.0,
+                            ),
+                            Text(
+                              categoryName![index].toUpperCase(),
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                            const SizedBox(
+                              height: 10.0,
+                            ),
+                            // Text('Rs. ${product.price}'),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  itemCount: categoryImages?.length,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  List<Widget> indicators(imagesLength, currentIndex) {
+    return List<Widget>.generate(imagesLength, (index) {
+      return Container(
+        margin: const EdgeInsets.all(3),
+        width: 10,
+        height: 10,
+        decoration: BoxDecoration(
+            color: currentIndex == index ? Colors.black : Colors.grey,
+            shape: BoxShape.circle),
+      );
+    });
+  }
+}

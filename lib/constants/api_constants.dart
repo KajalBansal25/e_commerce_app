@@ -1,4 +1,7 @@
 class ApiConstants {
   static String baseUrl = 'https://fakestoreapi.com';
-  static String usersEndpoint = '/products';
+  static String usersEndpointAllProducts = '/products';
+  static String usersEndpointCartProducts = '/carts';
+  static String usersEndpointSingleProduct = '/products/';
+  static String usersEndpointCategory = "/products/category/";
 }

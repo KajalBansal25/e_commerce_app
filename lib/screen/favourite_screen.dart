@@ -1,0 +1,77 @@
+import 'package:flutter/material.dart';
+import '../widgets/product_card.dart';
+import '../constants/api_service.dart';
+import '../model/product_model.dart';
+
+class FavouritePage extends StatefulWidget {
+  const FavouritePage({Key? key}) : super(key: key);
+
+  @override
+  State<FavouritePage> createState() => _FavouritePageState();
+}
+
+class _FavouritePageState extends State<FavouritePage>
+    with AutomaticKeepAliveClientMixin {
+  late List<ProductModel>? _productModel = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _getData();
+  }
+
+  void _getData() async {
+    _productModel = (await ApiService().getProducts())!;
+    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    return MaterialApp(
+      title: "Shop App",
+      home: SafeArea(
+        top: true,
+        child: Scaffold(
+            // backgroundColor: Color.fromARGB(255, 218, 218, 218),
+            body: _productModel == null || _productModel!.isEmpty
+                ? const Center(child: CircularProgressIndicator())
+                : Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(colors: [
+                        Color.fromARGB(255, 221, 221, 221),
+                        Color.fromARGB(255, 239, 239, 239),
+                      ], begin: Alignment.topLeft, end: Alignment.topRight),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(8, 16, 8, 0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                              "Your Favourites",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 22),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Expanded(
+                              child: ProductCard(
+                            productModel: _productModel,
+                          ))
+                        ],
+                      ),
+                    ),
+                  )),
+      ),
+    );
+  }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
+}
