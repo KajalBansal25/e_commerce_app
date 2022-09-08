@@ -1,34 +1,27 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:e_commerce_app/screen/profile_page.dart';
 import 'package:flutter/material.dart';
-
 import 'package:e_commerce_app/screen/cart_screen.dart';
 import 'package:e_commerce_app/screen/favourite_screen.dart';
 import 'package:e_commerce_app/screen/homeScreen.dart';
-import 'package:e_commerce_app/screen/product_page.dart';
 
 void main() {
-  runApp(const MyApp(
-    tabindex: 0,
-  ));
+  runApp(MyApp(tabIndex: 0,));
 }
 
+//ignore: must_be_immutable
 class MyApp extends StatefulWidget {
-  final int tabindex;
-
-  const MyApp({
+  int? tabIndex = 0;
+  MyApp({
     Key? key,
-    required this.tabindex,
+    this.tabIndex,
   }) : super(key: key);
 
   @override
-  State<MyApp> createState() => _MyAppState(tabindex);
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  // This widget is the root of your application.
-
-  var _selectedIndex;
+  get tabIndex => widget.tabIndex;
   static const List<Widget> _pages = <Widget>[
     HomeScreen(),
     FavouritePage(),
@@ -36,14 +29,13 @@ class _MyAppState extends State<MyApp> {
     ProfilePage(),
   ];
 
-  _MyAppState(this._selectedIndex);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       home: Scaffold(
         body: IndexedStack(
-          index: _selectedIndex,
+          index: tabIndex,
           children: _pages,
         ),
         bottomNavigationBar: Container(
@@ -56,7 +48,7 @@ class _MyAppState extends State<MyApp> {
             backgroundColor: Colors.red,
             selectedItemColor: Colors.black,
             elevation: 100,
-            currentIndex: _selectedIndex,
+            currentIndex: tabIndex,
             onTap: _onItemTapped,
             items: const [
               BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
@@ -75,7 +67,7 @@ class _MyAppState extends State<MyApp> {
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+      widget.tabIndex = index;
     });
   }
 }

@@ -1,6 +1,5 @@
 import 'package:badges/badges.dart';
 import 'package:e_commerce_app/main.dart';
-import 'package:e_commerce_app/screen/cart_screen.dart';
 import 'package:flutter/material.dart';
 import '../widgets/product_card.dart';
 import '../constants/api_service.dart';
@@ -30,6 +29,7 @@ class _ProductPageState extends State<ProductPage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return MaterialApp(
       // title: "Shop App",
       home: SafeArea(
@@ -60,23 +60,23 @@ class _ProductPageState extends State<ProductPage>
                                 },
                                 icon: const Icon(Icons.arrow_back_ios_rounded),
                               ),
-                              Text(
+                              const Text(
                                 "All Products",
-                                style: const TextStyle(
+                                style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 22),
                               ),
                               Badge(
-                                padding: EdgeInsets.all(5),
+                                padding: const EdgeInsets.all(5),
                                 position: BadgePosition.center(),
                                 // stackFit: ,
                                 child: IconButton(
-                                  padding: EdgeInsets.all(0),
+                                  padding: const EdgeInsets.all(0),
                                   onPressed: () {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                MyApp(tabindex: 2)));
+                                                MyApp(tabIndex: 2)));
                                   },
                                   icon:
                                       const Icon(Icons.shopping_cart_outlined),
@@ -84,7 +84,7 @@ class _ProductPageState extends State<ProductPage>
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           Expanded(

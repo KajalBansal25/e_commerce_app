@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class ProductImagePreviewScreen extends StatefulWidget {
@@ -17,7 +18,7 @@ class _ProductImagePreviewScreenState extends State<ProductImagePreviewScreen> {
     "https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg",
     "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg"
   ];
-  CarouselController _controller = new CarouselController();
+  final CarouselController _controller = CarouselController();
 
   List<Widget> indicators(imagesLength, currentIndex) {
     return List<Widget>.generate(imagesLength, (index) {
@@ -25,7 +26,9 @@ class _ProductImagePreviewScreenState extends State<ProductImagePreviewScreen> {
         onTap: () {
           setState(() {
             currentIndex = index;
-            print(currentIndex);
+            if (kDebugMode) {
+              print(currentIndex);
+            }
           });
           _controller.jumpToPage(currentIndex);
         },

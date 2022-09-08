@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import '../widgets/product_card.dart';
 import '../constants/api_service.dart';
 import '../model/product_model.dart';
@@ -29,6 +27,7 @@ class _FavouritePageState extends State<FavouritePage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return MaterialApp(
       title: "Shop App",
       home: SafeArea(

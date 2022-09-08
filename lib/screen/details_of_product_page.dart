@@ -1,21 +1,20 @@
 import 'package:e_commerce_app/screen/product_image_preview_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:expandable/expandable.dart';
 import 'package:e_commerce_app/model/single_product_model.dart';
 import 'package:e_commerce_app/constants/api_service.dart';
 
 import '../main.dart';
-
+//ignore: must_be_immutable
 class CustomDetailPage extends StatefulWidget {
   CustomDetailPage({Key? key, required this.prodId}) : super(key: key);
-  var prodId;
+  String prodId;
   @override
-  State<CustomDetailPage> createState() => _CustomDetailPageState(prodId);
+  State<CustomDetailPage> createState() => _CustomDetailPageState();
 }
 
 class _CustomDetailPageState extends State<CustomDetailPage> {
-  var prodId;
-  _CustomDetailPageState(this.prodId);
+  // var prodId;
+  // _CustomDetailPageState(this.prodId);
   late Welcome? _userModel = Welcome();
   final List<String> reportList = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
   String selectedChoice = "S";
@@ -26,7 +25,7 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
   }
 
   void _getData() async {
-    _userModel = (await ApiService().getSingleProducts(prodId))!;
+    _userModel = (await ApiService().getSingleProducts(widget.prodId))!;
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
@@ -80,7 +79,7 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          MyApp(tabindex: 2)));
+                                          MyApp(tabIndex: 2)));
                             },
                             icon: const Icon(Icons.shopping_cart_outlined),
                           ),

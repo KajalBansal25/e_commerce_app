@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // import '../model/user_data_modal.dart';
@@ -65,6 +66,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                       } else if (!RegExp("^[A-Za-z]").hasMatch(value)) {
                         return 'Please Enter a valid Name';
                       }
+                      return null;
                     },
                   ),
                 ),
@@ -91,6 +93,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                       } else if (!RegExp("^[A-Za-z]").hasMatch(value)) {
                         return 'Please Enter a valid Name';
                       }
+                      return null;
                     },
                   ),
                 ),
@@ -162,7 +165,9 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                 MaterialStateProperty.all(Colors.deepPurple)),
                         onPressed: () {
                           if (_formUpdateKey.currentState!.validate()) {
-                            print('Hello On Pressed Executed');
+                            if (kDebugMode) {
+                              print('Hello On Pressed Executed');
+                            }
                             // Navigator.pop(context);
                             emailUpdate.clear();
                             phoneNoUpdate.clear();

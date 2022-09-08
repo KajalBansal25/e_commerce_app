@@ -105,7 +105,7 @@ class OrderDetailScreen extends StatelessWidget {
                           Card(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15),
-                                side: BorderSide(color: Colors.blueAccent)),
+                                side: const BorderSide(color: Colors.blueAccent)),
                             child: Row(
                               children: [
                                 Padding(
@@ -119,9 +119,9 @@ class OrderDetailScreen extends StatelessWidget {
                                 ),
                                 Column(
                                   children: [
-                                    Text(
+                                    const Text(
                                       'Bag',
-                                      style: const TextStyle(
+                                      style:  TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -144,10 +144,10 @@ class OrderDetailScreen extends StatelessWidget {
                                     height: 82,
                                     width: 82,
                                     color: Colors.blueAccent,
-                                    child: Center(
+                                    child: const Center(
                                         child: Text(
                                       'Rs. 1500',
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold),
                                     )),

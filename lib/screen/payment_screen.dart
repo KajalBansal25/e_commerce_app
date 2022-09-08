@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/main.dart';
 import 'package:e_commerce_app/screen/order_detail_screen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
@@ -63,7 +64,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
         floor = place.postalCode!;
       });
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
     return null;
   }
@@ -95,8 +98,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    const MyApp(tabindex: 2)));
+                                builder: (context) => MyApp(tabIndex: 2)));
                       },
                       icon: const Icon(Icons.arrow_back_ios)),
                   const Text(
@@ -317,7 +319,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       onPressed: () {
                         showModalBottomSheet(
                             context: context,
-                            builder: (BuildContext) {
+                            builder: (buildContext) {
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -447,10 +449,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     style: ButtonStyle(
                         elevation: MaterialStateProperty.all(10),
                         backgroundColor: MaterialStateProperty.all(
-                            Color.fromARGB(255, 148, 211, 170)),
+                            const Color.fromARGB(255, 148, 211, 170)),
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15.0),
-                            side: BorderSide(color: Colors.green)))),
+                            side: const BorderSide(color: Colors.green)))),
                     onPressed: () {},
                     child: const Center(
                       child: Padding(
