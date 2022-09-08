@@ -18,9 +18,12 @@ class _HomeScreenState extends State<HomeScreen> {
   double totalPrice = 0;
   @override
   void initState() {
+    // _controller.startAutoPlay();
     super.initState();
     _getData();
   }
+
+  CarouselController _controller = new CarouselController();
 
   List<String> images = [
     "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
@@ -34,6 +37,15 @@ class _HomeScreenState extends State<HomeScreen> {
     _productModel = (await ApiService().getProducts())!;
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _controller.stopAutoPlay();
+  }
+
+  var _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -64,39 +76,53 @@ class _HomeScreenState extends State<HomeScreen> {
                                   fit: BoxFit.contain)));
                     });
                   }).toList(),
+                  carouselController: _controller,
                   options: CarouselOptions(
                     // height: MediaQuery.of(context).size.height * 0.5,
                     aspectRatio: 1 / 1,
                     viewportFraction: 1,
                     enlargeCenterPage: true,
-                    // autoPlay: true,r
+                    autoPlay: true,
 
                     onPageChanged: (position, reason) {
                       print(reason);
                       print(CarouselPageChangedReason.controller);
+                      setState(() {
+                        _currentIndex = position;
+                      });
                     },
                     enableInfiniteScroll: true,
                   ),
                 ),
               ),
-              // Row(
-              //   children: indicators(images.length, activePage),
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              // ),
-
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: indicators(images.length, _currentIndex),
+              ),
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('New Products'),
+                    const Text(
+                      'Categories ',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
                     GestureDetector(
                       onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => const ProductPage())),
                       child: Row(
-                        children: const [Text('More'), Icon(Icons.play_arrow)],
+                        children: const [
+                          Text(
+                            'More',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          Icon(Icons.play_arrow)
+                        ],
                       ),
                     ),
                   ],
@@ -171,16 +197,16 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // List<Widget> indicators(imagesLength, currentIndex) {
-  //   return List<Widget>.generate(imagesLength, (index) {
-  //     return Container(
-  //       margin: EdgeInsets.all(3),
-  //       width: 10,
-  //       height: 10,
-  //       decoration: BoxDecoration(
-  //           color: currentIndex == index ? Colors.black : Colors.grey,
-  //           shape: BoxShape.circle),
-  //     );
-  //   });
-  // }
+  List<Widget> indicators(imagesLength, currentIndex) {
+    return List<Widget>.generate(imagesLength, (index) {
+      return Container(
+        margin: EdgeInsets.all(3),
+        width: 10,
+        height: 10,
+        decoration: BoxDecoration(
+            color: currentIndex == index ? Colors.black : Colors.grey,
+            shape: BoxShape.circle),
+      );
+    });
+  }
 }

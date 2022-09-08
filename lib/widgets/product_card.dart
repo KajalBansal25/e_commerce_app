@@ -23,22 +23,6 @@ class _ProductCardState extends State<ProductCard> {
   final List<ProductModel>? _productModel;
 
   _ProductCardState(this._productModel);
-  // final int? index;
-  // _ProductCardState(this.index);
-
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   _getData();
-  // }
-
-  // void _getData() async {
-  //   _productModel = (await ApiService().getProducts())!;
-  //   Future.delayed(const Duration(seconds: 1)).then(
-  //     (value) => setState(() {}),
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
