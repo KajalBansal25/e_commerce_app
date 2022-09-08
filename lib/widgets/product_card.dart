@@ -34,7 +34,9 @@ class _ProductCardState extends State<ProductCard> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const CustomDetailPage()));
+                    builder: (context) => CustomDetailPage(
+                          prodId: _productModel?[index].id,
+                        )));
           },
           child: Container(
             child: Card(

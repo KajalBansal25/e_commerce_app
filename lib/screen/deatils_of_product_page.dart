@@ -7,13 +7,15 @@ import 'package:e_commerce_app/constants/api_service.dart';
 import '../main.dart';
 
 class CustomDetailPage extends StatefulWidget {
-  const CustomDetailPage({Key? key}) : super(key: key);
-
+  CustomDetailPage({Key? key, required this.prodId}) : super(key: key);
+  var prodId;
   @override
-  State<CustomDetailPage> createState() => _CustomDetailPageState();
+  State<CustomDetailPage> createState() => _CustomDetailPageState(prodId);
 }
 
 class _CustomDetailPageState extends State<CustomDetailPage> {
+  var prodId;
+  _CustomDetailPageState(this.prodId);
   late Welcome? _userModel = Welcome();
   final List<String> reportList = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
   String selectedChoice = "S";
@@ -24,7 +26,7 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
   }
 
   void _getData() async {
-    _userModel = (await ApiService().getSingleProducts())!;
+    _userModel = (await ApiService().getSingleProducts(prodId))!;
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 

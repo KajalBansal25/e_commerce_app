@@ -117,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Row(
                         children: const [
                           Text(
-                            'More',
+                            'All Products',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold),
                           ),
@@ -140,8 +140,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          const CustomDetailPage()));
+                                      builder: (context) => CustomDetailPage(
+                                            prodId: product.id,
+                                          )));
                             },
                             child: SizedBox(
                               width: 250.0,

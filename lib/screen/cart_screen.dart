@@ -72,7 +72,9 @@ class _CartScreenState extends State<CartScreen>
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          const CustomDetailPage()));
+                                                          CustomDetailPage(
+                                                              prodId:
+                                                                  product.id)));
                                             },
                                             child: Row(
                                               crossAxisAlignment:

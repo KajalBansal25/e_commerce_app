@@ -61,7 +61,7 @@ class _ProductPageState extends State<ProductPage>
                                 icon: const Icon(Icons.arrow_back_ios_rounded),
                               ),
                               Text(
-                                "${_productModel![0].category}",
+                                "All Products",
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 22),
                               ),
