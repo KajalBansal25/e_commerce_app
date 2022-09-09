@@ -88,8 +88,13 @@ class _ProductPageState extends State<ProductPage>
                             height: 20,
                           ),
                           Expanded(
-                            child: ProductCard(
+                            child: productCard(
                               productModel: _productModel,
+                              onFavButtonClick: (int index) {
+                                setState(() {
+                                  _productModel![index].favourite();
+                                });
+                              },parentContext: context,
                             ),
                           )
                         ],

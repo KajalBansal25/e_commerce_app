@@ -1,8 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:e_commerce_app/screen/category_screen.dart';
 import 'package:e_commerce_app/screen/product_page.dart';
+import 'package:e_commerce_app/utils/Scaling.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import '/utils/Scaling.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -53,21 +55,22 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text(
-                'Dla',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+               Text(
+                'DLA',
+                style: TextStyle(fontSize: normalizedWidth(context,30), fontWeight: FontWeight.bold),
               ),
-              const SizedBox(
-                height: 15,
+               SizedBox(
+                height: normalizedHeight(context, 15),
               ),
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.8,
+
+                width: normalizedWidth(context, 300),
                 child:
                 CarouselSlider(
                   items: images?.map<Widget>((index) {
                     return Builder(builder: (BuildContext context) {
                       return Container(
-                          width: MediaQuery.of(context).size.width * 0.8,
+                          width: normalizedWidth(context, 300),
                           decoration: BoxDecoration(
                               image: DecorationImage(
                                   image: NetworkImage(index),
@@ -98,14 +101,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: indicators(images?.length, _currentIndex),
               ),
               Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding:  EdgeInsets.all(normalizedWidth(context, 20)!),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
+                    Text(
                       'Categories ',
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: normalizedWidth(context, 18), fontWeight: FontWeight.bold),
                     ),
                     GestureDetector(
                       onTap: () => Navigator.push(
@@ -113,13 +116,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           MaterialPageRoute(
                               builder: (context) => const ProductPage())),
                       child: Row(
-                        children: const [
+                        children: [
                           Text(
                             'All Products',
                             style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
+                                fontSize: normalizedWidth(context, 18), fontWeight: FontWeight.bold),
                           ),
-                          Icon(Icons.play_arrow)
+                          const Icon(Icons.play_arrow)
                         ],
                       ),
                     ),
@@ -127,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               SizedBox(
-                height: 300,
+                height: normalizedHeight(context, 300),
                 width: double.infinity,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,

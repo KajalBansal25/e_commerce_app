@@ -60,184 +60,180 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: SafeArea(
-        child: Scaffold(
-          body: circular
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
-              : Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 16, 8, 0),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              Navigator.pop(
+    return SafeArea(
+      child: Scaffold(
+        body: circular
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Padding(
+                padding: const EdgeInsets.fromLTRB(8, 16, 8, 0),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            Navigator.pop(
+                              context,
+                            );
+                          },
+                          icon: const Icon(Icons.arrow_back_ios_rounded),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            Navigator.push(
                                 context,
-                              );
-                            },
-                            icon: const Icon(Icons.arrow_back_ios_rounded),
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          MyApp(tabIndex: 2)));
-                            },
-                            icon: const Icon(Icons.shopping_cart_outlined),
-                          ),
-                        ],
-                      ),
-                      Expanded(
-                        flex: 10,
-                        child: SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const ProductImagePreviewScreen()));
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Image(
-                                    image: NetworkImage("${_userModel?.image}"),
-                                    height: 350,
-                                  ),
+                                MaterialPageRoute(
+                                    builder: (context) => MyApp(tabIndex: 2)));
+                          },
+                          icon: const Icon(Icons.shopping_cart_outlined),
+                        ),
+                      ],
+                    ),
+                    Expanded(
+                      flex: 10,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ProductImagePreviewScreen()));
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Image(
+                                  image: NetworkImage("${_userModel?.image}"),
+                                  height: 350,
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 20.0,
-                                    bottom: 5.0,
-                                    right: 30.0,
-                                    left: 30.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    SizedBox(
-                                      width: 200,
-                                      child: Text(
-                                        '${_userModel?.title}',
-                                        softWrap: true,
-                                        maxLines: 3,
-                                        overflow: TextOverflow.visible,
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 15,
-                                        ),
-                                      ),
-                                    ),
-                                    Text(
-                                      '\$ ${_userModel?.price}',
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 20.0,
+                                  bottom: 5.0,
+                                  right: 30.0,
+                                  left: 30.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox(
+                                    width: 200,
+                                    child: Text(
+                                      '${_userModel?.title}',
+                                      softWrap: true,
+                                      maxLines: 3,
+                                      overflow: TextOverflow.visible,
                                       style: const TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 20,
+                                        fontSize: 15,
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 15, right: 15, top: 10),
-                                child: ExpansionTile(
-                                  title: const Text(
-                                    'Description',
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w500),
                                   ),
-                                  children: <Widget>[
-                                    ListTile(
-                                      title: Text(
-                                        '${_userModel?.description}',
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                    )
-                                  ],
+                                  Text(
+                                    '\$ ${_userModel?.price}',
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 15, right: 15, top: 10),
+                              child: ExpansionTile(
+                                title: const Text(
+                                  'Description',
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                children: <Widget>[
+                                  ListTile(
+                                    title: Text(
+                                      '${_userModel?.description}',
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            _userModel?.category == "men's clothing" || _userModel?.category == "women's clothing"?const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 30.0),
+                              child: Text(
+                                'Size',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ):Text(''),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 22.0),
+                              child: _userModel?.category == "men's clothing" || _userModel?.category == "women's clothing"?SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Wrap(
+                                  children: _buildChoiceList(),
+                                ),
+                              ): const Text('')
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: SizedBox(
+                        height: 35,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0, vertical: 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: 65,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(60),
+                                    ),
+                                  ),
+                                  onPressed: () {},
+                                  child: const Icon(
+                                    Icons.favorite_border,
+                                    size: 30,
+                                  ),
                                 ),
                               ),
-                              const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 30.0),
-                                child: Text(
-                                  'Size',
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 85.0),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(60),
+                                    )),
+                                onPressed: () {},
+                                child: const Text(
+                                  '+Add to Cart',
                                   style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 22.0),
-                                child: SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Wrap(
-                                    children: _buildChoiceList(),
-                                  ),
                                 ),
                               ),
                             ],
                           ),
                         ),
                       ),
-                      Expanded(
-                        child: SizedBox(
-                          height: 35,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16.0, vertical: 0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SizedBox(
-                                  width: 65,
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(60),
-                                      ),
-                                    ),
-                                    onPressed: () {},
-                                    child: const Icon(
-                                      Icons.favorite_border,
-                                      size: 30,
-                                    ),
-                                  ),
-                                ),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 85.0),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(60),
-                                      )),
-                                  onPressed: () {},
-                                  child: const Text(
-                                    '+Add to Cart',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-        ),
+              ),
       ),
     );
   }
