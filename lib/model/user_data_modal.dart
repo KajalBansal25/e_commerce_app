@@ -1,9 +1,8 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
-Userdata userdataFromJson(String str) => Userdata.fromJson(json.decode(str));
+part 'user_data_modal.g.dart';
 
-String userdataToJson(Userdata data) => json.encode(data.toJson());
-
+@JsonSerializable()
 class Userdata {
   Address? address;
 
@@ -25,29 +24,13 @@ class Userdata {
   String? phone;
   int? v;
 
-  factory Userdata.fromJson(Map<String, dynamic> json) => Userdata(
-        address: Address.fromJson(json["address"]),
-        id: json["id"],
-        email: json["email"],
-        username: json["username"],
-        password: json["password"],
-        name: Name.fromJson(json["name"]),
-        phone: json["phone"],
-        v: json["__v"],
-      );
+  factory Userdata.fromJson(Map<String, dynamic> json) =>
+      _$UserdataFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-        "address": address?.toJson(),
-        "id": id,
-        "email": email,
-        "username": username,
-        "password": password,
-        "name": name?.toJson(),
-        "phone": phone,
-        "__v": v,
-      };
+  Map<String, dynamic> toJson() => _$UserdataToJson(this);
 }
 
+@JsonSerializable()
 class Address {
   Address({
     this.geolocation,
@@ -63,23 +46,13 @@ class Address {
   int? number;
   String? zipcode;
 
-  factory Address.fromJson(Map<String, dynamic> json) => Address(
-        geolocation: Geolocation.fromJson(json["geolocation"]),
-        city: json["city"],
-        street: json["street"],
-        number: json["number"],
-        zipcode: json["zipcode"],
-      );
+  factory Address.fromJson(Map<String, dynamic> json) =>
+      _$AddressFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-        "geolocation": geolocation?.toJson(),
-        "city": city,
-        "street": street,
-        "number": number,
-        "zipcode": zipcode,
-      };
+  Map<String, dynamic> toJson() => _$AddressToJson(this);
 }
 
+@JsonSerializable()
 class Geolocation {
   Geolocation({
     this.lat,
@@ -89,17 +62,13 @@ class Geolocation {
   String? lat;
   String? long;
 
-  factory Geolocation.fromJson(Map<String, dynamic> json) => Geolocation(
-        lat: json["lat"],
-        long: json["long"],
-      );
+  factory Geolocation.fromJson(Map<String, dynamic> json) =>
+      _$GeolocationFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-        "lat": lat,
-        "long": long,
-      };
+  Map<String, dynamic> toJson() => _$GeolocationToJson(this);
 }
 
+@JsonSerializable()
 class Name {
   Name({
     this.firstname,
@@ -109,13 +78,7 @@ class Name {
   String? firstname;
   String? lastname;
 
-  factory Name.fromJson(Map<String, dynamic> json) => Name(
-        firstname: json["firstname"],
-        lastname: json["lastname"],
-      );
+  factory Name.fromJson(Map<String, dynamic> json) => _$NameFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-        "firstname": firstname,
-        "lastname": lastname,
-      };
+  Map<String, dynamic> toJson() => _$NameToJson(this);
 }
