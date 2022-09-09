@@ -1,9 +1,12 @@
 import 'package:e_commerce_app/screen/product_image_preview_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:e_commerce_app/model/single_product_model.dart';
-import 'package:e_commerce_app/constants/api_service.dart';
+import 'package:e_commerce_app/model/single_product_modal.dart';
 
+import '../constants/api_constants.dart';
 import '../main.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 //ignore: must_be_immutable
 class CustomDetailPage extends StatefulWidget {
   CustomDetailPage({Key? key, required this.prodId}) : super(key: key);
@@ -13,9 +16,8 @@ class CustomDetailPage extends StatefulWidget {
 }
 
 class _CustomDetailPageState extends State<CustomDetailPage> {
-  // var prodId;
-  // _CustomDetailPageState(this.prodId);
-  late Welcome? _userModel = Welcome();
+  ProductModal? _userModel = ProductModal();
+  bool circular = true;
   final List<String> reportList = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
   String selectedChoice = "S";
   @override
@@ -25,8 +27,15 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
   }
 
   void _getData() async {
-    _userModel = (await ApiService().getSingleProducts(widget.prodId))!;
-    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+    var url = Uri.parse(ApiConstants.baseUrl +
+        ApiConstants.usersEndpointSingleProduct +
+        widget.prodId);
+    var response = await http.get(url);
+    var temp = json.decode(response.body);
+    setState(() {
+      _userModel = ProductModal.fromJson(temp);
+      circular = false;
+    });
   }
 
   _buildChoiceList() {
@@ -51,14 +60,14 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    return _userModel == null || _userModel?.image == null
-        ? const Center(
-            child: CircularProgressIndicator(),
-          )
-        : MaterialApp(
-            home: SafeArea(
-              child: Scaffold(
-                body: Padding(
+    return MaterialApp(
+      home: SafeArea(
+        child: Scaffold(
+          body: circular
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Padding(
                   padding: const EdgeInsets.fromLTRB(8, 16, 8, 0),
                   child: Column(
                     children: [
@@ -228,8 +237,8 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                     ],
                   ),
                 ),
-              ),
-            ),
-          );
+        ),
+      ),
+    );
   }
 }

@@ -1,7 +1,8 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:e_commerce_app/screen/profile_update_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../constants/api_service.dart';
 import '../model/user_data_modal.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -12,7 +13,10 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  late Userdata? userModel = Userdata();
+  Userdata? _userDataModal = Userdata();
+
+  String apiLink = 'https://fakestoreapi.com/users/1';
+  bool circular = true;
   @override
   void initState() {
     super.initState();
@@ -20,21 +24,26 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void _getData() async {
-    userModel = (await ApiService().getUserData())!;
-    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+    var url = Uri.parse(apiLink);
+    var response = await http.get(url);
+    var temp = json.decode(response.body);
+    setState(() {
+      _userDataModal = Userdata.fromJson(temp);
+      circular = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return userModel == null || userModel?.address == null
-        ? const Center(
-            child: CircularProgressIndicator(
-              backgroundColor: Colors.white,
-            ),
-          )
-        : Scaffold(
-            body: SafeArea(
-              child: Stack(
+    return Scaffold(
+      body: SafeArea(
+        child: circular
+            ? const Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.white,
+                ),
+              )
+            : Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
                   Column(
@@ -49,20 +58,17 @@ class _ProfilePageState extends State<ProfilePage> {
                               const SizedBox(
                                 height: 50,
                               ),
-                              IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  Icons.account_circle,
-                                  size: 80,
-                                ),
+                              const Icon(
+                                Icons.account_circle,
+                                size: 80,
                                 color: Colors.white,
                               ),
                               const SizedBox(
-                                height: 50,
+                                height: 10,
                               ),
                               Center(
                                 child: Text(
-                                  '${userModel?.name?.firstname?.toUpperCase()} ${userModel?.name?.lastname?.toUpperCase()}',
+                                  '${_userDataModal?.name?.firstname?.toUpperCase()} ${_userDataModal?.name?.lastname?.toUpperCase()}',
                                   style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 20,
@@ -117,7 +123,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 color: Colors.deepPurple,
                               ),
                               title: Text(
-                                '${userModel?.phone}',
+                                '${_userDataModal?.phone}',
                               ),
                             ),
                             const Padding(
@@ -133,7 +139,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 Icons.email_outlined,
                                 color: Colors.deepPurple,
                               ),
-                              title: Text('${userModel?.email}'),
+                              title: Text('${_userDataModal?.email}'),
                             ),
                             const Padding(
                               padding: EdgeInsets.symmetric(horizontal: 20.0),
@@ -160,10 +166,10 @@ class _ProfilePageState extends State<ProfilePage> {
                               children: [
                                 ListTile(
                                   title: Text(
-                                    '${userModel?.address?.number} '
-                                    '${userModel?.address?.street?.toUpperCase()} '
-                                    '${userModel?.address?.city?.toUpperCase()} \n'
-                                    '${userModel?.address?.zipcode?.toUpperCase()} ',
+                                    '${_userDataModal?.address?.number} '
+                                    '${_userDataModal?.address?.street?.toUpperCase()} '
+                                    '${_userDataModal?.address?.city?.toUpperCase()} \n'
+                                    '${_userDataModal?.address?.zipcode?.toUpperCase()} ',
                                   ),
                                 )
                               ],
@@ -255,7 +261,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   )
                 ],
               ),
-            ),
-          );
+      ),
+    );
   }
 }

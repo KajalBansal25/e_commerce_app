@@ -102,7 +102,7 @@ class _ProductCardState extends State<ProductCard> {
                       ),
                     ),
                     Text(
-                      "${_productModel![index].price}",
+                      "\$ ${_productModel![index].price}",
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
