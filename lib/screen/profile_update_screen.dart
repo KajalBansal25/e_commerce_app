@@ -235,17 +235,18 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
 
     try {
       var url = Uri.parse('https://fakestoreapi.com/users/7');
-      var tempbody = userDataModal.toJson();
-      tempbody['name'] = name;
+      var tempBody = userDataModal.toJson();
+      tempBody['name'] = name;
       var response = await http.put(url,
           headers: {
             'Content-Type': 'application/json; charset=UTF-8',
           },
-          body: jsonEncode(tempbody));
+          body: jsonEncode(tempBody));
       print(response.body);
       return response.body;
     } catch (e) {
       print('try and catch : ${e.toString()}');
     }
+    return null;
   }
 }
