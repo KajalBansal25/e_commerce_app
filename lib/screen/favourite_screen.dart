@@ -60,9 +60,16 @@ class _FavouritePageState extends State<FavouritePage>
                             height: 20,
                           ),
                           Expanded(
-                              child: ProductCard(
-                            productModel: _productModel,
-                          ))
+                            child: productCard(
+                              productModel: _productModel,
+                              onFavButtonClick: (int index) {
+                                setState(() {
+                                  _productModel![index].favourite();
+                                });
+                              },
+                              parentContext: context,
+                            ),
+                          )
                         ],
                       ),
                     ),

@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:e_commerce_app/screen/order_detail_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:e_commerce_app/screen/profile_update_screen.dart';
 import 'package:flutter/material.dart';
@@ -342,13 +343,22 @@ class _ProfilePageState extends State<ProfilePage> {
                                 color: Colors.grey,
                               ),
                             ),
-                            const ListTile(
-                              leading: Icon(
+                             ListTile(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                    const OrderDetailScreen(),
+                                  ),
+                                );
+                              },
+                              leading: const Icon(
                                 Icons.shopping_bag_outlined,
                                 color: Colors.deepPurple,
                               ),
-                              title: Text('My Orders'),
-                              trailing: Icon(
+                              title: const Text('My Orders'),
+                              trailing: const Icon(
                                 Icons.arrow_forward_ios_sharp,
                                 color: Colors.deepPurple,
                                 size: 20,

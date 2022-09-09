@@ -73,8 +73,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                MyApp()));
+                                            builder: (context) => MyApp()));
                                   },
                                   icon:
                                       const Icon(Icons.shopping_cart_outlined),
@@ -86,8 +85,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             height: 20,
                           ),
                           Expanded(
-                            child: ProductCard(
+                            child: productCard(
                               productModel: _productModel,
+                              onFavButtonClick: (int index) {
+                                setState(() {
+                                  _productModel![index].favourite();
+                                });
+                              },parentContext: context,
                             ),
                           )
                         ],

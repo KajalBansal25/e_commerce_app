@@ -453,7 +453,55 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15.0),
                             side: const BorderSide(color: Colors.green)))),
-                    onPressed: () {},
+                    onPressed: () {
+                      showModalBottomSheet(
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (BuildContext context) {
+                            return SingleChildScrollView(
+                              padding:
+                              MediaQuery.of(context).viewInsets,
+                              child: Column(
+                                crossAxisAlignment:
+                                CrossAxisAlignment.end,
+                                children: [
+                                  TextFormField(
+                                    controller: houseTextField,
+                                    textInputAction:
+                                    TextInputAction.next,
+                                    decoration: const InputDecoration(
+                                        labelText: 'Enter Coupon Code'),
+                                  ),
+
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.end,
+                                    children: [
+
+
+                                      ElevatedButton(
+                                          onPressed: () {
+                                                Fluttertoast.showToast(msg: '${houseTextField.text} is not applicable' );
+                                                houseTextField.clear();
+                                                Navigator.of(context).pop();
+                                          },
+                                          style: ButtonStyle(
+                                              backgroundColor:
+                                              MaterialStateProperty
+                                                  .all(Colors
+                                                  .black)),
+                                          child: const Text(
+                                              'Check for Coupons')),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            );
+                          });
+                    },
                     child: const Center(
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(0, 18, 0, 18),
