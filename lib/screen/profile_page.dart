@@ -1,4 +1,8 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:e_commerce_app/screen/order_detail_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:e_commerce_app/screen/profile_update_screen.dart';
@@ -15,6 +19,61 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   Userdata? _userDataModal = Userdata();
+  final houseTextField = TextEditingController();
+  final floorTextField = TextEditingController();
+  final cityTextField = TextEditingController();
+  final countryTextField = TextEditingController();
+  String house = '';
+  String floor = '';
+  String city = '';
+  String country = '';
+  String currentAddress = '';
+  late Position currentPosition;
+
+  Future<Position?> _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      Fluttertoast.showToast(msg: "Please keep your location on");
+    }
+    permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        Fluttertoast.showToast(msg: 'Location Permission Denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      Fluttertoast.showToast(msg: 'Location permission is denied Forever');
+    }
+
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+
+    try {
+      List<Placemark> placemarks =
+      await placemarkFromCoordinates(position.latitude, position.longitude);
+      Placemark place = placemarks[0];
+      setState(() {
+        currentPosition = position;
+        currentAddress =
+        '${place.locality},${place.postalCode},${place.country}';
+        house = place.name!;
+        city = place.locality!;
+        country = place.country!;
+        floor = place.postalCode!;
+      });
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+    return null;
+  }
+
 
   String apiLink = 'https://fakestoreapi.com/users/1';
   bool circular = true;
@@ -172,6 +231,107 @@ class _ProfilePageState extends State<ProfilePage> {
                                     '${_userDataModal?.address?.city?.toUpperCase()} \n'
                                     '${_userDataModal?.address?.zipcode?.toUpperCase()} ',
                                   ),
+                                  trailing: TextButton(
+                                      style: ButtonStyle(
+                                          padding:
+                                          MaterialStateProperty.all(EdgeInsets.zero)),
+                                      onPressed: () {
+                                        showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return SingleChildScrollView(
+                                                padding:
+                                                MediaQuery.of(context).viewInsets,
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(10.0),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                    CrossAxisAlignment.end,
+                                                    children: [
+                                                      TextFormField(
+                                                        controller: houseTextField,
+                                                        textInputAction:
+                                                        TextInputAction.next,
+                                                        decoration: const InputDecoration(
+                                                            labelText: 'House No.'),
+                                                      ),
+                                                      TextFormField(
+                                                        controller: floorTextField,
+                                                        textInputAction:
+                                                        TextInputAction.next,
+                                                        decoration: const InputDecoration(
+                                                            labelText: 'Floor (Optional)'),
+                                                      ),
+                                                      TextFormField(
+                                                        controller: cityTextField,
+                                                        textInputAction:
+                                                        TextInputAction.next,
+                                                        decoration: const InputDecoration(
+                                                            labelText: 'City'),
+                                                      ),
+                                                      TextFormField(
+                                                        controller: countryTextField,
+                                                        textInputAction:
+                                                        TextInputAction.done,
+                                                        decoration: const InputDecoration(
+                                                            labelText: 'Country'),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                        MainAxisAlignment.end,
+                                                        children: [
+                                                          TextButton(
+                                                              style: ButtonStyle(
+                                                                  padding:
+                                                                  MaterialStateProperty
+                                                                      .all(EdgeInsets
+                                                                      .zero)),
+                                                              onPressed: () {
+                                                                _determinePosition();
+                                                                Navigator.pop(context);
+                                                              },
+                                                              child: const Text(
+                                                                  'Use Current Location')),
+                                                          const SizedBox(
+                                                            width: 20,
+                                                          ),
+                                                          ElevatedButton(
+                                                              onPressed: () {
+                                                                setState(() {
+                                                                  house =
+                                                                      houseTextField.text;
+                                                                  floor =
+                                                                      floorTextField.text;
+                                                                  city = cityTextField.text;
+                                                                  country =
+                                                                      countryTextField.text;
+                                                                  countryTextField.clear();
+                                                                  houseTextField.clear();
+                                                                  floorTextField.clear();
+                                                                  cityTextField.clear();
+                                                                });
+                                                                Navigator.pop(context);
+                                                              },
+                                                              style: ButtonStyle(
+                                                                  backgroundColor:
+                                                                  MaterialStateProperty
+                                                                      .all(Colors
+                                                                      .black)),
+                                                              child: const Text(
+                                                                  'Save Address')),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+                                            });
+                                      },
+                                      child: const Text('Change Address')),
                                 )
                               ],
                             ),
