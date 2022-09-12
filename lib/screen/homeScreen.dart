@@ -55,18 +55,18 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-               Text(
+              Text(
                 'DLA',
-                style: TextStyle(fontSize: normalizedWidth(context,30), fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    fontSize: normalizedWidth(context, 30),
+                    fontWeight: FontWeight.bold),
               ),
-               SizedBox(
+              SizedBox(
                 height: normalizedHeight(context, 15),
               ),
               SizedBox(
-
                 width: normalizedWidth(context, 300),
-                child:
-                CarouselSlider(
+                child: CarouselSlider(
                   items: images?.map<Widget>((index) {
                     return Builder(builder: (BuildContext context) {
                       return Container(
@@ -101,14 +101,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: indicators(images?.length, _currentIndex),
               ),
               Padding(
-                padding:  EdgeInsets.all(normalizedWidth(context, 20)!),
+                padding: EdgeInsets.all(normalizedWidth(context, 20)!),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       'Categories ',
-                      style:
-                          TextStyle(fontSize: normalizedWidth(context, 18), fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: normalizedWidth(context, 18),
+                          fontWeight: FontWeight.bold),
                     ),
                     GestureDetector(
                       onTap: () => Navigator.push(
@@ -120,7 +121,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           Text(
                             'All Products',
                             style: TextStyle(
-                                fontSize: normalizedWidth(context, 18), fontWeight: FontWeight.bold),
+                                fontSize: normalizedWidth(context, 18),
+                                fontWeight: FontWeight.bold),
                           ),
                           const Icon(Icons.play_arrow)
                         ],
@@ -144,27 +146,31 @@ class _HomeScreenState extends State<HomeScreen> {
                                   )));
                     },
                     child: Card(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 10.0, vertical: 20.0),
+                      margin: EdgeInsets.symmetric(
+                          horizontal: normalizedHeight(context, 10)!,
+                          vertical: normalizedWidth(context, 20)!),
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: normalizedHeight(context, 8)!,
+                            vertical: normalizedWidth(context, 8)!),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Image(
                                 fit: BoxFit.contain,
-                                height: 200,
-                                width: 200,
+                                height: normalizedHeight(context, 200),
+                                width: normalizedWidth(context, 200),
                                 image: NetworkImage(categoryImages![index])),
-                            const SizedBox(
-                              height: 10.0,
+                            SizedBox(
+                              height: normalizedHeight(context, 10),
                             ),
                             Text(
                               categoryName![index].toUpperCase(),
-                              style: const TextStyle(fontSize: 16),
+                              style: TextStyle(
+                                  fontSize: normalizedWidth(context, 16)),
                             ),
-                            const SizedBox(
-                              height: 10.0,
+                            SizedBox(
+                              height: normalizedHeight(context, 10),
                             ),
                             // Text('Rs. ${product.price}'),
                           ],
@@ -185,9 +191,9 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> indicators(imagesLength, currentIndex) {
     return List<Widget>.generate(imagesLength, (index) {
       return Container(
-        margin: const EdgeInsets.all(3),
-        width: 10,
-        height: 10,
+        margin:  EdgeInsets.symmetric(horizontal: normalizedWidth(context, 3)!,vertical: normalizedHeight(context, 3)!),
+        width: normalizedWidth(context, 10),
+        height: normalizedHeight(context, 30),
         decoration: BoxDecoration(
             color: currentIndex == index ? Colors.black : Colors.grey,
             shape: BoxShape.circle),
