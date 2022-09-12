@@ -87,7 +87,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
           ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
         ),
         child: Padding(
-          padding:  EdgeInsets.symmetric(vertical: normalizedHeight(context, 8)!,horizontal: normalizedWidth(context, 8)!),
+          padding:  EdgeInsets.symmetric(vertical: normalizedHeight(context, 0)!,horizontal: normalizedWidth(context, 8)!),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,7 +101,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             MaterialPageRoute(
                                 builder: (context) => MyApp(tabIndex: 2)));
                       },
-                      icon: const Icon(Icons.arrow_back_ios)),
+                      icon: const Icon(Icons.arrow_back_ios),iconSize: normalizedWidth(context, 20)),
                   Text(
                     'Payment',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: normalizedWidth(context, 22)),
@@ -117,19 +117,19 @@ class _PaymentScreenState extends State<PaymentScreen> {
               ),
               Card(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0),
+                  borderRadius: BorderRadius.circular(normalizedWidth(context, 15)!),
                 ),
                 elevation: 5,
                 child: Row(children: [
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: normalizedHeight(context, 8)!,horizontal: normalizedWidth(context, 8)!),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(normalizedWidth(context, 15)!),
                       child: Image.asset(
                         'assets/images/location.png',
                         fit: BoxFit.fill,
-                        height: 150,
-                        width: 150,
+                        height: normalizedHeight(context, 150),
+                        width: normalizedWidth(context, 150),
                       ),
                     ),
                   ),
@@ -307,7 +307,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       ],
                     ),
                   ),
-                  const Expanded(child: SizedBox()),
+                  // const Expanded(child: SizedBox()),
                   Card(
                     color: const Color.fromARGB(255, 112, 185, 114),
                     elevation: 0,
@@ -392,7 +392,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   ),
                 ]),
               ),
-              const Expanded(child: SizedBox()),
+              // const Expanded(child: SizedBox()),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -452,7 +452,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         backgroundColor: MaterialStateProperty.all(
                             const Color.fromARGB(255, 148, 211, 170)),
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
+                            borderRadius: BorderRadius.circular(normalizedWidth(context, 15)!),
                             side: const BorderSide(color: Colors.green)))),
                     onPressed: () {
                       showModalBottomSheet(
@@ -526,7 +526,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         backgroundColor: MaterialStateProperty.all(
                             const Color.fromARGB(220, 0, 0, 0)),
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
+                          borderRadius: BorderRadius.circular(normalizedWidth(context, 15)!),
                         ))),
                     onPressed: () {
                       Navigator.push(
@@ -536,7 +536,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     },
                     child:  Center(
                       child: Padding(
-                        padding: EdgeInsets.fromLTRB(normalizedWidth(context, 80)!, normalizedHeight(context, 18)!, normalizedWidth(context, 80)!, normalizedHeight(context, 18)!,),
+                        padding: EdgeInsets.fromLTRB(normalizedWidth(context, 0)!, normalizedHeight(context, 18)!, normalizedWidth(context, 0)!, normalizedHeight(context, 18)!,),
                         child: Text(
                           'Place Order',
                           style: TextStyle(
