@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:im_stepper/stepper.dart';
+import 'package:e_commerce_app/utils/Scaling.dart';
+
 
 class OrderDetailScreen extends StatelessWidget {
   const OrderDetailScreen({Key? key}) : super(key: key);
@@ -23,36 +25,37 @@ class OrderDetailScreen extends StatelessWidget {
                     Navigator.pop(context);
                   },
                   icon: const Icon(Icons.arrow_back_ios)),
-              const Text(
+               Text(
                 'Orders',
                 style: TextStyle(
-                  fontSize: 22,
+                  fontSize: normalizedWidth(context, 22)!,
                   fontWeight: FontWeight.bold,
                 ),
               )
             ],
           ),
-          const SizedBox(
-            height: 60,
+           SizedBox(
+            height: normalizedHeight(context, 60),
           ),
           Expanded(
             child: ListView.builder(
               itemBuilder: ((context, index) => Card(
+
                     elevation: 5,
-                    margin: const EdgeInsets.fromLTRB(16, 5, 16, 5),
+                    margin: EdgeInsets.fromLTRB(normalizedWidth(context, 16)!, normalizedHeight(context, 5)!,normalizedWidth(context, 16)!, normalizedHeight(context, 5)!),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25)),
                     child: Padding(
-                      padding: const EdgeInsets.all(15.0),
+                      padding: EdgeInsets.fromLTRB(normalizedWidth(context, 15)!, normalizedHeight(context, 15)!,normalizedWidth(context, 15)!, normalizedHeight(context, 15)!),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
+                           Text(
                             'ID: 95 259105',
                             style: TextStyle(
-                                color: Color.fromARGB(255, 152, 36, 188),
-                                fontSize: 20,
+                                color: const Color.fromARGB(255, 152, 36, 188),
+                                fontSize: normalizedWidth(context, 20),
                                 fontWeight: FontWeight.bold),
                           ),
                           Row(
@@ -69,19 +72,19 @@ class OrderDetailScreen extends StatelessWidget {
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const [
+                            children:  [
                               Text(
                                 'Delhi',
                                 style: TextStyle(
-                                    color: Color.fromARGB(255, 122, 36, 188),
-                                    fontSize: 20,
+                                    color: const Color.fromARGB(255, 122, 36, 188),
+                                    fontSize: normalizedWidth(context, 20),
                                     fontWeight: FontWeight.bold),
                               ),
                               Text(
                                 'Hisar',
                                 style: TextStyle(
-                                    color: Color.fromARGB(255, 122, 36, 188),
-                                    fontSize: 20,
+                                    color: const Color.fromARGB(255, 122, 36, 188),
+                                    fontSize: normalizedWidth(context, 20),
                                     fontWeight: FontWeight.bold),
                               ),
                             ],
@@ -109,27 +112,27 @@ class OrderDetailScreen extends StatelessWidget {
                             child: Row(
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.all(16.0),
+                                  padding: EdgeInsets.fromLTRB(normalizedWidth(context, 16)!, normalizedHeight(context, 16)!,normalizedWidth(context, 16)!, normalizedHeight(context, 16)!),
                                   child: Image.network(
                                     'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
-                                    height: 50,
-                                    width: 50,
+                                    height: normalizedHeight(context, 50),
+                                    width: normalizedWidth(context, 50),
                                     fit: BoxFit.scaleDown,
                                   ),
                                 ),
                                 Column(
                                   children: [
-                                    const Text(
+                                    Text(
                                       'Bag',
                                       style:  TextStyle(
-                                        fontSize: 16,
+                                        fontSize: normalizedWidth(context, 16),
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     Text(
                                       'x${index + 1}',
-                                      style: const TextStyle(
-                                        fontSize: 16,
+                                      style:  TextStyle(
+                                        fontSize: normalizedWidth(context, 16),
                                         color: Colors.grey,
                                       ),
                                     )
@@ -141,14 +144,14 @@ class OrderDetailScreen extends StatelessWidget {
                                       topRight: Radius.circular(15),
                                       bottomRight: Radius.circular(15)),
                                   child: Container(
-                                    height: 82,
-                                    width: 82,
+                                    height: normalizedHeight(context, 82),
+                                    width: normalizedWidth(context, 82),
                                     color: Colors.blueAccent,
-                                    child: const Center(
+                                    child:  Center(
                                         child: Text(
                                       'Rs. 1500',
                                       style: TextStyle(
-                                          fontSize: 16,
+                                          fontSize: normalizedWidth(context, 16),
                                           fontWeight: FontWeight.bold),
                                     )),
                                   ),

@@ -1,11 +1,12 @@
 import 'package:e_commerce_app/main.dart';
 import 'package:e_commerce_app/screen/order_detail_screen.dart';
+import 'package:e_commerce_app/utils/Scaling.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-
+import 'package:e_commerce_app/utils/Scaling.dart';
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({Key? key}) : super(key: key);
 
@@ -51,9 +52,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
         desiredAccuracy: LocationAccuracy.high);
 
     try {
-      List<Placemark> placemarks =
+      List<Placemark> placeMarks =
           await placemarkFromCoordinates(position.latitude, position.longitude);
-      Placemark place = placemarks[0];
+      Placemark place = placeMarks[0];
       setState(() {
         currentPosition = position;
         currentAddress =
@@ -86,7 +87,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
           ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding:  EdgeInsets.symmetric(vertical: normalizedHeight(context, 8)!,horizontal: normalizedWidth(context, 8)!),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,17 +102,17 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                 builder: (context) => MyApp(tabIndex: 2)));
                       },
                       icon: const Icon(Icons.arrow_back_ios)),
-                  const Text(
+                  Text(
                     'Payment',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: normalizedWidth(context, 22)),
                   ),
                 ],
               ),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
+               Padding(
+                padding: EdgeInsets.symmetric(vertical: normalizedHeight(context, 8)!,horizontal: normalizedWidth(context, 8)!),
                 child: Text(
                   'Address',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: normalizedWidth(context, 20), fontWeight: FontWeight.bold),
                 ),
               ),
               Card(
@@ -121,7 +122,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 elevation: 5,
                 child: Row(children: [
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.symmetric(vertical: normalizedHeight(context, 8)!,horizontal: normalizedWidth(context, 8)!),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(15),
                       child: Image.asset(
@@ -133,15 +134,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.symmetric(vertical: normalizedHeight(context, 8)!,horizontal: normalizedWidth(context, 8)!),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
+                         Text(
                           'Home',
                           style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
+                              fontSize: normalizedWidth(context, 16)!, fontWeight: FontWeight.bold),
                         ),
                         Text(
                           '$house,$floor',
@@ -201,8 +202,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                             decoration: const InputDecoration(
                                                 labelText: 'Country'),
                                           ),
-                                          const SizedBox(
-                                            height: 10,
+                                          SizedBox(
+                                            height: normalizedHeight(context, 10),
                                           ),
                                           Row(
                                             mainAxisAlignment:
@@ -220,8 +221,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                                   },
                                                   child: const Text(
                                                       'Use Current Location')),
-                                              const SizedBox(
-                                                width: 20,
+                                              SizedBox(
+                                                width: normalizedWidth(context, 20),
                                               ),
                                               ElevatedButton(
                                                   onPressed: () {
@@ -260,11 +261,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   )
                 ]),
               ),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
+               Padding(
+                padding: EdgeInsets.symmetric(vertical: normalizedHeight(context, 8)!,horizontal: normalizedWidth(context, 8)!),
                 child: Text(
                   'Payment Method',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: normalizedWidth(context, 16), fontWeight: FontWeight.bold),
                 ),
               ),
               Card(
@@ -274,7 +275,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 elevation: 5,
                 child: Row(children: [
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.symmetric(vertical: normalizedHeight(context, 8)!,horizontal: normalizedWidth(context, 8)!),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: Image.asset(
@@ -282,22 +283,22 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
                         'assets/images/Mastercard-Logo.png',
                         fit: BoxFit.fitWidth,
-                        height: 90,
-                        width: 90,
+                        height: normalizedHeight(context, 90),
+                        width: normalizedWidth(context, 90),
                       ),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.symmetric(vertical: normalizedHeight(context, 8)!,horizontal: normalizedWidth(context, 8)!),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
+                      children:  [
                         Text(
                           'MasterCard',
                           style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
+                              fontSize:normalizedWidth(context, 16), fontWeight: FontWeight.bold),
                         ),
-                        Text(
+                        const Text(
                           '**** **** **** 7852',
                           overflow: TextOverflow.ellipsis,
                           maxLines: 3,
@@ -323,12 +324,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Padding(
-                                    padding: EdgeInsets.fromLTRB(30, 8, 0, 8),
+                                   Padding(
+                                    padding: EdgeInsets.fromLTRB(normalizedWidth(context, 30)!, normalizedHeight(context, 8)!, 0, normalizedHeight(context, 8)!),
                                     child: Text(
                                       'Choose Your Payment Methord',
                                       style: TextStyle(
-                                          fontSize: 20,
+                                          fontSize: normalizedWidth(context, 20),
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ),
@@ -386,37 +387,37 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       },
                     ),
                   ),
-                  const SizedBox(
-                    width: 20,
+                  SizedBox(
+                    width: normalizedWidth(context, 20),
                   ),
                 ]),
               ),
               const Expanded(child: SizedBox()),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children: [
                   Text(
                     'Subtotal',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: normalizedWidth(context, 16),
                     ),
                   ),
                   Text(
                     'Rs. 1500',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: normalizedWidth(context, 16), fontWeight: FontWeight.bold),
                   )
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children:  [
                   Text(
                     'Shipping',
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: normalizedWidth(context, 16),),
                   ),
                   Text(
                     'Rs. 99',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: normalizedWidth(context, 16), fontWeight: FontWeight.bold),
                   )
                 ],
               ),
@@ -429,22 +430,22 @@ class _PaymentScreenState extends State<PaymentScreen> {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children: [
                   Text(
                     'Total',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: normalizedWidth(context, 16), fontWeight: FontWeight.bold),
                   ),
                   Text(
                     'Rs. 1599',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: normalizedWidth(context, 16), fontWeight: FontWeight.bold),
                   )
                 ],
               ),
-              const SizedBox(
-                height: 20,
+               SizedBox(
+                height: normalizedHeight(context, 20),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(20.0, 0, 20, 0),
+                padding: EdgeInsets.fromLTRB(normalizedWidth(context, 20)!, 0, normalizedWidth(context, 20)!, 0),
                 child: ElevatedButton(
                     style: ButtonStyle(
                         elevation: MaterialStateProperty.all(10),
@@ -473,8 +474,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                         labelText: 'Enter Coupon Code'),
                                   ),
 
-                                  const SizedBox(
-                                    height: 10,
+                                 SizedBox(
+                                    height: normalizedHeight(context, 10),
                                   ),
                                   Row(
                                     mainAxisAlignment:
@@ -502,23 +503,23 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             );
                           });
                     },
-                    child: const Center(
+                    child:  Center(
                       child: Padding(
-                        padding: EdgeInsets.fromLTRB(0, 18, 0, 18),
+                        padding: EdgeInsets.fromLTRB(0, normalizedHeight(context, 18)!, 0, normalizedHeight(context, 18)!),
                         child: Text(
                           'Apply Coupons',
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: normalizedWidth(context, 20),
                           ),
                         ),
                       ),
                     )),
               ),
-              const SizedBox(
-                height: 10,
+              SizedBox(
+                height: normalizedHeight(context, 10),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                padding: EdgeInsets.fromLTRB(normalizedWidth(context, 20)!, 0, normalizedWidth(context, 20)!, 0),
                 child: ElevatedButton(
                     style: ButtonStyle(
                         elevation: MaterialStateProperty.all(10),
@@ -533,13 +534,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           MaterialPageRoute(
                               builder: (context) => const OrderDetailScreen()));
                     },
-                    child: const Center(
+                    child:  Center(
                       child: Padding(
-                        padding: EdgeInsets.fromLTRB(80, 18, 80, 18),
+                        padding: EdgeInsets.fromLTRB(normalizedWidth(context, 80)!, normalizedHeight(context, 18)!, normalizedWidth(context, 80)!, normalizedHeight(context, 18)!,),
                         child: Text(
                           'Place Order',
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: normalizedWidth(context, 20),
                           ),
                         ),
                       ),

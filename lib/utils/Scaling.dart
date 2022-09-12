@@ -16,7 +16,6 @@ double? normalizedHeight(BuildContext context,size){
 }
 
 double? normalizedWidth(BuildContext context,size){
-  // print((deviceWidth(context)));
   return ((deviceWidth(context)/guidedWidth)*size);
 
 }
