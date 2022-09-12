@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../widgets/product_card.dart';
 import '../constants/api_service.dart';
 import '../model/product_model.dart';
-
+import 'package:e_commerce_app/utils/Scaling.dart';
 class ProductPage extends StatefulWidget {
   const ProductPage({Key? key}) : super(key: key);
 
@@ -46,7 +46,7 @@ class _ProductPageState extends State<ProductPage>
                       ], begin: Alignment.topLeft, end: Alignment.topRight),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(8, 16, 8, 0),
+                      padding: EdgeInsets.fromLTRB(normalizedWidth(context, 8)!, normalizedHeight(context, 16)!, normalizedWidth(context, 8)!, 0),
                       child: Column(
                         children: [
                           Row(
@@ -60,10 +60,10 @@ class _ProductPageState extends State<ProductPage>
                                 },
                                 icon: const Icon(Icons.arrow_back_ios_rounded),
                               ),
-                              const Text(
+                               Text(
                                 "All Products",
                                 style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 22),
+                                    fontWeight: FontWeight.bold, fontSize: normalizedWidth(context, 22)),
                               ),
                               Badge(
                                 padding: const EdgeInsets.all(5),
@@ -84,8 +84,8 @@ class _ProductPageState extends State<ProductPage>
                               ),
                             ],
                           ),
-                          const SizedBox(
-                            height: 20,
+                          SizedBox(
+                            height: normalizedHeight(context, 20),
                           ),
                           Expanded(
                             child: productCard(
@@ -94,6 +94,7 @@ class _ProductPageState extends State<ProductPage>
                                 setState(() {
                                   _productModel![index].favourite();
                                 });
+                                return null;
                               },parentContext: context,
                             ),
                           )

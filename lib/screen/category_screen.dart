@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import '../widgets/product_card.dart';
 import '../constants/api_service.dart';
 import '../model/product_model.dart';
+import 'package:e_commerce_app/utils/Scaling.dart';
+
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({Key? key, required this.category}) : super(key: key);
@@ -14,8 +16,6 @@ class CategoryScreen extends StatefulWidget {
 
 class _CategoryScreenState extends State<CategoryScreen> {
   late List<ProductModel>? _productModel = [];
-  // var category;
-  // _CategoryScreenState(this.category);
   @override
   void initState() {
     super.initState();
@@ -44,7 +44,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       ], begin: Alignment.topLeft, end: Alignment.topRight),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(8, 16, 8, 0),
+                      padding: EdgeInsets.fromLTRB(normalizedWidth(context, 8)!, normalizedHeight(context, 16)!, normalizedWidth(context, 8)!, 0),
                       child: Column(
                         children: [
                           Row(
@@ -60,11 +60,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               ),
                               Text(
                                 widget.category.toString().toUpperCase(),
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 22),
+                                style:  TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: normalizedWidth(context, 22)!),
                               ),
                               Badge(
-                                padding: const EdgeInsets.all(5),
+                                padding: EdgeInsets.fromLTRB(normalizedWidth(context, 8)!, normalizedHeight(context, 16)!, normalizedWidth(context, 8)!, normalizedHeight(context, 16)!),
                                 position: BadgePosition.center(),
                                 // stackFit: ,
                                 child: IconButton(
@@ -81,8 +81,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               ),
                             ],
                           ),
-                          const SizedBox(
-                            height: 20,
+                          SizedBox(
+                            height: normalizedHeight(context, 20),
                           ),
                           Expanded(
                             child: productCard(
@@ -91,6 +91,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 setState(() {
                                   _productModel![index].favourite();
                                 });
+                                return null;
                               },parentContext: context,
                             ),
                           )

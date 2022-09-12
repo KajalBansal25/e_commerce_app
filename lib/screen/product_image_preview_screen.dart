@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:e_commerce_app/utils/Scaling.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 
 class ProductImagePreviewScreen extends StatefulWidget {
   const ProductImagePreviewScreen({Key? key}) : super(key: key);
@@ -33,7 +35,7 @@ class _ProductImagePreviewScreenState extends State<ProductImagePreviewScreen> {
           _controller.jumpToPage(currentIndex);
         },
         child: Container(
-          margin: const EdgeInsets.all(3),
+          margin: EdgeInsets.symmetric(vertical: normalizedHeight(context, 3)!,horizontal: normalizedWidth(context, 3)!),
           width: MediaQuery.of(context).size.width * 0.16,
           height: MediaQuery.of(context).size.height * 0.1,
           decoration: BoxDecoration(
@@ -42,7 +44,7 @@ class _ProductImagePreviewScreenState extends State<ProductImagePreviewScreen> {
               fit: BoxFit.fitHeight,
             ),
             border: Border.all(
-                width: 2,
+                width: normalizedWidth(context, 2)!,
                 color: currentIndex == index ? Colors.blue : Colors.grey),
           ),
         ),

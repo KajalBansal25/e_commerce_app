@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils/Scaling.dart';
 import '../widgets/product_card.dart';
 import '../constants/api_service.dart';
 import '../model/product_model.dart';
@@ -29,12 +30,10 @@ class _FavouritePageState extends State<FavouritePage>
   Widget build(BuildContext context) {
     super.build(context);
     return MaterialApp(
-      title: "Shop App",
       home: SafeArea(
         top: true,
         child: Scaffold(
-            // backgroundColor: Color.fromARGB(255, 218, 218, 218),
-            body: _productModel == null || _productModel!.isEmpty
+                       body: _productModel == null || _productModel!.isEmpty
                 ? const Center(child: CircularProgressIndicator())
                 : Container(
                     decoration: const BoxDecoration(
@@ -44,20 +43,20 @@ class _FavouritePageState extends State<FavouritePage>
                       ], begin: Alignment.topLeft, end: Alignment.topRight),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(8, 16, 8, 0),
+                      padding: EdgeInsets.fromLTRB(normalizedWidth(context, 8)!, normalizedHeight(context, 16)!, normalizedWidth(context, 8)!, 0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Padding(
-                            padding: EdgeInsets.all(8.0),
+                           Padding(
+                            padding: EdgeInsets.fromLTRB(normalizedWidth(context, 8)!, normalizedHeight(context, 8)!, normalizedWidth(context, 8)!, normalizedWidth(context, 8)!),
                             child: Text(
                               "Your Favourites",
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 22),
+                                  fontWeight: FontWeight.bold, fontSize: normalizedWidth(context, 22)),
                             ),
                           ),
-                          const SizedBox(
-                            height: 20,
+                          SizedBox(
+                            height: normalizedHeight(context, 20),
                           ),
                           Expanded(
                             child: productCard(
@@ -66,6 +65,7 @@ class _FavouritePageState extends State<FavouritePage>
                                 setState(() {
                                   _productModel![index].favourite();
                                 });
+                                return null;
                               },
                               parentContext: context,
                             ),
