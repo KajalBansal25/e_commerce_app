@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/utils/Scaling.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -59,28 +60,35 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
           key: _formUpdateKey,
           autovalidateMode: _autovalidateMode,
           child: Padding(
-            padding: const EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0),
+            padding: EdgeInsets.only(
+                top: normalizedHeight(context, 10)!,
+                left: normalizedWidth(context, 20)!,
+                right: normalizedWidth(context, 20)!),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(
-                  height: 30.0,
+                SizedBox(
+                  height: normalizedHeight(context, 30),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                  padding: EdgeInsets.symmetric(
+                      vertical: normalizedHeight(context, 8)!),
                   child: TextFormField(
                     controller: firstNameUpdate,
                     textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(
-                      label: Text('First Name'),
-                      contentPadding: EdgeInsets.all(15.0),
+                    decoration: InputDecoration(
+                      label: const Text('First Name'),
+                      contentPadding: EdgeInsets.symmetric(
+                          horizontal: normalizedWidth(context, 15)!,
+                          vertical: normalizedHeight(context, 15)!),
                       border: OutlineInputBorder(
-                          gapPadding: 1.0,
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                          gapPadding: normalizedHeight(context, 1)!,
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(normalizedWidth(context, 10)!)),
                           borderSide: BorderSide(
                               color: Colors.black,
                               style: BorderStyle.solid,
-                              width: 2.0)),
+                              width: normalizedWidth(context, 2)!)),
                     ),
                     validator: (value) {
                       if ((value == null || value.isEmpty)) {
@@ -93,20 +101,24 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                  padding: EdgeInsets.symmetric(
+                      vertical: normalizedHeight(context, 8)!),
                   child: TextFormField(
                     controller: lastNameUpdate,
                     textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(
-                      label: Text('Last Name'),
-                      contentPadding: EdgeInsets.all(15.0),
+                    decoration: InputDecoration(
+                      label: const Text('Last Name'),
+                      contentPadding: EdgeInsets.symmetric(
+                          horizontal: normalizedWidth(context, 15)!,
+                          vertical: normalizedHeight(context, 15)!),
                       border: OutlineInputBorder(
-                        gapPadding: 1.0,
-                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        gapPadding: normalizedHeight(context, 1)!,
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(normalizedWidth(context, 10)!)),
                         borderSide: BorderSide(
                             color: Colors.black,
                             style: BorderStyle.solid,
-                            width: 2.0),
+                            width: normalizedWidth(context, 2)!),
                       ),
                     ),
                     validator: (value) {
@@ -120,21 +132,25 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                  padding: EdgeInsets.symmetric(
+                      vertical: normalizedHeight(context, 8)!),
                   child: TextFormField(
                     controller: emailUpdate,
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(
-                      label: Text('Email'),
-                      contentPadding: EdgeInsets.all(15.0),
+                    decoration: InputDecoration(
+                      label: const Text('Email'),
+                      contentPadding: EdgeInsets.symmetric(
+                          horizontal: normalizedWidth(context, 15)!,
+                          vertical: normalizedHeight(context, 15)!),
                       border: OutlineInputBorder(
-                          gapPadding: 1.0,
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                          gapPadding: normalizedHeight(context, 1)!,
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(normalizedWidth(context, 10)!)),
                           borderSide: BorderSide(
                               color: Colors.black,
                               style: BorderStyle.solid,
-                              width: 2.0)),
+                              width: normalizedWidth(context, 2)!)),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -150,20 +166,23 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                  padding: EdgeInsets.symmetric(
+                      vertical: normalizedHeight(context, 8)!),
                   child: TextFormField(
                     controller: phoneNoUpdate,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      label: Text('Mobile No'),
-                      contentPadding: EdgeInsets.all(15.0),
+                    decoration: InputDecoration(
+                      label: const Text('Mobile No'),
+                      contentPadding: EdgeInsets.symmetric(
+                          horizontal: normalizedWidth(context, 15)!,
+                          vertical: normalizedHeight(context, 15)!),
                       border: OutlineInputBorder(
-                        gapPadding: 1.0,
-                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        gapPadding: normalizedHeight(context, 1)!,
+                        borderRadius: BorderRadius.all(Radius.circular(normalizedWidth(context, 10)!)),
                         borderSide: BorderSide(
                             color: Colors.black,
                             style: BorderStyle.solid,
-                            width: 2.0),
+                            width: normalizedWidth(context, 2)!),
                       ),
                     ),
                     validator: (value) {
@@ -177,7 +196,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  padding:  EdgeInsets.symmetric(vertical: normalizedHeight(context, 16)!),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
