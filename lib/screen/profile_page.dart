@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:e_commerce_app/utils/Scaling.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
@@ -55,12 +56,12 @@ class _ProfilePageState extends State<ProfilePage> {
 
     try {
       List<Placemark> placemarks =
-      await placemarkFromCoordinates(position.latitude, position.longitude);
+          await placemarkFromCoordinates(position.latitude, position.longitude);
       Placemark place = placemarks[0];
       setState(() {
         currentPosition = position;
         currentAddress =
-        '${place.locality},${place.postalCode},${place.country}';
+            '${place.locality},${place.postalCode},${place.country}';
         house = place.name!;
         city = place.locality!;
         country = place.country!;
@@ -73,7 +74,6 @@ class _ProfilePageState extends State<ProfilePage> {
     }
     return null;
   }
-
 
   String apiLink = 'https://fakestoreapi.com/users/1';
   bool circular = true;
@@ -115,23 +115,23 @@ class _ProfilePageState extends State<ProfilePage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              const SizedBox(
-                                height: 50,
+                              SizedBox(
+                                height: normalizedHeight(context, 50),
                               ),
-                              const Icon(
+                              Icon(
                                 Icons.account_circle,
-                                size: 80,
+                                size: normalizedWidth(context, 80),
                                 color: Colors.white,
                               ),
-                              const SizedBox(
-                                height: 10,
+                              SizedBox(
+                                height: normalizedHeight(context, 10),
                               ),
                               Center(
                                 child: Text(
                                   '${_userDataModal?.name?.firstname?.toUpperCase()} ${_userDataModal?.name?.lastname?.toUpperCase()}',
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 20,
+                                      fontSize: normalizedWidth(context, 20),
                                       fontStyle: FontStyle.italic,
                                       fontWeight: FontWeight.w500),
                                 ),
@@ -146,8 +146,10 @@ class _ProfilePageState extends State<ProfilePage> {
                           color: Colors.black87,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: const [
-                              SizedBox(),
+                            children: [
+                              SizedBox(
+                                height: normalizedHeight(context, 0),
+                              ),
                             ],
                           ),
                         ),
@@ -155,25 +157,29 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                   ),
                   SizedBox(
-                    height: 490,
+                    height: normalizedHeight(context, 470),
                     child: Card(
                       elevation: 10,
                       color: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      margin: const EdgeInsets.all(10),
+                      margin: EdgeInsets.symmetric(
+                          horizontal: normalizedWidth(context, 12)!,
+                          vertical: normalizedHeight(context, 12)!),
                       child: SingleChildScrollView(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            const Padding(
-                              padding: EdgeInsets.all(18.0),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: normalizedWidth(context, 18)!,
+                                  vertical: normalizedHeight(context, 18)!),
                               child: Text(
                                 'Profile',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 22,
+                                  fontSize: normalizedWidth(context, 21),
                                 ),
                               ),
                             ),
@@ -186,11 +192,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                 '${_userDataModal?.phone}',
                               ),
                             ),
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 20.0),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: normalizedHeight(context, 20)!),
                               child: Divider(
-                                height: 1,
-                                thickness: 1,
+                                height: normalizedHeight(context, 1),
+                                thickness: normalizedWidth(context, 1),
                                 color: Colors.grey,
                               ),
                             ),
@@ -201,11 +208,12 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                               title: Text('${_userDataModal?.email}'),
                             ),
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 20.0),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: normalizedHeight(context, 20)!),
                               child: Divider(
-                                height: 5,
-                                thickness: 1,
+                                height: normalizedHeight(context, 5),
+                                thickness: normalizedWidth(context, 1),
                                 color: Colors.grey,
                               ),
                             ),
@@ -216,111 +224,149 @@ class _ProfilePageState extends State<ProfilePage> {
                                 Icons.location_on_outlined,
                                 color: Colors.deepPurple,
                               ),
-                              title: const Text(
+                              title: Text(
                                 'Address',
                                 style: TextStyle(
-                                  fontSize: 16.0,
+                                  fontSize: normalizedWidth(context, 15),
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
                               children: [
                                 ListTile(
-                                  title: Text(
-                                    '${_userDataModal?.address?.number} '
-                                    '${_userDataModal?.address?.street?.toUpperCase()} '
-                                    '${_userDataModal?.address?.city?.toUpperCase()} \n'
-                                    '${_userDataModal?.address?.zipcode?.toUpperCase()} ',
-                                  ),
+                                  title: Wrap(children: [
+                                    Text(
+                                      '${_userDataModal?.address?.number} '
+                                      '${_userDataModal?.address?.street?.toUpperCase()} '
+                                      '${_userDataModal?.address?.city?.toUpperCase()} '
+                                      '${_userDataModal?.address?.zipcode?.toUpperCase()} ',
+                                    ),
+                                  ]),
                                   trailing: TextButton(
                                       style: ButtonStyle(
-                                          padding:
-                                          MaterialStateProperty.all(EdgeInsets.zero)),
+                                          padding: MaterialStateProperty.all(
+                                              EdgeInsets.zero)),
                                       onPressed: () {
                                         showModalBottomSheet(
                                             isScrollControlled: true,
                                             context: context,
                                             builder: (BuildContext context) {
                                               return SingleChildScrollView(
-                                                padding:
-                                                MediaQuery.of(context).viewInsets,
+                                                padding: MediaQuery.of(context)
+                                                    .viewInsets,
                                                 child: Padding(
-                                                  padding: const EdgeInsets.all(10.0),
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal:
+                                                          normalizedWidth(
+                                                              context, 10)!,
+                                                      vertical:
+                                                          normalizedHeight(
+                                                              context, 10)!),
                                                   child: Column(
                                                     crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
+                                                        CrossAxisAlignment.end,
                                                     children: [
                                                       TextFormField(
-                                                        controller: houseTextField,
+                                                        controller:
+                                                            houseTextField,
                                                         textInputAction:
-                                                        TextInputAction.next,
-                                                        decoration: const InputDecoration(
-                                                            labelText: 'House No.'),
+                                                            TextInputAction
+                                                                .next,
+                                                        decoration:
+                                                            const InputDecoration(
+                                                                labelText:
+                                                                    'House No.'),
                                                       ),
                                                       TextFormField(
-                                                        controller: floorTextField,
+                                                        controller:
+                                                            floorTextField,
                                                         textInputAction:
-                                                        TextInputAction.next,
-                                                        decoration: const InputDecoration(
-                                                            labelText: 'Floor (Optional)'),
+                                                            TextInputAction
+                                                                .next,
+                                                        decoration:
+                                                            const InputDecoration(
+                                                                labelText:
+                                                                    'Floor (Optional)'),
                                                       ),
                                                       TextFormField(
-                                                        controller: cityTextField,
+                                                        controller:
+                                                            cityTextField,
                                                         textInputAction:
-                                                        TextInputAction.next,
-                                                        decoration: const InputDecoration(
-                                                            labelText: 'City'),
+                                                            TextInputAction
+                                                                .next,
+                                                        decoration:
+                                                            const InputDecoration(
+                                                                labelText:
+                                                                    'City'),
                                                       ),
                                                       TextFormField(
-                                                        controller: countryTextField,
+                                                        controller:
+                                                            countryTextField,
                                                         textInputAction:
-                                                        TextInputAction.done,
-                                                        decoration: const InputDecoration(
-                                                            labelText: 'Country'),
+                                                            TextInputAction
+                                                                .done,
+                                                        decoration:
+                                                            const InputDecoration(
+                                                                labelText:
+                                                                    'Country'),
                                                       ),
                                                       const SizedBox(
                                                         height: 10,
                                                       ),
                                                       Row(
                                                         mainAxisAlignment:
-                                                        MainAxisAlignment.end,
+                                                            MainAxisAlignment
+                                                                .end,
                                                         children: [
                                                           TextButton(
                                                               style: ButtonStyle(
-                                                                  padding:
-                                                                  MaterialStateProperty
-                                                                      .all(EdgeInsets
-                                                                      .zero)),
+                                                                  padding: MaterialStateProperty.all(
+                                                                      EdgeInsets
+                                                                          .zero)),
                                                               onPressed: () {
                                                                 _determinePosition();
-                                                                Navigator.pop(context);
+                                                                Navigator.pop(
+                                                                    context);
                                                               },
                                                               child: const Text(
                                                                   'Use Current Location')),
-                                                          const SizedBox(
-                                                            width: 20,
+                                                          SizedBox(
+                                                            width:
+                                                                normalizedWidth(
+                                                                    context,
+                                                                    20),
                                                           ),
                                                           ElevatedButton(
                                                               onPressed: () {
                                                                 setState(() {
                                                                   house =
-                                                                      houseTextField.text;
+                                                                      houseTextField
+                                                                          .text;
                                                                   floor =
-                                                                      floorTextField.text;
-                                                                  city = cityTextField.text;
+                                                                      floorTextField
+                                                                          .text;
+                                                                  city =
+                                                                      cityTextField
+                                                                          .text;
                                                                   country =
-                                                                      countryTextField.text;
-                                                                  countryTextField.clear();
-                                                                  houseTextField.clear();
-                                                                  floorTextField.clear();
-                                                                  cityTextField.clear();
+                                                                      countryTextField
+                                                                          .text;
+                                                                  countryTextField
+                                                                      .clear();
+                                                                  houseTextField
+                                                                      .clear();
+                                                                  floorTextField
+                                                                      .clear();
+                                                                  cityTextField
+                                                                      .clear();
                                                                 });
-                                                                Navigator.pop(context);
+                                                                Navigator.pop(
+                                                                    context);
                                                               },
                                                               style: ButtonStyle(
                                                                   backgroundColor:
-                                                                  MaterialStateProperty
-                                                                      .all(Colors
-                                                                      .black)),
+                                                                      MaterialStateProperty.all(
+                                                                          Colors
+                                                                              .black)),
                                                               child: const Text(
                                                                   'Save Address')),
                                                         ],
@@ -335,21 +381,22 @@ class _ProfilePageState extends State<ProfilePage> {
                                 )
                               ],
                             ),
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 20.0),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: normalizedHeight(context, 20)!),
                               child: Divider(
-                                height: 7,
-                                thickness: 1,
+                                height: normalizedHeight(context, 7),
+                                thickness: normalizedWidth(context, 1),
                                 color: Colors.grey,
                               ),
                             ),
-                             ListTile(
+                            ListTile(
                               onTap: () {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                    const OrderDetailScreen(),
+                                        const OrderDetailScreen(),
                                   ),
                                 );
                               },
@@ -358,23 +405,25 @@ class _ProfilePageState extends State<ProfilePage> {
                                 color: Colors.deepPurple,
                               ),
                               title: const Text('My Orders'),
-                              trailing: const Icon(
+                              trailing: Icon(
                                 Icons.arrow_forward_ios_sharp,
                                 color: Colors.deepPurple,
-                                size: 20,
+                                size: normalizedWidth(context, 15),
                               ),
                             ),
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 20.0),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: normalizedHeight(context, 20)!),
                               child: Divider(
-                                height: 1,
-                                thickness: 1,
+                                height: normalizedHeight(context, 1),
+                                thickness: normalizedWidth(context, 1),
                                 color: Colors.grey,
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10.0, vertical: 15),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: normalizedWidth(context, 10)!,
+                                  vertical: normalizedHeight(context, 15)!),
                               child: ElevatedButton(
                                 style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(
@@ -403,7 +452,9 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(10.0),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: normalizedWidth(context, 10)!,
+                                  vertical: normalizedHeight(context, 10)!),
                               child: ElevatedButton(
                                 style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(
