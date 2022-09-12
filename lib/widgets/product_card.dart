@@ -2,18 +2,20 @@
 import 'package:flutter/material.dart';
 import '../model/product_model.dart';
 import '../screen/details_of_product_page.dart';
+import '../utils/Scaling.dart';
 
 Widget productCard(
     {required List<ProductModel>? productModel,
     required VoidCallback? Function(int index) onFavButtonClick,
     BuildContext? parentContext}) {
+  print("fontsize>>>>"+normalizedHeight(parentContext!, 10).toString());
   return GridView.builder(
     itemCount: productModel?.length,
     itemBuilder: (context, index) {
       return GestureDetector(
         onTap: () {
           Navigator.push(
-              parentContext!,
+              parentContext,
               MaterialPageRoute(
                   builder: (parentContext) => CustomDetailPage(
                         prodId: productModel![index].id.toString(),
@@ -21,93 +23,95 @@ Widget productCard(
         },
         child: Card(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
+            borderRadius: BorderRadius.circular(normalizedWidth(context, 15)!),
           ),
           // color: Colors.grey,
           elevation: 5,
           child: Column(
-            children: [
-              Stack(
                 children: [
-                  SizedBox(
-                    height: 230,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Image.network(
-                              fit: BoxFit.contain,
-                              height: 180,
-                              '${productModel![index].image}'),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      productModel[index].isFavourite == false
-                          ? IconButton(
-                              icon: const Icon(Icons.favorite_outline,
-                                  color: Color.fromARGB(255, 255, 17, 0)),
-                              onPressed: () => onFavButtonClick(index))
-                          : IconButton(
-                              icon: const Icon(Icons.favorite,
-                                  color: Color.fromARGB(255, 255, 17, 0)),
-                              onPressed: () => onFavButtonClick(index))
+                      Stack(
+                        children: [Padding(
+                          padding: EdgeInsets.symmetric(vertical: normalizedHeight(context, 5)!,horizontal: normalizedWidth(context, 16)!),
+                          child: Center(
+                            child: Image.network(
+                                fit: BoxFit.scaleDown,
+                                height: normalizedHeight(context, 180),
+                                '${productModel![index].image}'),
+                          ),
+                        ),Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            productModel[index].isFavourite == false
+                                ? IconButton(
+                                icon: const Icon(Icons.favorite_outline,
+                                    color: Color.fromARGB(255, 255, 17, 0)),
+                                onPressed: () => onFavButtonClick(index))
+                                : IconButton(
+                                icon: const Icon(Icons.favorite,
+                                    color: Color.fromARGB(255, 255, 17, 0)),
+                                onPressed: () => onFavButtonClick(index))
+                          ],
+                        ),
+                      ]),
                     ],
                   ),
-                ],
-              ),
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "${productModel[index].title}",
-                      softWrap: true,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 118, 111, 111),
+                 Expanded(child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: normalizedWidth(context, 8)!,vertical: normalizedHeight(context, 8)!),
+                      child: Text(
+                        "${productModel[index].title}",
+                        softWrap: true,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style:  TextStyle(
+                          fontSize: normalizedHeight(context, 16)!,
+                          fontWeight: FontWeight.bold,
+                          color:  const Color.fromARGB(255, 118, 111, 111),
+                        ),
                       ),
                     ),
-                  ),
-                  Text(
-                    "\$ ${productModel[index].price}",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                    Text(
+                      "\$ ${productModel[index].price}",
+                      style: TextStyle(
+                        fontSize: normalizedHeight(context, 16)!,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
+                  ],)),
+                  Padding(
+                    padding:  EdgeInsets.symmetric(horizontal: normalizedWidth(context, 8)!),
+                    child: ElevatedButton(
+                        style: ButtonStyle(
+                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(normalizedWidth(context, 25)!),
+                              ),
+                            ),
+                            // padding: MaterialStateProperty.all(EdgeInsets.fromLTRB(normalizedWidth(parentContext, 0)!, 0, normalizedWidth(parentContext, 0)!, 0),
+                            // ),
+                            backgroundColor: MaterialStateProperty.all(
+                                const Color.fromARGB(255, 156, 155, 155))),
+                        onPressed: () {},
+                        child:  const Center(child: Text("Add to Cart"))),
                   )
                 ],
               ),
-              ElevatedButton(
-                  style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      padding: MaterialStateProperty.all(
-                        const EdgeInsets.fromLTRB(40, 0, 40, 0),
-                      ),
-                      backgroundColor: MaterialStateProperty.all(
-                          const Color.fromARGB(255, 156, 155, 155))),
-                  onPressed: () {},
-                  child: const Text("Add to Cart"))
-            ],
-          ),
         ),
       );
     },
-    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: 200,
-        mainAxisExtent: 350,
-        childAspectRatio: 2 / 3,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10),
+    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: normalizedWidth(parentContext, 200)!,
+        // mainAxisExtent: normalizedHeight(parentContext,350)!,
+        mainAxisExtent: MediaQuery.of(parentContext).size.height *0.45,
+        // childAspectRatio: 0.55,
+        crossAxisSpacing: normalizedWidth(parentContext, 10)!,
+        mainAxisSpacing: normalizedHeight(parentContext, 20)!
+  ),
   );
 }

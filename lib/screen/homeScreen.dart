@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                'DLA',
+                'DLAasdadasd',
                 style: TextStyle(
                     fontSize: normalizedWidth(context, 30),
                     fontWeight: FontWeight.bold),
@@ -132,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               SizedBox(
-                height: normalizedHeight(context, 300),
+                height: normalizedHeight(context, 308),
                 width: double.infinity,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
@@ -157,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Image(
-                                fit: BoxFit.contain,
+                                fit: BoxFit.fitHeight,
                                 height: normalizedHeight(context, 200),
                                 width: normalizedWidth(context, 200),
                                 image: NetworkImage(categoryImages![index])),
@@ -169,9 +169,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               style: TextStyle(
                                   fontSize: normalizedWidth(context, 16)),
                             ),
-                            SizedBox(
-                              height: normalizedHeight(context, 10),
-                            ),
+                            // SizedBox(
+                            //   height: normalizedHeight(context, 10),
+                            // ),
                             // Text('Rs. ${product.price}'),
                           ],
                         ),
