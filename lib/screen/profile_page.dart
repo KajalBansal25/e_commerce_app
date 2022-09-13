@@ -160,7 +160,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     height: normalizedHeight(context, 470),
                     child: Card(
                       elevation: 10,
-                      color: Colors.white,
+                      // color: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),

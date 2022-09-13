@@ -30,8 +30,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: SafeArea(
+    return SafeArea(
         top: true,
         child: Scaffold(
             body: _productModel == null || _productModel!.isEmpty
@@ -99,7 +98,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       ),
                     ),
                   )),
-      ),
-    );
+      );
   }
 }
