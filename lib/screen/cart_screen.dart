@@ -198,7 +198,7 @@ class _CartScreenState extends State<CartScreen>
                                 builder: (context) => const PaymentScreen()));
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.redAccent,
+
                         padding: const EdgeInsets.symmetric(
                             horizontal: 140.0, vertical: 15.0),
                         shape: RoundedRectangleBorder(

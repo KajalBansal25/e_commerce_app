@@ -52,7 +52,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
       appBar: AppBar(
         title: const Text('Profile Update'),
         centerTitle: true,
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Colors.redAccent,
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -182,9 +182,6 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.deepPurple)),
                         onPressed: () {
                           if (_formUpdateKey.currentState!.validate()) {
                             updatedProfileData = send();

@@ -93,17 +93,13 @@ Widget productCard(
                     horizontal: normalizedWidth(context, 8)!),
                 child: ElevatedButton(
                     style: ButtonStyle(
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                                normalizedWidth(context, 25)!),
-                          ),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                              normalizedWidth(context, 25)!),
                         ),
-                        // padding: MaterialStateProperty.all(EdgeInsets.fromLTRB(normalizedWidth(parentContext, 0)!, 0, normalizedWidth(parentContext, 0)!, 0),
-                        // ),
-                        backgroundColor: MaterialStateProperty.all(
-                            const Color.fromARGB(255, 255, 0, 0))),
+                      ),
+                    ),
                     onPressed: () {},
                     child: const Center(child: Text("Add to Cart"))),
               )

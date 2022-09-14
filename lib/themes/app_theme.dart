@@ -1,28 +1,31 @@
 import 'package:flutter/material.dart';
 
-CustomColors objCustomColors = CustomColors();
-
 class CustomTheme {
   static ThemeData get lightTheme {
-    //1
     return ThemeData(
-        primaryColor: Colors.red,
-        iconTheme: const IconThemeData(color: Colors.black),
-        textTheme: const TextTheme(
-          headline1: TextStyle(color: Colors.black),
-          headline2: TextStyle(color: Colors.black),
-          bodyText2: TextStyle(color: Colors.black),
-          subtitle1: TextStyle(color: Colors.black),
-          button: TextStyle(color: Colors.red),
+      primaryColor: Colors.white,
+      iconTheme: const IconThemeData(color: Colors.black),
+      textTheme: const TextTheme(
+        headline1: TextStyle(color: Colors.black),
+        headline2: TextStyle(color: Colors.black),
+        bodyText2: TextStyle(color: Colors.black),
+        subtitle1: TextStyle(color: Colors.black),
+        button: TextStyle(color: Colors.red),
+      ),
+      scaffoldBackgroundColor: Colors.white,
+      cardColor: Colors.white,
+      fontFamily: 'Roboto',
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.redAccent)),
+      ),
+      buttonTheme: ButtonThemeData(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(18.0),
         ),
-        scaffoldBackgroundColor: Colors.white,
-        cardColor: Colors.white,
-        fontFamily: 'Roboto',
-        buttonTheme: ButtonThemeData(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)),
-          buttonColor: objCustomColors.secondaryColor,
-        ),);
+        buttonColor: Colors.redAccent,
+      ),
+    );
   }
 
   static ThemeData get darkTheme {
@@ -30,6 +33,11 @@ class CustomTheme {
       iconTheme: const IconThemeData(
         color: Colors.white,
       ),
+      bottomAppBarColor: Colors.grey.shade900,
+      inputDecorationTheme: const InputDecorationTheme(
+          focusColor: Colors.white, labelStyle: TextStyle(color: Colors.white)),
+      bottomSheetTheme:
+          BottomSheetThemeData(backgroundColor: Colors.grey.shade900),
       textTheme: const TextTheme(
         headline1: TextStyle(color: Colors.white),
         headline2: TextStyle(color: Colors.white),
@@ -38,10 +46,15 @@ class CustomTheme {
         button: TextStyle(color: Colors.white),
       ),
       primaryColor: Colors.grey.shade600,
-      focusColor:Colors.black12,
+      focusColor: Colors.black12,
       scaffoldBackgroundColor: Colors.grey.shade900,
       cardColor: Colors.grey.shade800,
       fontFamily: 'Roboto',
+      unselectedWidgetColor: Colors.white,
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.redAccent)),
+      ),
       buttonTheme: ButtonThemeData(
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)),
@@ -49,10 +62,4 @@ class CustomTheme {
       ),
     );
   }
-}
-
-class CustomColors {
-  var primaryColor = Colors.purple;
-  var secondaryColor = Colors.purpleAccent;
-  var tertiaryColor = Colors.red.shade200;
 }

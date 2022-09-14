@@ -35,33 +35,31 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: CustomTheme.darkTheme , //   //CustomTheme.lightTheme
-      // theme: CustomTheme.lightTheme , //   //CustomTheme.lightTheme
+      darkTheme: CustomTheme.darkTheme , //   //CustomTheme.lightTheme
+      theme: CustomTheme.lightTheme , //   //CustomTheme.lightTheme
       home: Scaffold(
         body: IndexedStack(
           index: tabIndex,
           children: _pages,
         ),
-        bottomNavigationBar: Container(
-          child: BottomNavigationBar(
-            showUnselectedLabels: false,
-            // fixedColor: Colors.red,
-            unselectedItemColor: CustomTheme.darkTheme.primaryColor,
-            iconSize: 30,
-            selectedItemColor: Colors.redAccent,
-            elevation: 100,
-            currentIndex: tabIndex,
-            onTap: _onItemTapped,
-            items: const [
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.favorite), label: 'Favourites'),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.shopping_cart_outlined), label: 'Cart'),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.person), label: 'Profile'),
-            ],
-          ),
+        bottomNavigationBar: BottomNavigationBar(
+          showUnselectedLabels: false,
+          // backgroundColor:Colors.lightGreen,
+          unselectedItemColor: CustomTheme.darkTheme.primaryColor,
+          iconSize: 30,
+          selectedItemColor: Colors.redAccent,
+          elevation: 100,
+          currentIndex: tabIndex,
+          onTap: _onItemTapped,
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.favorite), label: 'Favourites'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.shopping_cart_outlined), label: 'Cart'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.person), label: 'Profile'),
+          ],
         ),
       ),
     );
