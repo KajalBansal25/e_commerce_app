@@ -30,10 +30,17 @@ class CustomTheme {
 
   static ThemeData get darkTheme {
     return ThemeData(
+      primaryColor: Colors.grey.shade500,
+      focusColor: Colors.black12,
+      scaffoldBackgroundColor: Colors.grey.shade900,
+      cardColor: Colors.grey.shade800,
+      fontFamily: 'Roboto',
+      unselectedWidgetColor: Colors.white,
+      canvasColor: Colors.grey.shade700,
       iconTheme: const IconThemeData(
         color: Colors.white,
       ),
-      bottomAppBarColor: Colors.grey.shade900,
+      // bottomAppBarColor: Colors.grey.shade900,
       inputDecorationTheme: const InputDecorationTheme(
           focusColor: Colors.white, labelStyle: TextStyle(color: Colors.white)),
       bottomSheetTheme:
@@ -45,12 +52,7 @@ class CustomTheme {
         subtitle1: TextStyle(color: Colors.white),
         button: TextStyle(color: Colors.white),
       ),
-      primaryColor: Colors.grey.shade600,
-      focusColor: Colors.black12,
-      scaffoldBackgroundColor: Colors.grey.shade900,
-      cardColor: Colors.grey.shade800,
-      fontFamily: 'Roboto',
-      unselectedWidgetColor: Colors.white,
+
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(Colors.redAccent)),
