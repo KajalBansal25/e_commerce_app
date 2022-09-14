@@ -29,52 +29,51 @@ class _FavouritePageState extends State<FavouritePage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return MaterialApp(
-      home: SafeArea(
-        top: true,
-        child: Scaffold(
-                       body: _productModel == null || _productModel!.isEmpty
-                ? const Center(child: CircularProgressIndicator())
-                : Container(
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(colors: [
-                        Color.fromARGB(255, 221, 221, 221),
-                        Color.fromARGB(255, 239, 239, 239),
-                      ], begin: Alignment.topLeft, end: Alignment.topRight),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(normalizedWidth(context, 8)!, normalizedHeight(context, 16)!, normalizedWidth(context, 8)!, 0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                           Padding(
-                            padding: EdgeInsets.fromLTRB(normalizedWidth(context, 8)!, normalizedHeight(context, 8)!, normalizedWidth(context, 8)!, normalizedWidth(context, 8)!),
-                            child: Text(
-                              "Your Favourites",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: normalizedWidth(context, 22)),
-                            ),
-                          ),
-                          SizedBox(
-                            height: normalizedHeight(context, 20),
-                          ),
-                          Expanded(
-                            child: productCard(
-                              productModel: _productModel,
-                              onFavButtonClick: (int index) {
-                                setState(() {
-                                  _productModel![index].favourite();
-                                });
-                                return null;
-                              },
-                              parentContext: context,
-                            ),
-                          )
-                        ],
+    return SafeArea(
+      top: true,
+      child: Scaffold(
+          body: _productModel == null || _productModel!.isEmpty
+              ? const Center(child: CircularProgressIndicator())
+              : Padding(
+                  padding: EdgeInsets.fromLTRB(
+                      normalizedWidth(context, 8)!,
+                      normalizedHeight(context, 16)!,
+                      normalizedWidth(context, 8)!,
+                      0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(
+                            normalizedWidth(context, 8)!,
+                            normalizedHeight(context, 8)!,
+                            normalizedWidth(context, 8)!,
+                            normalizedWidth(context, 8)!),
+                        child: Text(
+                          "Your Favourites",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: normalizedWidth(context, 22)),
+                        ),
                       ),
-                    ),
-                  )),
-      ),
+                      SizedBox(
+                        height: normalizedHeight(context, 20),
+                      ),
+                      Expanded(
+                        child: productCard(
+                          productModel: _productModel,
+                          onFavButtonClick: (int index) {
+                            setState(() {
+                              _productModel![index].favourite();
+                            });
+                            return null;
+                          },
+                          parentContext: context,
+                        ),
+                      )
+                    ],
+                  ),
+                )),
     );
   }
 

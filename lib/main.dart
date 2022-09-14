@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/screen/profile_page.dart';
+import 'package:e_commerce_app/themes/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/screen/cart_screen.dart';
 import 'package:e_commerce_app/screen/favourite_screen.dart';
@@ -29,37 +30,36 @@ class _MyAppState extends State<MyApp> {
     ProfilePage(),
   ];
 
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      darkTheme: CustomTheme.darkTheme , //   //CustomTheme.lightTheme
+      theme: CustomTheme.lightTheme , //   //CustomTheme.lightTheme
       home: Scaffold(
         body: IndexedStack(
           index: tabIndex,
           children: _pages,
         ),
-        bottomNavigationBar: Container(
-          color: Colors.amber,
-          child: BottomNavigationBar(
-            showUnselectedLabels: false,
-            // fixedColor: Colors.red,
-            unselectedItemColor: Colors.grey,
-            iconSize: 30,
-            backgroundColor: Colors.red,
-            selectedItemColor: Colors.black,
-            elevation: 100,
-            currentIndex: tabIndex,
-            onTap: _onItemTapped,
-            items: const [
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.favorite), label: 'Favourites'),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.shopping_cart_outlined), label: 'Cart'),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.person), label: 'Profile'),
-            ],
-          ),
+        bottomNavigationBar: BottomNavigationBar(
+          showUnselectedLabels: false,
+          // backgroundColor:Colors.lightGreen,
+          unselectedItemColor: CustomTheme.darkTheme.primaryColor,
+          iconSize: 30,
+          selectedItemColor: Colors.redAccent,
+          elevation: 100,
+          currentIndex: tabIndex,
+          onTap: _onItemTapped,
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.favorite), label: 'Favourites'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.shopping_cart_outlined), label: 'Cart'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.person), label: 'Profile'),
+          ],
         ),
       ),
     );

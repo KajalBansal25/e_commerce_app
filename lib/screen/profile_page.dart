@@ -111,7 +111,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       Expanded(
                         flex: 3,
                         child: ColoredBox(
-                          color: Colors.deepPurple,
+                          color: Colors.redAccent,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
@@ -160,7 +160,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     height: normalizedHeight(context, 470),
                     child: Card(
                       elevation: 10,
-                      color: Colors.white,
+                      // color: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -186,7 +186,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             ListTile(
                               leading: const Icon(
                                 Icons.phone,
-                                color: Colors.deepPurple,
+                                color: Colors.redAccent,
                               ),
                               title: Text(
                                 '${_userDataModal?.phone}',
@@ -204,7 +204,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             ListTile(
                               leading: const Icon(
                                 Icons.email_outlined,
-                                color: Colors.deepPurple,
+                                color: Colors.redAccent,
                               ),
                               title: Text('${_userDataModal?.email}'),
                             ),
@@ -218,11 +218,11 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                             ExpansionTile(
-                              iconColor: Colors.deepPurple,
-                              collapsedIconColor: Colors.deepPurple,
+                              iconColor: Colors.redAccent,
+                              collapsedIconColor: Colors.redAccent,
                               leading: const Icon(
                                 Icons.location_on_outlined,
-                                color: Colors.deepPurple,
+                                color: Colors.redAccent,
                               ),
                               title: Text(
                                 'Address',
@@ -362,11 +362,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                                                 Navigator.pop(
                                                                     context);
                                                               },
-                                                              style: ButtonStyle(
-                                                                  backgroundColor:
-                                                                      MaterialStateProperty.all(
-                                                                          Colors
-                                                                              .black)),
                                                               child: const Text(
                                                                   'Save Address')),
                                                         ],
@@ -402,12 +397,12 @@ class _ProfilePageState extends State<ProfilePage> {
                               },
                               leading: const Icon(
                                 Icons.shopping_bag_outlined,
-                                color: Colors.deepPurple,
+                                color: Colors.redAccent,
                               ),
                               title: const Text('My Orders'),
                               trailing: Icon(
                                 Icons.arrow_forward_ios_sharp,
-                                color: Colors.deepPurple,
+                                color: Colors.redAccent,
                                 size: normalizedWidth(context, 15),
                               ),
                             ),
@@ -426,8 +421,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                   vertical: normalizedHeight(context, 15)!),
                               child: ElevatedButton(
                                 style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                      Colors.deepPurple),
                                   elevation: MaterialStateProperty.all(0),
                                   shape: MaterialStateProperty.all<
                                       RoundedRectangleBorder>(
@@ -457,8 +450,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                   vertical: normalizedHeight(context, 10)!),
                               child: ElevatedButton(
                                 style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                      Colors.deepPurple),
                                   shape: MaterialStateProperty.all<
                                       RoundedRectangleBorder>(
                                     RoundedRectangleBorder(

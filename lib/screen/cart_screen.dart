@@ -108,8 +108,8 @@ class _CartScreenState extends State<CartScreen>
                                                       TextOverflow.ellipsis,
                                                   softWrap: false,
                                                   style: TextStyle(
-                                                      fontSize: 16,
-                                                      color: Colors.black),
+                                                    fontSize: 16,
+                                                  ),
                                                 ),
                                               ),
                                               SizedBox(
@@ -198,7 +198,7 @@ class _CartScreenState extends State<CartScreen>
                                 builder: (context) => const PaymentScreen()));
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.black,
+
                         padding: const EdgeInsets.symmetric(
                             horizontal: 140.0, vertical: 15.0),
                         shape: RoundedRectangleBorder(
