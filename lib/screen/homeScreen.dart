@@ -1,9 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:e_commerce_app/cubit/product_cubit.dart';
 import 'package:e_commerce_app/screen/category_screen.dart';
 import 'package:e_commerce_app/screen/product_page.dart';
 import 'package:e_commerce_app/utils/Scaling.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '/utils/Scaling.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -56,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                'DLAasdadasd',
+                'DLA',
                 style: TextStyle(
                     fontSize: normalizedWidth(context, 30),
                     fontWeight: FontWeight.bold),
@@ -82,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     aspectRatio: 1 / 1,
                     viewportFraction: 1,
                     enlargeCenterPage: true,
-                    autoPlay: true,
+                    autoPlay: false,
                     onPageChanged: (position, reason) {
                       if (kDebugMode) {
                         print(reason);
@@ -115,7 +117,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const ProductPage())),
+                              builder: (context) =>
+                                  BlocProvider<ProductCubit>.value(
+                                    value:
+                                        BlocProvider.of<ProductCubit>(context),
+                                    child: const ProductPage(),
+                                  ))),
                       child: Row(
                         children: [
                           Text(
@@ -169,10 +176,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               style: TextStyle(
                                   fontSize: normalizedWidth(context, 16)),
                             ),
-                            // SizedBox(
-                            //   height: normalizedHeight(context, 10),
-                            // ),
-                            // Text('Rs. ${product.price}'),
                           ],
                         ),
                       ),
@@ -191,7 +194,9 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> indicators(imagesLength, currentIndex) {
     return List<Widget>.generate(imagesLength, (index) {
       return Container(
-        margin:  EdgeInsets.symmetric(horizontal: normalizedWidth(context, 3)!,vertical: normalizedHeight(context, 3)!),
+        margin: EdgeInsets.symmetric(
+            horizontal: normalizedWidth(context, 3)!,
+            vertical: normalizedHeight(context, 3)!),
         width: normalizedWidth(context, 10),
         height: normalizedHeight(context, 30),
         decoration: BoxDecoration(

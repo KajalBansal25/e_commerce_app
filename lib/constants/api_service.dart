@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:http/http.dart' as http;
@@ -51,6 +52,17 @@ class ApiService {
       }
     } catch (e) {
       log(e.toString());
+    }
+    return null;
+  }
+
+  Future<Userdata?> getUserData() async {
+    var url = Uri.parse('https://fakestoreapi.com/users/1');
+    var response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      var temp = json.decode(response.body);
+      return Userdata.fromJson(temp);
     }
     return null;
   }

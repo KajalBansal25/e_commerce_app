@@ -72,15 +72,15 @@ class _CartScreenState extends State<CartScreen>
                                         horizontal: 10.0, vertical: 10.0),
                                     child: GestureDetector(
                                       onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                CustomDetailPage(
-                                                    prodId: cart.productId
-                                                        .toString()),
-                                          ),
-                                        );
+                                        // Navigator.push(
+                                        //   context,
+                                        //   MaterialPageRoute(
+                                        //     builder: (context) =>
+                                        //         CustomDetailPage(
+                                        //             prodId: cart.productId
+                                        //                 .toString()),
+                                        //   ),
+                                        // );
                                       },
                                       child: Row(
                                         crossAxisAlignment:
@@ -198,7 +198,6 @@ class _CartScreenState extends State<CartScreen>
                                 builder: (context) => const PaymentScreen()));
                       },
                       style: ElevatedButton.styleFrom(
-
                         padding: const EdgeInsets.symmetric(
                             horizontal: 140.0, vertical: 15.0),
                         shape: RoundedRectangleBorder(

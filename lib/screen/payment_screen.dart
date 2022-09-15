@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/main.dart';
 import 'package:e_commerce_app/screen/order_detail_screen.dart';
+import 'package:e_commerce_app/screen/tabs_screen.dart';
 import 'package:e_commerce_app/utils/Scaling.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -95,7 +96,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => MyApp(tabIndex: 2)));
+                              builder: (context) => Tabs(tabIndex: 2)));
                     },
                     icon: const Icon(Icons.arrow_back_ios),
                     iconSize: normalizedWidth(context, 20)),

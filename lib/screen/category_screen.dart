@@ -1,5 +1,5 @@
 import 'package:badges/badges.dart';
-import 'package:e_commerce_app/main.dart';
+import 'package:e_commerce_app/screen/tabs_screen.dart';
 import 'package:flutter/material.dart';
 import '../widgets/product_card.dart';
 import '../constants/api_service.dart';
@@ -73,7 +73,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => MyApp()));
+                                        builder: (context) => Tabs()));
                               },
                               icon: const Icon(Icons.shopping_cart_outlined),
                             ),

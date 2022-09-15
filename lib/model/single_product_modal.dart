@@ -20,6 +20,7 @@ class ProductModal {
   final String? category;
   final String? image;
   final Rating? rating;
+  final bool isFavourite = false;
 
   factory ProductModal.fromJson(Map<String, dynamic> json) =>
       _$ProductModalFromJson(json);

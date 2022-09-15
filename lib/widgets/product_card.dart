@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import '../model/product_model.dart';
 import '../screen/details_of_product_page.dart';
@@ -8,17 +7,17 @@ Widget productCard(
     {required List<ProductModel>? productModel,
     required VoidCallback? Function(int index) onFavButtonClick,
     BuildContext? parentContext}) {
-  print("fontsize>>>>" + normalizedHeight(parentContext!, 10).toString());
   return GridView.builder(
     itemCount: productModel?.length,
     itemBuilder: (context, index) {
       return GestureDetector(
         onTap: () {
           Navigator.push(
-              parentContext,
+              parentContext!,
               MaterialPageRoute(
                   builder: (parentContext) => CustomDetailPage(
                         prodId: productModel![index].id.toString(),
+                        productModal: productModel[index],
                       )));
         },
         child: Card(
@@ -109,8 +108,7 @@ Widget productCard(
       );
     },
     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: normalizedWidth(parentContext, 200)!,
-        // mainAxisExtent: normalizedHeight(parentContext,350)!,
+        maxCrossAxisExtent: normalizedWidth(parentContext!, 200)!,
         mainAxisExtent: MediaQuery.of(parentContext).size.height * 0.45,
         // childAspectRatio: 0.55,
         crossAxisSpacing: normalizedWidth(parentContext, 10)!,

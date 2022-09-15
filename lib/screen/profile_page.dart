@@ -1,12 +1,13 @@
-import 'dart:convert';
+import 'package:e_commerce_app/cubit/user_cubit.dart';
 import 'package:e_commerce_app/utils/Scaling.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:e_commerce_app/screen/order_detail_screen.dart';
-import 'package:http/http.dart' as http;
 import 'package:e_commerce_app/screen/profile_update_screen.dart';
+
 import 'package:flutter/material.dart';
 
 import '../model/user_data_modal.dart';
@@ -19,7 +20,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  Userdata? _userDataModal = Userdata();
+  late Userdata? userDataModel = Userdata();
   final houseTextField = TextEditingController();
   final floorTextField = TextEditingController();
   final cityTextField = TextEditingController();
@@ -75,26 +76,25 @@ class _ProfilePageState extends State<ProfilePage> {
     return null;
   }
 
-  String apiLink = 'https://fakestoreapi.com/users/1';
-  bool circular = true;
-  @override
-  void initState() {
-    super.initState();
-    _getData();
-  }
+  // String apiLink = 'https://fakestoreapi.com/users/1';
+  bool circular = false;
+  // @override
+  // void initState() {
+  //   super.initState();
 
-  void _getData() async {
-    var url = Uri.parse(apiLink);
-    var response = await http.get(url);
-    var temp = json.decode(response.body);
-    setState(() {
-      _userDataModal = Userdata.fromJson(temp);
-      circular = false;
-    });
-  }
+  //   // _getData();
+  // }
+
+  // void _getData() async {
+
+  //     userDataModel =
+  //     circular = false;
+  //   };
+  // }
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<UserCubit>(context).getUser();
     return Scaffold(
       body: SafeArea(
         child: circular
@@ -127,13 +127,24 @@ class _ProfilePageState extends State<ProfilePage> {
                                 height: normalizedHeight(context, 10),
                               ),
                               Center(
-                                child: Text(
-                                  '${_userDataModal?.name?.firstname?.toUpperCase()} ${_userDataModal?.name?.lastname?.toUpperCase()}',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: normalizedWidth(context, 20),
-                                      fontStyle: FontStyle.italic,
-                                      fontWeight: FontWeight.w500),
+                                child: BlocBuilder<UserCubit, UserState>(
+                                  builder: (context, state) {
+                                    if (state is! UserLoaded) {
+                                      return const CircularProgressIndicator();
+                                    } else {
+                                      print((state).userdata);
+                                      return Text(
+                                        // '${userDataModel?.name?.firstname?.toUpperCase()} ${userDataModel?.name?.lastname?.toUpperCase()}',
+                                        '${(state).userdata.name!.firstname.toString().toUpperCase()} ${(state).userdata.name!.lastname.toString().toUpperCase()}',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize:
+                                                normalizedWidth(context, 20),
+                                            fontStyle: FontStyle.italic,
+                                            fontWeight: FontWeight.w500),
+                                      );
+                                    }
+                                  },
                                 ),
                               ),
                             ],
@@ -188,8 +199,16 @@ class _ProfilePageState extends State<ProfilePage> {
                                 Icons.phone,
                                 color: Colors.redAccent,
                               ),
-                              title: Text(
-                                '${_userDataModal?.phone}',
+                              title: BlocBuilder<UserCubit, UserState>(
+                                builder: (context, state) {
+                                  if (state is! UserLoaded) {
+                                    return const CircularProgressIndicator();
+                                  } else {
+                                    return Text(
+                                      '${(state).userdata.phone.toString().toUpperCase()} ',
+                                    );
+                                  }
+                                },
                               ),
                             ),
                             Padding(
@@ -206,7 +225,17 @@ class _ProfilePageState extends State<ProfilePage> {
                                 Icons.email_outlined,
                                 color: Colors.redAccent,
                               ),
-                              title: Text('${_userDataModal?.email}'),
+                              title: BlocBuilder<UserCubit, UserState>(
+                                builder: (context, state) {
+                                  if (state is! UserLoaded) {
+                                    return const CircularProgressIndicator();
+                                  } else {
+                                    return Text(
+                                      '${(state).userdata.email.toString()} ',
+                                    );
+                                  }
+                                },
+                              ),
                             ),
                             Padding(
                               padding: EdgeInsets.symmetric(
@@ -234,11 +263,19 @@ class _ProfilePageState extends State<ProfilePage> {
                               children: [
                                 ListTile(
                                   title: Wrap(children: [
-                                    Text(
-                                      '${_userDataModal?.address?.number} '
-                                      '${_userDataModal?.address?.street?.toUpperCase()} '
-                                      '${_userDataModal?.address?.city?.toUpperCase()} '
-                                      '${_userDataModal?.address?.zipcode?.toUpperCase()} ',
+                                    BlocBuilder<UserCubit, UserState>(
+                                      builder: (context, state) {
+                                        if (state is! UserLoaded) {
+                                          return const CircularProgressIndicator();
+                                        } else {
+                                          return Text(
+                                            '${(state).userdata.address?.number.toString().toUpperCase()} '
+                                            '${(state).userdata.address?.street.toString().toUpperCase()} '
+                                            '${(state).userdata.address?.city.toString().toUpperCase()} '
+                                            '${(state).userdata.address?.zipcode.toString().toUpperCase()} ',
+                                          );
+                                        }
+                                      },
                                     ),
                                   ]),
                                   trailing: TextButton(
@@ -433,8 +470,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          const ProfileUpdate(),
+                                      builder: (context) => BlocProvider.value(
+                                        value:
+                                            BlocProvider.of<UserCubit>(context),
+                                        child: const ProfileUpdate(),
+                                      ),
                                     ),
                                   );
                                 },
