@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:e_commerce_app/cubit/category_cubit.dart';
 import 'package:e_commerce_app/cubit/product_cubit.dart';
 import 'package:e_commerce_app/screen/category_screen.dart';
 import 'package:e_commerce_app/screen/product_page.dart';
@@ -148,9 +149,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => CategoryScreen(
-                                    category: categoryName![index],
-                                  )));
+                            builder: (context) =>
+                                BlocProvider<CategoryCubit>.value(
+                              value: BlocProvider.of<CategoryCubit>(context),
+                              child: CategoryScreen(
+                                category: categoryName![index],
+                              ),
+                            ),
+                          ));
                     },
                     child: Card(
                       margin: EdgeInsets.symmetric(

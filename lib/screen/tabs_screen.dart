@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/cubit/category_cubit.dart';
 import 'package:e_commerce_app/cubit/user_cubit.dart';
 import 'package:e_commerce_app/screen/cart_screen.dart';
 import 'package:e_commerce_app/screen/favourite_screen.dart';
@@ -20,24 +21,34 @@ class Tabs extends StatefulWidget {
 class _TabsState extends State<Tabs> {
   get tabIndex => widget.tabIndex;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext pcontext) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'E-commerce',
       darkTheme: CustomTheme.darkTheme,
       theme: CustomTheme.lightTheme,
       home: Scaffold(
         body: IndexedStack(index: tabIndex, children: <Widget>[
-          BlocProvider<ProductCubit>.value(
-            value: BlocProvider.of<ProductCubit>(context),
+          MultiBlocProvider(
+            providers: [
+              BlocProvider<ProductCubit>.value(
+                value: BlocProvider.of<ProductCubit>(context),
+              ),
+              BlocProvider<CategoryCubit>.value(
+                value: BlocProvider.of<CategoryCubit>(context),
+              ),
+            ],
             child: const HomeScreen(),
           ),
           BlocProvider<ProductCubit>.value(
             value: BlocProvider.of<ProductCubit>(context),
             child: FavouritePage(),
           ),
-          CartScreen(),
+          BlocProvider<ProductCubit>.value(
+            value: BlocProvider.of<ProductCubit>(context),
+            child: CartScreen(),
+          ),
           BlocProvider(
-            create: (pContext) => UserCubit(),
+            create: (context) => UserCubit(),
             child: const ProfilePage(),
           ),
         ]),
