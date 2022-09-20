@@ -121,7 +121,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                   BlocProvider<ProductCubit>.value(
                                     value:
                                         BlocProvider.of<ProductCubit>(context),
-                                    child: const ProductPage(),
+                                    child: BlocProvider<CategoryCubit>.value(
+                                      value: BlocProvider.of<CategoryCubit>(
+                                          context),
+                                      child: const ProductPage(),
+                                    ),
                                   ))),
                       child: Row(
                         children: [
@@ -151,8 +155,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             builder: (context) =>
                                 BlocProvider<CategoryCubit>.value(
                               value: BlocProvider.of<CategoryCubit>(context),
-                              child: CategoryScreen(
-                                category: categoryName![index],
+                              child: BlocProvider<ProductCubit>.value(
+                                value: BlocProvider.of<ProductCubit>(context),
+                                child: CategoryScreen(
+                                  category: categoryName![index],
+                                ),
                               ),
                             ),
                           ));

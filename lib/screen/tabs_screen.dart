@@ -42,7 +42,10 @@ class _TabsState extends State<Tabs> {
           ),
           BlocProvider<ProductCubit>.value(
             value: BlocProvider.of<ProductCubit>(context),
-            child: const FavouritePage(),
+            child: BlocProvider<CategoryCubit>.value(
+              value: BlocProvider.of<CategoryCubit>(context),
+              child: FavouritePage(),
+            ),
           ),
 
           MultiBlocProvider(
@@ -57,6 +60,7 @@ class _TabsState extends State<Tabs> {
             child: const CartScreen(),
           ),
           BlocProvider(
+            lazy: true,
             create: (context) => UserCubit(),
             child: const ProfilePage(),
           ),

@@ -30,8 +30,10 @@ class ApiService {
       var url = Uri.parse(
           ApiConstants.baseUrl + ApiConstants.usersEndpointCategory + category);
       var response = await http.get(url);
+
       if (response.statusCode == 200) {
         List<ProductModel> model = productModelFromJson(response.body);
+
         return model;
       }
     } catch (e) {
