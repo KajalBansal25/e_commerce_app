@@ -1,4 +1,5 @@
 import 'package:badges/badges.dart';
+import 'package:e_commerce_app/cubit/category_cubit.dart';
 import 'package:e_commerce_app/cubit/product_cubit.dart';
 import 'package:e_commerce_app/screen/tabs_screen.dart';
 import 'package:flutter/material.dart';
@@ -73,7 +74,12 @@ class _ProductPageState extends State<ProductPage> {
                           productModel: (state).productModel,
                           onFavButtonClick: (int index) {
                             setState(() {
-                              (state).productModel![index].favourite();
+                              BlocProvider.of<ProductCubit>(context)
+                                  .updateFavouriteList(
+                                      (state).productModel![index]);
+                              BlocProvider.of<CategoryCubit>(context)
+                                  .updateFavouriteList(
+                                      (state).productModel![index].id!);
                             });
                             return null;
                           },

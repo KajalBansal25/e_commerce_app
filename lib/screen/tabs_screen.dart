@@ -41,13 +41,17 @@ class _TabsState extends State<Tabs> {
           ),
           BlocProvider<ProductCubit>.value(
             value: BlocProvider.of<ProductCubit>(context),
-            child: FavouritePage(),
+            child: BlocProvider<CategoryCubit>.value(
+              value: BlocProvider.of<CategoryCubit>(context),
+              child: FavouritePage(),
+            ),
           ),
           BlocProvider<ProductCubit>.value(
             value: BlocProvider.of<ProductCubit>(context),
             child: CartScreen(),
           ),
           BlocProvider(
+            lazy: true,
             create: (context) => UserCubit(),
             child: const ProfilePage(),
           ),

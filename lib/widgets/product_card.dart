@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../cubit/product_cubit.dart';
 import '../model/product_model.dart';
 import '../screen/details_of_product_page.dart';
 import '../utils/Scaling.dart';
@@ -15,9 +17,12 @@ Widget productCard(
           Navigator.push(
               parentContext!,
               MaterialPageRoute(
-                  builder: (parentContext) => CustomDetailPage(
-                        prodId: productModel![index].id.toString(),
-                        productModal: productModel[index],
+                  builder: (parentContext) => BlocProvider<ProductCubit>.value(
+                        value: BlocProvider.of<ProductCubit>(context),
+                        child: CustomDetailPage(
+                          prodId: productModel![index].id.toString(),
+                          productModal: productModel[index],
+                        ),
                       )));
         },
         child: Card(

@@ -1,6 +1,8 @@
+import 'package:e_commerce_app/cubit/product_cubit.dart';
 import 'package:e_commerce_app/screen/product_image_preview_screen.dart';
 import 'package:e_commerce_app/screen/tabs_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../model/product_model.dart';
 import '../utils/Scaling.dart';
 
@@ -17,24 +19,6 @@ class CustomDetailPage extends StatefulWidget {
 class _CustomDetailPageState extends State<CustomDetailPage> {
   final List<String> reportList = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
   String selectedChoice = "S";
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _getData();
-  // }
-
-  // void _getData() async {
-  //   var url = Uri.parse(ApiConstants.baseUrl +
-  //       ApiConstants.usersEndpointSingleProduct +
-  //       widget.prodId);
-  //   var response = await http.get(url);
-  //   var temp = json.decode(response.body);
-  //   setState(() {
-  //     _userModel = ProductModal.fromJson(temp);
-  //     circular = false;
-  //   });
-  // }
-
   _buildChoiceList() {
     List<Widget> choices = [];
     for (var item in reportList) {
@@ -59,7 +43,6 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    // print(widget.productModal.category.toString());
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -75,6 +58,7 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                 children: [
                   IconButton(
                     onPressed: () {
+                      context.read<ProductCubit>().getProductData();
                       Navigator.pop(
                         context,
                       );
@@ -83,10 +67,12 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                   ),
                   IconButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Tabs(tabIndex: 2)));
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Tabs(tabIndex: 2)),
+                        ModalRoute.withName('/'),
+                      );
                     },
                     icon: const Icon(Icons.shopping_cart_outlined),
                   ),
@@ -226,7 +212,10 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                                         color: Colors.white),
                                     onPressed: () {
                                       setState(() {
-                                        widget.productModal.isFavourite = true;
+                                        // widget.productModal.favourite();
+                                        BlocProvider.of<ProductCubit>(context)
+                                            .updateFavouriteListFromDetailScreen(
+                                                widget.productModal);
                                       });
                                     },
                                   ),
@@ -245,7 +234,10 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                                         color: Colors.white),
                                     onPressed: () {
                                       setState(() {
-                                        widget.productModal.isFavourite = false;
+                                        // widget.productModal.favourite();
+                                        BlocProvider.of<ProductCubit>(context)
+                                            .updateFavouriteListFromDetailScreen(
+                                                widget.productModal);
                                       });
                                     },
                                   ),

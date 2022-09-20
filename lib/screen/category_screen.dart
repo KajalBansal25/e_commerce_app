@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:e_commerce_app/cubit/category_cubit.dart';
+import 'package:e_commerce_app/cubit/product_cubit.dart';
 import 'package:e_commerce_app/screen/tabs_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,6 +33,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   onPressed: () {
                     BlocProvider.of<CategoryCubit>(context)
                         .updateCateogyState();
+                    // context.read<ProductCubit>().getProductData();
                     Navigator.pop(
                       context,
                     );
@@ -44,26 +46,17 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       fontWeight: FontWeight.bold,
                       fontSize: normalizedWidth(context, 22)!),
                 ),
-                Badge(
-                  padding: EdgeInsets.fromLTRB(
-                      normalizedWidth(context, 8)!,
-                      normalizedHeight(context, 16)!,
-                      normalizedWidth(context, 8)!,
-                      normalizedHeight(context, 16)!),
-                  position: BadgePosition.center(),
-                  // stackFit: ,
-                  child: IconButton(
-                    padding: const EdgeInsets.all(0),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Tabs(
-                                    tabIndex: 2,
-                                  )));
-                    },
-                    icon: const Icon(Icons.shopping_cart_outlined),
-                  ),
+                IconButton(
+                  padding: const EdgeInsets.all(0),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Tabs(
+                                  tabIndex: 2,
+                                )));
+                  },
+                  icon: const Icon(Icons.shopping_cart_outlined),
                 ),
               ],
             ),
@@ -77,16 +70,33 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   if (state is! CatergoryLoaded) {
                     return const Center(child: CircularProgressIndicator());
                   } else {
-                    return productCard(
-                      productModel: state.listOfAllCatergory[widget.category],
-                      onFavButtonClick: (int index) {
-                        setState(() {
-                          state.listOfAllCatergory[widget.category][index]
-                              .favourite();
-                        });
-                        return null;
+                    return BlocBuilder<ProductCubit, ProductState>(
+                      builder: (context, state1) {
+                        if (state1 is ProductLoaded ||
+                            state1 is FavouriteUpdated) {
+                          return productCard(
+                            productModel:
+                                state.listOfAllCatergory[widget.category],
+                            onFavButtonClick: (int index) {
+                              setState(() {
+                                BlocProvider.of<ProductCubit>(context)
+                                    .updateFavouriteListFromDetailScreen(state
+                                            .listOfAllCatergory[widget.category]
+                                        [index]);
+
+                                BlocProvider.of<CategoryCubit>(context)
+                                    .updateFavouriteList(state
+                                        .listOfAllCatergory[widget.category]
+                                            [index]
+                                        .id);
+                              });
+                              return null;
+                            },
+                            parentContext: context,
+                          );
+                        }
+                        return const Center(child: CircularProgressIndicator());
                       },
-                      parentContext: context,
                     );
                   }
                 },
