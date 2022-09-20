@@ -28,18 +28,7 @@ class Userdata {
       _$UserdataFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserdataToJson(this);
-
-  // Future<Userdata> fetchUser() async{
-  //    var url = Uri.parse(apiLink);
-  //   var response = await http.get(url);
-  //   var temp = json.decode(response.body);
-  //   setState(() {
-  //     _userDataModal = Userdata.fromJson(temp);
-  //     circular = false;
-  //   });
-
-  // }
-}
+  }
 
 @JsonSerializable()
 class Address {

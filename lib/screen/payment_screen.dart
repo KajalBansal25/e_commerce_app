@@ -1,13 +1,11 @@
-import 'package:e_commerce_app/main.dart';
 import 'package:e_commerce_app/screen/order_detail_screen.dart';
 import 'package:e_commerce_app/screen/tabs_screen.dart';
-import 'package:e_commerce_app/utils/Scaling.dart';
+import 'package:e_commerce_app/utils/scaling.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:e_commerce_app/utils/Scaling.dart';
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({Key? key}) : super(key: key);

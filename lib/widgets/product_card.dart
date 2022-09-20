@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../model/product_model.dart';
 import '../screen/details_of_product_page.dart';
-import '../utils/Scaling.dart';
+import '../utils/scaling.dart';
 
 Widget productCard(
     {required List<ProductModel>? productModel,

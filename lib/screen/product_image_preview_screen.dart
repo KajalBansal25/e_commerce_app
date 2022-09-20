@@ -1,5 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:e_commerce_app/utils/Scaling.dart';
+import 'package:e_commerce_app/utils/scaling.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 

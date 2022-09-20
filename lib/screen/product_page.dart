@@ -3,9 +3,8 @@ import 'package:e_commerce_app/cubit/product_cubit.dart';
 import 'package:e_commerce_app/screen/tabs_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../model/product_model.dart';
 import '../widgets/product_card.dart';
-import 'package:e_commerce_app/utils/Scaling.dart';
+import 'package:e_commerce_app/utils/scaling.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({Key? key}) : super(key: key);

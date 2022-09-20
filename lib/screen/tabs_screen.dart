@@ -1,8 +1,9 @@
+import 'package:e_commerce_app/cubit/cart_cubit.dart';
 import 'package:e_commerce_app/cubit/category_cubit.dart';
 import 'package:e_commerce_app/cubit/user_cubit.dart';
 import 'package:e_commerce_app/screen/cart_screen.dart';
 import 'package:e_commerce_app/screen/favourite_screen.dart';
-import 'package:e_commerce_app/screen/homeScreen.dart';
+import 'package:e_commerce_app/screen/home_screen.dart';
 import 'package:e_commerce_app/screen/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,11 +42,19 @@ class _TabsState extends State<Tabs> {
           ),
           BlocProvider<ProductCubit>.value(
             value: BlocProvider.of<ProductCubit>(context),
-            child: FavouritePage(),
+            child: const FavouritePage(),
           ),
-          BlocProvider<ProductCubit>.value(
-            value: BlocProvider.of<ProductCubit>(context),
-            child: CartScreen(),
+
+          MultiBlocProvider(
+            providers: [
+              BlocProvider<ProductCubit>.value(
+                value: BlocProvider.of<ProductCubit>(context),
+              ),
+              BlocProvider(
+                create: (context) => CartCubit(),
+              ),
+            ],
+            child: const CartScreen(),
           ),
           BlocProvider(
             create: (context) => UserCubit(),

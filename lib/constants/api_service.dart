@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 
 import '../model/cart_model.dart';
 import '../model/product_model.dart';
-import '../model/single_product_modal.dart';
 import '../model/user_data_modal.dart';
 import 'api_constants.dart';
 

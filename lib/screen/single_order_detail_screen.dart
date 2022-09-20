@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/utils/Scaling.dart';
+import 'package:e_commerce_app/utils/scaling.dart';
 import 'package:flutter/material.dart';
 
 class SingleOrderDetailScreen extends StatefulWidget {

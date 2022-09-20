@@ -1,7 +1,4 @@
-import 'package:e_commerce_app/main.dart';
-import 'package:e_commerce_app/model/product_model.dart';
 import 'package:e_commerce_app/screen/category_screen.dart';
-import 'package:e_commerce_app/screen/details_of_product_page.dart';
 import 'package:e_commerce_app/screen/order_detail_screen.dart';
 import 'package:e_commerce_app/screen/payment_screen.dart';
 import 'package:e_commerce_app/screen/product_image_preview_screen.dart';
@@ -10,7 +7,6 @@ import 'package:e_commerce_app/screen/profile_update_screen.dart';
 import 'package:e_commerce_app/screen/single_order_detail_screen.dart';
 import 'package:e_commerce_app/screen/tabs_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class AppRouter {
   Route? generateRoute(RouteSettings settings) {

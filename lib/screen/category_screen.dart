@@ -4,7 +4,7 @@ import 'package:e_commerce_app/screen/tabs_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../widgets/product_card.dart';
-import 'package:e_commerce_app/utils/Scaling.dart';
+import 'package:e_commerce_app/utils/scaling.dart';
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({Key? key, required this.category}) : super(key: key);

@@ -2,7 +2,7 @@ import 'package:e_commerce_app/screen/product_image_preview_screen.dart';
 import 'package:e_commerce_app/screen/tabs_screen.dart';
 import 'package:flutter/material.dart';
 import '../model/product_model.dart';
-import '../utils/Scaling.dart';
+import '../utils/scaling.dart';
 
 //ignore: must_be_immutable
 class CustomDetailPage extends StatefulWidget {

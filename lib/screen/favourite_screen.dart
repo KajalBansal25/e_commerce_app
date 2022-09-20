@@ -1,7 +1,7 @@
 import 'package:e_commerce_app/cubit/product_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../utils/Scaling.dart';
+import '../utils/scaling.dart';
 import '../widgets/product_card.dart';
 // import '../constants/api_service.dart';
 import '../model/product_model.dart';
