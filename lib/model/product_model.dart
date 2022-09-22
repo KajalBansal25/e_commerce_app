@@ -25,6 +25,7 @@ class ProductModel {
   String? title;
   double? price;
   String? description;
+  bool isFavourite = false;
   Category? category;
   String? image;
   Rating? rating;
@@ -48,6 +49,14 @@ class ProductModel {
         "image": image,
         "rating": rating?.toJson(),
       };
+
+  favourite() {
+    if (isFavourite == false) {
+      isFavourite = true;
+    } else if (isFavourite == true) {
+      isFavourite = false;
+    }
+  }
 }
 
 enum Category { MEN_S_CLOTHING, JEWELERY, ELECTRONICS, WOMEN_S_CLOTHING }
@@ -87,7 +96,7 @@ class EnumValues<T> {
 
   Map<T, String> get reverse {
     if (reverseMap == null) {
-      reverseMap = map.map((k, v) => new MapEntry(v, k));
+      reverseMap = map.map((k, v) => MapEntry(v, k));
     }
     return reverseMap;
   }

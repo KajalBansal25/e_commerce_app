@@ -1,20 +1,57 @@
 import 'dart:developer';
 
-import 'package:e_commerce_app/constants/api_constants.dart';
-import 'package:e_commerce_app/model/product_model.dart';
 import 'package:http/http.dart' as http;
+
+import '../model/cart_model.dart';
+import '../model/product_model.dart';
+import '../model/single_product_modal.dart';
+import '../model/user_data_modal.dart';
+import 'api_constants.dart';
 
 class ApiService {
   Future<List<ProductModel>?> getProducts() async {
     try {
-      var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.usersEndpoint);
+      var url = Uri.parse(
+          ApiConstants.baseUrl + ApiConstants.usersEndpointAllProducts);
       var response = await http.get(url);
       if (response.statusCode == 200) {
-        List<ProductModel> _model = productModelFromJson(response.body);
-        return _model;
+        List<ProductModel> model = productModelFromJson(response.body);
+
+        return model;
       }
     } catch (e) {
       log(e.toString());
     }
+    return null;
+  }
+
+  Future<List<ProductModel>?> getProductsByCategory(category) async {
+    try {
+      var url = Uri.parse(
+          ApiConstants.baseUrl + ApiConstants.usersEndpointCategory + category);
+      var response = await http.get(url);
+      if (response.statusCode == 200) {
+        List<ProductModel> model = productModelFromJson(response.body);
+        return model;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+    return null;
+  }
+
+  Future<List<CartModel>?> getCartProduct() async {
+    try {
+      var url = Uri.parse(
+          ApiConstants.baseUrl + ApiConstants.usersEndpointCartProducts);
+      var response = await http.get(url);
+      if (response.statusCode == 200) {
+        List<CartModel> model = cartModelFromJson(response.body);
+        return model;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+    return null;
   }
 }
