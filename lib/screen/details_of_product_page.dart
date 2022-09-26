@@ -174,9 +174,9 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                           padding: EdgeInsets.symmetric(
                               horizontal: normalizedWidth(context, 25)!),
                           child: (widget.productModal.category.toString() ==
-                                      "Category.MEN_S_CLOTHING" ||
+                                      "men's clothing" ||
                                   widget.productModal.category.toString() ==
-                                      "Category.WOMEN_S_CLOTHING")
+                                      "women's clothing")
                               ? SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
                                   child: Wrap(

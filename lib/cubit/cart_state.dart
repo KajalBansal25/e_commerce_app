@@ -11,12 +11,14 @@ class CartInitial extends CartState {}
 
 class CartLoaded extends CartState{
   final List<CartModel?> cartModel;
+
   const CartLoaded({
     required this.cartModel,
   });
 }
-class SortedCartData extends CartLoaded{
-  const SortedCartData({required super.cartModel});
+class SortedCartData{
+   final List<CartModel> cartProductDataList ;
+   SortedCartData({required this.cartProductDataList});
 
 
 }

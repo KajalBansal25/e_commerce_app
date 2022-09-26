@@ -1,17 +1,19 @@
-// To parse this JSON data, do
-//
-//     final productModel = productModelFromJson(jsonString);
+import 'package:json_annotation/json_annotation.dart';
 
-// ignore_for_file: constant_identifier_names
+part 'product_model.g.dart';
 
-import 'dart:convert';
+@JsonSerializable()
+class ProductListModel {
+  ProductListModel({required this.products});
+  final List<ProductModel>? products;
 
-List<ProductModel> productModelFromJson(String str) => List<ProductModel>.from(
-    json.decode(str).map((x) => ProductModel.fromJson(x)));
+  factory ProductListModel.fromJson(Map<String, dynamic> json) =>
+      _$ProductListModelFromJson(json);
 
-String productModelToJson(List<ProductModel> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+  Map<String, dynamic> toJson() => _$ProductListModelToJson(this);
+}
 
+@JsonSerializable()
 class ProductModel {
   ProductModel({
     this.id,
@@ -27,49 +29,21 @@ class ProductModel {
   String? title;
   double? price;
   String? description;
-  bool isFavourite = false;
-  Category? category;
+  String? category;
   String? image;
   Rating? rating;
+  bool isFavourite = false;
 
-  factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
-        id: json["id"],
-        title: json["title"],
-        price: json["price"].toDouble(),
-        description: json["description"],
-        category: categoryValues.map[json["category"]],
-        image: json["image"],
-        rating: Rating.fromJson(json["rating"]),
-      );
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "title": title,
-        "price": price,
-        "description": description,
-        "category": categoryValues.reverse[category],
-        "image": image,
-        "rating": rating?.toJson(),
-      };
+  factory ProductModel.fromJson(Map<String, dynamic> json) =>
+      _$ProductModelFromJson(json);
 
-  favourite() {
-    if (isFavourite == false) {
-      isFavourite = true;
-    } else if (isFavourite == true) {
-      isFavourite = false;
-    }
-  }
+  Map<String, dynamic> toJson() => _$ProductModelToJson(this);
+
+
 }
 
-enum Category { MEN_S_CLOTHING, JEWELERY, ELECTRONICS, WOMEN_S_CLOTHING }
-
-final categoryValues = EnumValues({
-  "electronics": Category.ELECTRONICS,
-  "jewelery": Category.JEWELERY,
-  "men's clothing": Category.MEN_S_CLOTHING,
-  "women's clothing": Category.WOMEN_S_CLOTHING
-});
-
+@JsonSerializable()
 class Rating {
   Rating({
     this.rate,
@@ -79,27 +53,7 @@ class Rating {
   double? rate;
   int? count;
 
-  factory Rating.fromJson(Map<String, dynamic> json) => Rating(
-        rate: json["rate"].toDouble(),
-        count: json["count"],
-      );
+  factory Rating.fromJson(Map<String, dynamic> json) => _$RatingFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-        "rate": rate,
-        "count": count,
-      };
-}
-
-class EnumValues<T> {
-  late Map<String, T> map;
-  late Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    if (reverseMap == null) {
-      reverseMap = map.map((k, v) => MapEntry(v, k));
-    }
-    return reverseMap;
-  }
+  Map<String, dynamic> toJson() => _$RatingToJson(this);
 }

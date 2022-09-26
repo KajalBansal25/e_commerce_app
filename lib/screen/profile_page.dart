@@ -7,9 +7,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:e_commerce_app/screen/order_detail_screen.dart';
 import 'package:e_commerce_app/screen/profile_update_screen.dart';
-
 import 'package:flutter/material.dart';
-
 import '../model/user_data_modal.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -76,21 +74,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return null;
   }
 
-  // String apiLink = 'https://fakestoreapi.com/users/1';
   bool circular = false;
-  // @override
-  // void initState() {
-  //   super.initState();
-
-  //   // _getData();
-  // }
-
-  // void _getData() async {
-
-  //     userDataModel =
-  //     circular = false;
-  //   };
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +118,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                     } else {
                                       print((state).userdata);
                                       return Text(
-                                        // '${userDataModel?.name?.firstname?.toUpperCase()} ${userDataModel?.name?.lastname?.toUpperCase()}',
                                         '${(state).userdata.name!.firstname.toString().toUpperCase()} ${(state).userdata.name!.lastname.toString().toUpperCase()}',
                                         style: TextStyle(
                                             color: Colors.white,

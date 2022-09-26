@@ -1,11 +1,8 @@
 import 'package:bloc/bloc.dart';
-
 import 'package:equatable/equatable.dart';
-
 import 'package:e_commerce_app/constants/api_service.dart';
 import 'package:e_commerce_app/model/product_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 part 'product_state.dart';
 
 class ProductCubit extends Cubit<ProductState> {
@@ -13,8 +10,9 @@ class ProductCubit extends Cubit<ProductState> {
   List<ProductModel>? favouriteList = [];
   List<int>? ids = [];
 
-  final Future<List<ProductModel>?> fetchData = ApiService().getProducts();
   ProductCubit() : super(ProductInitial());
+
+  final Future<List<ProductModel>?> fetchData = ApiService().getProducts();
 
   void getProductData() {
     if (productModel != []) {

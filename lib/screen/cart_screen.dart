@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:e_commerce_app/cubit/cart_cubit.dart';
 import 'package:e_commerce_app/cubit/product_cubit.dart';
+// import 'package:e_commerce_app/model/cart_model.dart';
 import 'package:e_commerce_app/screen/payment_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,6 +17,8 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen>
     with AutomaticKeepAliveClientMixin {
   List cartProductDataList = [];
+  double totalAmount = 0.0;
+
   @override
   void initState() {
     super.initState();
@@ -73,21 +76,24 @@ class _CartScreenState extends State<CartScreen>
                                         .toString(),
                                     'pdtTitle': state1.productModel![i].title
                                         .toString(),
-                                    'pdtPrice': state1.productModel![i].price
-                                        .toString(),
+                                    'pdtPrice': state1.productModel![i].price,
                                     'crtPdtCount': state2
-                                        .cartModel[0]?.products![j].quantity
+                                        .cartModel[0]?.products![j].quantity,
+                                    "productId": state2
+                                        .cartModel[0]?.products![j].productId
                                   });
                                 }
                               }
                             }
                           }
+                          print('$totalAmount');
                           print(cartProductDataList.length);
                         } else if (state2 is! CartLoaded) {
                           return const Center(
                             child: CircularProgressIndicator(),
                           );
                         }
+
                         return _customColumn(cartProductDataList);
                       });
                     } else if (state1 is! ProductLoaded) {
@@ -106,14 +112,23 @@ class _CartScreenState extends State<CartScreen>
                   const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text(
+                children: [
+                  const Text(
                     'Total',
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
-                  Text(
-                    '\$ 1560.00',
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  BlocBuilder<CartCubit, CartState>(
+                    builder: (context, state) {
+                      if(state is CartLoaded) {
+                        totalAmount = _getTotalAmount(cartProductDataList);
+
+                        return Text(
+                        '\$ $totalAmount ',
+                        style: const TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold),
+                      );}
+                      return const Text('Price::');
+                    },
                   ),
                 ],
               ),
@@ -189,7 +204,7 @@ class _CartScreenState extends State<CartScreen>
                             const SizedBox(
                               height: 10,
                             ),
-                            Text("\$ ${item["pdtPrice"]}"),
+                            Text("\$ ${item["pdtPrice"].toString()}"),
                           ],
                         ),
                         const SizedBox(
@@ -200,7 +215,9 @@ class _CartScreenState extends State<CartScreen>
                           children: [
                             IconButton(
                               onPressed: () {
-                                updateCountApi();
+                                print('${item["productId"]}');
+                                putUpdateCountApi(
+                                    item["productId"], item["crtPdtCount"]);
                               },
                               icon: const Icon(
                                 Icons.remove,
@@ -237,19 +254,33 @@ class _CartScreenState extends State<CartScreen>
     ]);
   }
 
-  void updateCountApi() async {
+  void putUpdateCountApi(int productId, int itemCount) async {
     try {
-      var url = Uri.parse("https://fakestoreapi.com/carts/1");
-      var response = await http.get(url);
+      var url = Uri.parse("https://fakestoreapi.com/carts/7");
+      var response = await http.put(url);
+
       if (response.statusCode == 200) {
-        print(response.body);
+        print("=================>>${response.body}");
       }
     } catch (e) {
       log(e.toString());
     }
   }
 
+  double _getTotalAmount(List cartList) {
+    List<double> productAll = [];
+    for (var key in cartList) {
+      var temp = 0.0;
+      temp = key["pdtPrice"] * key["crtPdtCount"];
+      productAll.add(temp);
+    }
+    for (var i in productAll) {
+      totalAmount = totalAmount + i;
+    }
+
+    return totalAmount.ceilToDouble();
+  }
+
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }

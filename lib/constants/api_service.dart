@@ -15,14 +15,15 @@ class ApiService {
           ApiConstants.baseUrl + ApiConstants.usersEndpointAllProducts);
       var response = await http.get(url);
       if (response.statusCode == 200) {
-        List<ProductModel> model = productModelFromJson(response.body);
-
-        return model;
+        List data = jsonDecode(response.body);
+        Map<String, dynamic> output = {"products": data};
+        ProductListModel model = ProductListModel.fromJson(output);
+        return model.products;
       }
     } catch (e) {
       log(e.toString());
     }
-    return null;
+    return [];
   }
 
   Future<List<ProductModel>?> getProductsByCategory(category) async {
@@ -32,9 +33,10 @@ class ApiService {
       var response = await http.get(url);
 
       if (response.statusCode == 200) {
-        List<ProductModel> model = productModelFromJson(response.body);
-
-        return model;
+        List data = jsonDecode(response.body);
+        Map<String, dynamic> output = {"products": data};
+        ProductListModel model = ProductListModel.fromJson(output);
+        return model.products;
       }
     } catch (e) {
       log(e.toString());
@@ -48,8 +50,10 @@ class ApiService {
           ApiConstants.baseUrl + ApiConstants.usersEndpointCartProducts);
       var response = await http.get(url);
       if (response.statusCode == 200) {
-        List<CartModel> model = cartModelFromJson(response.body);
-        return model;
+        List data = jsonDecode(response.body);
+        Map<String, dynamic> output = {"carts": data};
+        CartListModel model = CartListModel.fromJson(output);
+        return model.carts;
       }
     } catch (e) {
       log(e.toString());
