@@ -31,7 +31,6 @@ class ApiService {
       var url = Uri.parse(
           ApiConstants.baseUrl + ApiConstants.usersEndpointCategory + category);
       var response = await http.get(url);
-
       if (response.statusCode == 200) {
         List data = jsonDecode(response.body);
         Map<String, dynamic> output = {"products": data};
@@ -71,4 +70,37 @@ class ApiService {
     }
     return null;
   }
+
+  Future<bool> postData({dynamic object}) async {
+    try {
+      var payload = jsonEncode(object);
+      var uri = Uri.parse(ApiConstants.baseUrl+ApiConstants.addToCart);
+      var response = await http.post(
+        uri,
+        body: payload,
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      print("----------------------------- ${response.body}");
+      if (response.statusCode == 200) {
+        CartModel modal = CartModel.fromJson((jsonDecode(response.body)));
+        return true;
+
+      }
+    } catch (e) {
+      log("Error postData $e");
+    }
+    return false;
+  }
+
+
+
+
+
+
+
+
+
+
 }

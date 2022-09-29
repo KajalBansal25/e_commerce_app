@@ -13,17 +13,33 @@ class ProductInitial extends ProductState {}
 class ProductLoaded extends ProductState {
   final List<ProductModel>? productModel;
   final List<ProductModel>? favList;
+  final List<ProductModel>? addToCartList;
   const ProductLoaded({
     required this.productModel,
     required this.favList,
+    required this.addToCartList,
   });
 }
 
 class FavouriteUpdated extends ProductState {
   final List<ProductModel>? productModel;
   final List<ProductModel>? favList;
+  // final List<ProductModel>? addToCaList;
+
   const FavouriteUpdated({
     required this.productModel,
     required this.favList,
+    // required this.addToCaList,
   });
+}
+
+class AddToCaUpdated extends ProductState {
+  final List<ProductModel>? productModel;
+  final List<ProductModel>? addToCaList;
+
+  const AddToCaUpdated({
+    required this.productModel,
+    required this.addToCaList,
+  });
+
 }

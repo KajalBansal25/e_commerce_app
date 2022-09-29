@@ -23,6 +23,8 @@ class ProductModel {
     this.category,
     this.image,
     this.rating,
+    this.isAddToCart=false,
+    this.isFavourite=false,
   });
 
   int? id;
@@ -32,7 +34,8 @@ class ProductModel {
   String? category;
   String? image;
   Rating? rating;
-  bool isFavourite = false;
+  bool? isFavourite;
+  bool? isAddToCart;
 
 
   factory ProductModel.fromJson(Map<String, dynamic> json) =>

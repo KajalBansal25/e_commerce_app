@@ -1,7 +1,5 @@
 import 'package:bloc/bloc.dart';
-// import 'package:e_commerce_app/cubit/product_cubit.dart';
 import 'package:equatable/equatable.dart';
-
 import 'package:e_commerce_app/constants/api_service.dart';
 import 'package:e_commerce_app/model/product_model.dart';
 
@@ -11,6 +9,7 @@ class CategoryCubit extends Cubit<CategoryState> {
   List<String> categoryList = [];
   List<ProductModel> categoryModel = [];
   List<int> favids = [];
+  List<int> addToCartids = [];
   final Map<String, dynamic> listOfAllCatergory = {};
 
   CategoryCubit() : super(CategoryInitial());
@@ -22,7 +21,6 @@ class CategoryCubit extends Cubit<CategoryState> {
     } else {
       ApiService().getProductsByCategory(categoryName).then((categoryModel) {
         listOfAllCatergory[categoryName] = categoryModel;
-
         emit(CatergoryLoaded(
             listOfAllCatergory: listOfAllCatergory,
             categoryName: categoryName));
@@ -57,4 +55,31 @@ class CategoryCubit extends Cubit<CategoryState> {
       });
     }
   }
+
+
+  void updateAddToCartList(int? itemid) {
+    if (addToCartids.contains(itemid)) {
+      listOfAllCatergory.forEach((key, value) {
+        for (var i = 0; i < value.length; i++) {
+          if (addToCartids.contains(listOfAllCatergory[key][i].id) &&
+              listOfAllCatergory[key][i].id == itemid) {
+            listOfAllCatergory[key][i].isAddToCart = false;
+          }
+        }
+        addToCartids.remove(itemid);
+      });
+    } else {
+      addToCartids.add(itemid!);
+      listOfAllCatergory.forEach((key, value) {
+        for (var i = 0; i < value.length; i++) {
+          if (addToCartids.contains(listOfAllCatergory[key][i].id) &&
+              listOfAllCatergory[key][i].id == itemid) {
+            listOfAllCatergory[key][i].isAddToCart = true;
+          }
+        }
+      });
+    }
+  }
+
+
 }

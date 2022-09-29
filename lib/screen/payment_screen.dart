@@ -91,10 +91,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
               children: [
                 IconButton(
                     onPressed: () {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Tabs(tabIndex: 2)));
+                      Navigator.pop(context);
+                      // Navigator.pushReplacement(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) => Tabs(tabIndex: 2)));
                     },
                     icon: const Icon(Icons.arrow_back_ios),
                     iconSize: normalizedWidth(context, 20)),

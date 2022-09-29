@@ -1,8 +1,12 @@
+import 'package:e_commerce_app/constants/api_service.dart';
+import 'package:e_commerce_app/cubit/category_cubit.dart';
 import 'package:e_commerce_app/cubit/product_cubit.dart';
+import 'package:e_commerce_app/model/cart_model.dart';
 import 'package:e_commerce_app/screen/product_image_preview_screen.dart';
 import 'package:e_commerce_app/screen/tabs_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import '../model/product_model.dart';
 import '../utils/scaling.dart';
 
@@ -10,7 +14,7 @@ import '../utils/scaling.dart';
 class CustomDetailPage extends StatefulWidget {
   CustomDetailPage({Key? key, required this.prodId, required this.productModal})
       : super(key: key);
-  String prodId;
+  int? prodId;
   ProductModel productModal;
   @override
   State<CustomDetailPage> createState() => _CustomDetailPageState();
@@ -19,7 +23,10 @@ class CustomDetailPage extends StatefulWidget {
 class _CustomDetailPageState extends State<CustomDetailPage> {
   final List<String> reportList = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
   String selectedChoice = "S";
-  _buildChoiceList() {
+  bool responseStatus = false;
+  get prodId => widget.prodId;
+
+   _buildChoiceList() {
     List<Widget> choices = [];
     for (var item in reportList) {
       choices.add(Container(
@@ -158,9 +165,9 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                         ),
                       ),
                       (widget.productModal.category.toString() ==
-                                  "Category.MEN_S_CLOTHING" ||
+                                  "men's clothing" ||
                               widget.productModal.category.toString() ==
-                                  "Category.WOMEN_S_CLOTHING")
+                                  "women's clothing")
                           ? Padding(
                               padding: EdgeInsets.symmetric(
                                   horizontal: normalizedWidth(context, 30)!),
@@ -212,10 +219,12 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                                         color: Colors.white),
                                     onPressed: () {
                                       setState(() {
-                                        // widget.productModal.favourite();
                                         BlocProvider.of<ProductCubit>(context)
                                             .updateFavouriteListFromDetailScreen(
                                                 widget.productModal);
+                                        BlocProvider.of<CategoryCubit>(context)
+                                            .updateFavouriteList(
+                                            widget.productModal.id!);
                                       });
                                     },
                                   ),
@@ -234,29 +243,82 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                                         color: Colors.white),
                                     onPressed: () {
                                       setState(() {
-                                        // widget.productModal.favourite();
                                         BlocProvider.of<ProductCubit>(context)
                                             .updateFavouriteListFromDetailScreen(
                                                 widget.productModal);
+                                        BlocProvider.of<CategoryCubit>(context)
+                                            .updateFavouriteList(
+                                            widget.productModal.id ??0);
                                       });
                                     },
                                   ),
                                 ),
                               ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: normalizedWidth(context, 80)!),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    normalizedWidth(context, 60)!),
-                              )),
-                          onPressed: () {},
-                          child: const Text(
-                            'Add to Cart',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
+                        widget.productModal.isAddToCart == false
+                            ? ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal:
+                                            normalizedWidth(context, 80)!),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          normalizedWidth(context, 60)!),
+                                    )),
+                                onPressed: ()  async{
+                                  CartModel cart = CartModel(
+                                    id: 11,
+                                    userId: prodId,
+                                    date: DateFormat('yyyy-MM-dd')
+                                        .format(DateTime.now()),
+                                    products: [
+                                      Product(
+                                        productId:2,
+                                        quantity: 1,
+                                      ),
+                                    ],
+                                    v: 0,
+                                  );
+                                  responseStatus =
+                                      await ApiService().postData(object: cart);
+                                  setState(() {
+                                    BlocProvider.of<ProductCubit>(context)
+                                        .updateAddToCaListFromDetailScreen(
+                                            widget.productModal);
+                                    BlocProvider.of<CategoryCubit>(context)
+                                        .updateAddToCartList(
+                                        widget.productModal.id ??0);
+                                  });
+                                },
+                                child: const Text(
+                                  'Add to Cart',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              )
+                            : ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.grey,
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal:
+                                            normalizedWidth(context, 65)!),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          normalizedWidth(context, 60)!),
+                                    )),
+                                onPressed: () {
+                                  setState(() {
+                                    BlocProvider.of<ProductCubit>(context)
+                                        .updateAddToCaListFromDetailScreen(
+                                            widget.productModal);
+                                    BlocProvider.of<CategoryCubit>(context)
+                                        .updateAddToCartList(
+                                        widget.productModal.id);
+                                  });
+                                },
+                                child: const Text(
+                                  'Remove From Cart',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ),
                       ],
                     ),
                   ),

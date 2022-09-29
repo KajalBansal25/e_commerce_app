@@ -40,14 +40,17 @@ class _TabsState extends State<Tabs> {
             ],
             child: const HomeScreen(),
           ),
-          BlocProvider<ProductCubit>.value(
-            value: BlocProvider.of<ProductCubit>(context),
-            child: BlocProvider<CategoryCubit>.value(
-              value: BlocProvider.of<CategoryCubit>(context),
-              child: const FavouritePage(),
-            ),
+          MultiBlocProvider(
+            providers: [
+              BlocProvider<ProductCubit>.value(
+                value: BlocProvider.of<ProductCubit>(context),
+              ),
+              BlocProvider<CategoryCubit>.value(
+                value: BlocProvider.of<CategoryCubit>(context),
+              ),
+            ],
+            child: const FavouritePage(),
           ),
-
           MultiBlocProvider(
             providers: [
               BlocProvider<ProductCubit>.value(
@@ -59,9 +62,8 @@ class _TabsState extends State<Tabs> {
             ],
             child: const CartScreen(),
           ),
-          BlocProvider(
-            lazy: true,
-            create: (context) => UserCubit(),
+          BlocProvider<UserCubit>.value(
+            value: BlocProvider.of<UserCubit>(context),
             child: const ProfilePage(),
           ),
         ]),

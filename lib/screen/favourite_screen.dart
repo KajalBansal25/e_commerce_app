@@ -17,6 +17,7 @@ class _FavouritePageState extends State<FavouritePage> {
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<ProductCubit>(context).getProductData();
+    BlocProvider.of<CategoryCubit>(context).updateCateogyState();
 
     return SafeArea(
       top: true,
@@ -48,7 +49,7 @@ class _FavouritePageState extends State<FavouritePage> {
                   } else {
                     List<ProductModel>? favProduct =
                         BlocProvider.of<ProductCubit>(context).favouriteList;
-
+                          print("hello Favourite Screen ${favProduct?.length}");
                     return productCard(
                       productModel: favProduct,
                       onFavButtonClick: (int index) {
@@ -57,6 +58,15 @@ class _FavouritePageState extends State<FavouritePage> {
                               .updateFavouriteList(favProduct![index].id!);
                           BlocProvider.of<ProductCubit>(context)
                               .updateFavouriteList(favProduct[index]);
+                        });
+                        return null;
+                      },
+                      onAddToCaButtonClick: (int index){
+                        setState(() {
+                          BlocProvider.of<CategoryCubit>(context)
+                              .updateAddToCartList(favProduct![index].id!);
+                          BlocProvider.of<ProductCubit>(context)
+                              .updateAddToCaList(favProduct[index]);
                         });
                         return null;
                       },

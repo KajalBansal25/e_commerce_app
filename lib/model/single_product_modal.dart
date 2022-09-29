@@ -11,6 +11,8 @@ class ProductModal {
     this.category,
     this.image,
     this.rating,
+    this.isFavourite= false,
+    this.isAddToCart= false,
   });
 
   final int? id;
@@ -20,7 +22,9 @@ class ProductModal {
   final String? category;
   final String? image;
   final Rating? rating;
-  final bool isFavourite = false;
+  bool? isFavourite ;
+  bool? isAddToCart ;
+
 
   factory ProductModal.fromJson(Map<String, dynamic> json) =>
       _$ProductModalFromJson(json);

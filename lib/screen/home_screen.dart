@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
     "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg"
   ];
 
-  List<String>? categoryImages = [
+  List<String> categoryImages = [
     "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
     "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg",
     "https://fakestoreapi.com/img/71kWymZ+c+L._AC_SX679_.jpg",
@@ -178,7 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 fit: BoxFit.fitHeight,
                                 height: normalizedHeight(context, 200),
                                 width: normalizedWidth(context, 200),
-                                image: NetworkImage(categoryImages![index])),
+                                image: NetworkImage(categoryImages[index])),
                             SizedBox(
                               height: normalizedHeight(context, 10),
                             ),
@@ -192,7 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-                  itemCount: categoryImages?.length,
+                  itemCount: categoryImages.length,
                 ),
               ),
             ],

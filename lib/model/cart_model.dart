@@ -25,7 +25,7 @@ class CartModel {
 
   int? id;
   int? userId;
-  DateTime? date;
+  String? date;
   List<Product>? products;
   int? v;
 
@@ -40,16 +40,10 @@ class Product {
   Product({
     this.productId,
     this.quantity,
-    this.title,
-    this.image,
-    this.price,
-  });
+     });
 
   int? productId;
   int? quantity;
-  String? title;
-  double? price;
-  String? image;
 
   factory Product.fromJson(Map<String, dynamic> json) =>
       _$ProductFromJson(json);

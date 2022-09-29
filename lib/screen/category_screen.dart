@@ -32,7 +32,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   onPressed: () {
                     BlocProvider.of<CategoryCubit>(context)
                         .updateCateogyState();
-                    // context.read<ProductCubit>().getProductData();
+                    context.read<ProductCubit>().getProductData();
                     Navigator.pop(
                       context,
                     );
@@ -65,14 +65,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
             Expanded(
               child: BlocBuilder<CategoryCubit, CategoryState>(
                 builder: (context, state) {
-                  // print();
                   if (state is! CatergoryLoaded) {
                     return const Center(child: CircularProgressIndicator());
                   } else {
                     return BlocBuilder<ProductCubit, ProductState>(
                       builder: (context, state1) {
                         if (state1 is ProductLoaded ||
-                            state1 is FavouriteUpdated) {
+                            state1 is FavouriteUpdated || state1 is AddToCaUpdated) {
                           return productCard(
                             productModel:
                                 state.listOfAllCatergory[widget.category],
@@ -85,6 +84,21 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
                                 BlocProvider.of<CategoryCubit>(context)
                                     .updateFavouriteList(state
+                                        .listOfAllCatergory[widget.category]
+                                            [index]
+                                        .id);
+                              });
+                              return null;
+                            },
+                            onAddToCaButtonClick: (int index) {
+                              setState(() {
+                                BlocProvider.of<ProductCubit>(context)
+                                    .updateAddToCaListFromDetailScreen(state
+                                            .listOfAllCatergory[widget.category]
+                                        [index]);
+
+                                BlocProvider.of<CategoryCubit>(context)
+                                    .updateAddToCartList(state
                                         .listOfAllCatergory[widget.category]
                                             [index]
                                         .id);

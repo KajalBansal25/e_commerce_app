@@ -9,16 +9,10 @@ abstract class CartState extends Equatable {
 
 class CartInitial extends CartState {}
 
-class CartLoaded extends CartState{
+class CartLoaded extends CartState {
   final List<CartModel?> cartModel;
 
   const CartLoaded({
     required this.cartModel,
   });
-}
-class SortedCartData{
-   final List<CartModel> cartProductDataList ;
-   SortedCartData({required this.cartProductDataList});
-
-
 }

@@ -34,6 +34,8 @@ class _ProductPageState extends State<ProductPage> {
                   children: [
                     IconButton(
                       onPressed: () {
+                        context.read<ProductCubit>().stream;
+
                         Navigator.pop(
                           context,
                         );
@@ -70,7 +72,7 @@ class _ProductPageState extends State<ProductPage> {
                         return const Center(child: CircularProgressIndicator());
                       } else {
                         return productCard(
-                          productModel: (state).productModel,
+                          productModel: (state).productModel!,
                           onFavButtonClick: (int index) {
                             setState(() {
                               BlocProvider.of<ProductCubit>(context)
@@ -79,6 +81,17 @@ class _ProductPageState extends State<ProductPage> {
                               BlocProvider.of<CategoryCubit>(context)
                                   .updateFavouriteList(
                                       (state).productModel![index].id!);
+                            });
+                            return null;
+                          },
+                          onAddToCaButtonClick: (int index) {
+                            setState(() {
+                              BlocProvider.of<ProductCubit>(context)
+                                  .updateAddToCaList(
+                                  (state).productModel![index]);
+                              // BlocProvider.of<CategoryCubit>(context)
+                              //     .updateFavouriteList(
+                              //     (state).productModel![index].id!);
                             });
                             return null;
                           },

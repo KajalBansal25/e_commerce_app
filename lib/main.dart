@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/cubit/category_cubit.dart';
+import 'package:e_commerce_app/cubit/user_cubit.dart';
 import 'package:e_commerce_app/router.dart';
 import 'package:e_commerce_app/screen/tabs_screen.dart';
 
@@ -34,13 +35,21 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ProductCubit(),
-      child: BlocProvider(
-        create: (context) => CategoryCubit(),
-        child: Tabs(
-          tabIndex: 0,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          lazy: false,
+          create: (context) => ProductCubit(),
         ),
+        BlocProvider(
+          create: (context) => CategoryCubit(),
+        ),
+        BlocProvider(
+          create: (context) => UserCubit(),
+        ),
+      ],
+      child: Tabs(
+        tabIndex: 0,
       ),
     );
   }

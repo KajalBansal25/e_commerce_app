@@ -21,8 +21,7 @@ Map<String, dynamic> _$CartListModelToJson(CartListModel instance) =>
 CartModel _$CartModelFromJson(Map<String, dynamic> json) => CartModel(
       id: json['id'] as int?,
       userId: json['userId'] as int?,
-      date:
-          json['date'] == null ? null : DateTime.parse(json['date'] as String),
+      date: json['date'] as String?,
       products: (json['products'] as List<dynamic>?)
           ?.map((e) => Product.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -32,7 +31,7 @@ CartModel _$CartModelFromJson(Map<String, dynamic> json) => CartModel(
 Map<String, dynamic> _$CartModelToJson(CartModel instance) => <String, dynamic>{
       'id': instance.id,
       'userId': instance.userId,
-      'date': instance.date?.toIso8601String(),
+      'date': instance.date,
       'products': instance.products,
       'v': instance.v,
     };
@@ -40,15 +39,9 @@ Map<String, dynamic> _$CartModelToJson(CartModel instance) => <String, dynamic>{
 Product _$ProductFromJson(Map<String, dynamic> json) => Product(
       productId: json['productId'] as int?,
       quantity: json['quantity'] as int?,
-      title: json['title'] as String?,
-      image: json['image'] as String?,
-      price: (json['price'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
       'productId': instance.productId,
       'quantity': instance.quantity,
-      'title': instance.title,
-      'price': instance.price,
-      'image': instance.image,
     };
