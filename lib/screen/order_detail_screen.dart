@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:im_stepper/stepper.dart';
-import 'package:e_commerce_app/utils/Scaling.dart';
+import 'package:e_commerce_app/utils/scaling.dart';
 
 class OrderDetailScreen extends StatelessWidget {
   const OrderDetailScreen({Key? key}) : super(key: key);

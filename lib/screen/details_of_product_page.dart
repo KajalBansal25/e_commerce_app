@@ -1,46 +1,32 @@
+import 'package:e_commerce_app/constants/api_service.dart';
+import 'package:e_commerce_app/cubit/category_cubit.dart';
+import 'package:e_commerce_app/cubit/product_cubit.dart';
+import 'package:e_commerce_app/model/cart_model.dart';
 import 'package:e_commerce_app/screen/product_image_preview_screen.dart';
+import 'package:e_commerce_app/screen/tabs_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:e_commerce_app/model/single_product_modal.dart';
-
-import '../constants/api_constants.dart';
-import '../main.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-
-import '../utils/Scaling.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import '../model/product_model.dart';
+import '../utils/scaling.dart';
 
 //ignore: must_be_immutable
 class CustomDetailPage extends StatefulWidget {
-  CustomDetailPage({Key? key, required this.prodId}) : super(key: key);
-  String prodId;
+  CustomDetailPage({Key? key, required this.prodId, required this.productModal})
+      : super(key: key);
+  int? prodId;
+  ProductModel productModal;
   @override
   State<CustomDetailPage> createState() => _CustomDetailPageState();
 }
 
 class _CustomDetailPageState extends State<CustomDetailPage> {
-  ProductModal? _userModel = ProductModal();
-  bool circular = true;
   final List<String> reportList = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
   String selectedChoice = "S";
-  @override
-  void initState() {
-    super.initState();
-    _getData();
-  }
+  bool responseStatus = false;
+  get prodId => widget.prodId;
 
-  void _getData() async {
-    var url = Uri.parse(ApiConstants.baseUrl +
-        ApiConstants.usersEndpointSingleProduct +
-        widget.prodId);
-    var response = await http.get(url);
-    var temp = json.decode(response.body);
-    setState(() {
-      _userModel = ProductModal.fromJson(temp);
-      circular = false;
-    });
-  }
-
-  _buildChoiceList() {
+   _buildChoiceList() {
     List<Widget> choices = [];
     for (var item in reportList) {
       choices.add(Container(
@@ -66,199 +52,284 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: circular
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : Padding(
-                padding: EdgeInsets.fromLTRB(
-                    normalizedWidth(context, 8)!,
-                    normalizedHeight(context, 16)!,
-                    normalizedWidth(context, 8)!,
-                    normalizedHeight(context, 0)!),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            Navigator.pop(
+        body: Padding(
+          padding: EdgeInsets.fromLTRB(
+              normalizedWidth(context, 8)!,
+              normalizedHeight(context, 16)!,
+              normalizedWidth(context, 8)!,
+              normalizedHeight(context, 0)!),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      context.read<ProductCubit>().getProductData();
+                      Navigator.pop(
+                        context,
+                      );
+                    },
+                    icon: const Icon(Icons.arrow_back_ios_rounded),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Tabs(tabIndex: 2)),
+                        ModalRoute.withName('/'),
+                      );
+                    },
+                    icon: const Icon(Icons.shopping_cart_outlined),
+                  ),
+                ],
+              ),
+              Expanded(
+                flex: 10,
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
                               context,
-                            );
-                          },
-                          icon: const Icon(Icons.arrow_back_ios_rounded),
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ProductImagePreviewScreen()));
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: normalizedWidth(context, 10)!,
+                              vertical: normalizedHeight(context, 10)!),
+                          child: Image(
+                            image: NetworkImage("${widget.productModal.image}"),
+                            height: normalizedHeight(context, 350),
+                          ),
                         ),
-                        IconButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => MyApp(tabIndex: 2)));
-                          },
-                          icon: const Icon(Icons.shopping_cart_outlined),
-                        ),
-                      ],
-                    ),
-                    Expanded(
-                      flex: 10,
-                      child: SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: normalizedHeight(context, 20)!,
+                            bottom: normalizedHeight(context, 5)!,
+                            right: normalizedHeight(context, 30)!,
+                            left: normalizedHeight(context, 30)!),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const ProductImagePreviewScreen()));
-                              },
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: normalizedWidth(context, 10)!,
-                                    vertical: normalizedHeight(context, 10)!),
-                                child: Image(
-                                  image: NetworkImage("${_userModel?.image}"),
-                                  height: normalizedHeight(context, 350),
+                            SizedBox(
+                              width: normalizedWidth(context, 200),
+                              child: Text(
+                                '${widget.productModal.title}',
+                                softWrap: true,
+                                maxLines: 3,
+                                overflow: TextOverflow.visible,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: normalizedWidth(context, 15),
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  top: normalizedHeight(context, 20)!,
-                                  bottom: normalizedHeight(context, 5)!,
-                                  right: normalizedHeight(context, 30)!,
-                                  left: normalizedHeight(context, 30)!),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SizedBox(
-                                    width: normalizedWidth(context, 200),
-                                    child: Text(
-                                      '${_userModel?.title}',
-                                      softWrap: true,
-                                      maxLines: 3,
-                                      overflow: TextOverflow.visible,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: normalizedWidth(context, 15),
-                                      ),
-                                    ),
-                                  ),
-                                  Text(
-                                    '\$ ${_userModel?.price}',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: normalizedWidth(context, 19),
-                                    ),
-                                  ),
-                                ],
+                            Text(
+                              '\$ ${widget.productModal.price}',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: normalizedWidth(context, 19),
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  left: normalizedWidth(context, 15)!,
-                                  right: normalizedWidth(context, 15)!,
-                                  top: normalizedHeight(context, 10)!),
-                              child: ExpansionTile(
-                                title: Text(
-                                  'Description',
-                                  style: TextStyle(
-                                      fontSize: normalizedWidth(context, 15),
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                children: <Widget>[
-                                  ListTile(
-                                    title: Text(
-                                      '${_userModel?.description}',
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w700),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            _userModel?.category == "men's clothing" ||
-                                    _userModel?.category == "women's clothing"
-                                ? Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal:
-                                            normalizedWidth(context, 30)!),
-                                    child: const Text(
-                                      'Size',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  )
-                                : const Text(''),
-                            Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: normalizedWidth(context, 25)!),
-                                child:
-                                    _userModel?.category == "men's clothing" ||
-                                            _userModel?.category ==
-                                                "women's clothing"
-                                        ? SingleChildScrollView(
-                                            scrollDirection: Axis.horizontal,
-                                            child: Wrap(
-                                              children: _buildChoiceList(),
-                                            ),
-                                          )
-                                        : const Text('')),
                           ],
                         ),
                       ),
-                    ),
-                    Expanded(
-                      child: SizedBox(
-                        height: normalizedHeight(context, 35),
-                        child: Padding(
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: normalizedWidth(context, 15)!,
+                            right: normalizedWidth(context, 15)!,
+                            top: normalizedHeight(context, 10)!),
+                        child: ExpansionTile(
+                          title: Text(
+                            'Description',
+                            style: TextStyle(
+                                fontSize: normalizedWidth(context, 15),
+                                fontWeight: FontWeight.w500),
+                          ),
+                          children: <Widget>[
+                            ListTile(
+                              title: Text(
+                                '${widget.productModal.description}',
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w700),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      (widget.productModal.category.toString() ==
+                                  "men's clothing" ||
+                              widget.productModal.category.toString() ==
+                                  "women's clothing")
+                          ? Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: normalizedWidth(context, 30)!),
+                              child: const Text(
+                                'Size',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            )
+                          : const Text(''),
+                      Padding(
                           padding: EdgeInsets.symmetric(
-                              horizontal: normalizedWidth(context, 16)!,
-                              vertical: normalizedHeight(context, 0)!),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SizedBox(
-                                width: normalizedWidth(context, 65),
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(normalizedWidth(context, 60)!),
-                                    ),
+                              horizontal: normalizedWidth(context, 25)!),
+                          child: (widget.productModal.category.toString() ==
+                                      "men's clothing" ||
+                                  widget.productModal.category.toString() ==
+                                      "women's clothing")
+                              ? SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Wrap(
+                                    children: _buildChoiceList(),
                                   ),
-                                  onPressed: () {},
-                                  child: Icon(
-                                    Icons.favorite_border,
-                                    size: normalizedWidth(context, 30),
+                                )
+                              : const Text('')),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                child: SizedBox(
+                  height: normalizedHeight(context, 35),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: normalizedWidth(context, 16)!,
+                        vertical: normalizedHeight(context, 0)!),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        widget.productModal.isFavourite == false
+                            ? Container(
+                                height: normalizedHeight(context, 35),
+                                decoration: const BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20)),
+                                    color: Colors.redAccent),
+                                width: normalizedWidth(context, 65),
+                                child: Center(
+                                  child: IconButton(
+                                    icon: const Icon(Icons.favorite_outline,
+                                        color: Colors.white),
+                                    onPressed: () {
+                                      setState(() {
+                                        BlocProvider.of<ProductCubit>(context)
+                                            .updateFavouriteListFromDetailScreen(
+                                                widget.productModal);
+                                        BlocProvider.of<CategoryCubit>(context)
+                                            .updateFavouriteList(
+                                            widget.productModal.id!);
+                                      });
+                                    },
+                                  ),
+                                ),
+                              )
+                            : Container(
+                                height: normalizedHeight(context, 35),
+                                decoration: const BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20)),
+                                    color: Colors.redAccent),
+                                width: normalizedWidth(context, 65),
+                                child: Center(
+                                  child: IconButton(
+                                    icon: const Icon(Icons.favorite,
+                                        color: Colors.white),
+                                    onPressed: () {
+                                      setState(() {
+                                        BlocProvider.of<ProductCubit>(context)
+                                            .updateFavouriteListFromDetailScreen(
+                                                widget.productModal);
+                                        BlocProvider.of<CategoryCubit>(context)
+                                            .updateFavouriteList(
+                                            widget.productModal.id ??0);
+                                      });
+                                    },
                                   ),
                                 ),
                               ),
-                              ElevatedButton(
+                        widget.productModal.isAddToCart == false
+                            ? ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                     padding: EdgeInsets.symmetric(
                                         horizontal:
                                             normalizedWidth(context, 80)!),
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(normalizedWidth(context, 60)!),
+                                      borderRadius: BorderRadius.circular(
+                                          normalizedWidth(context, 60)!),
                                     )),
-                                onPressed: () {},
+                                onPressed: ()  async{
+                                  CartModel cart = CartModel(
+                                    id: 11,
+                                    userId: prodId,
+                                    date: DateFormat('yyyy-MM-dd')
+                                        .format(DateTime.now()),
+                                    products: [
+                                      Product(
+                                        productId:2,
+                                        quantity: 1,
+                                      ),
+                                    ],
+                                    v: 0,
+                                  );
+                                  responseStatus =
+                                      await ApiService().postData(object: cart);
+                                  setState(() {
+                                    BlocProvider.of<ProductCubit>(context)
+                                        .updateAddToCaListFromDetailScreen(
+                                            widget.productModal);
+                                    BlocProvider.of<CategoryCubit>(context)
+                                        .updateAddToCartList(
+                                        widget.productModal.id ??0);
+                                  });
+                                },
                                 child: const Text(
                                   'Add to Cart',
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
+                              )
+                            : ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.grey,
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal:
+                                            normalizedWidth(context, 65)!),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          normalizedWidth(context, 60)!),
+                                    )),
+                                onPressed: () {
+                                  setState(() {
+                                    BlocProvider.of<ProductCubit>(context)
+                                        .updateAddToCaListFromDetailScreen(
+                                            widget.productModal);
+                                    BlocProvider.of<CategoryCubit>(context)
+                                        .updateAddToCartList(
+                                        widget.productModal.id);
+                                  });
+                                },
+                                child: const Text(
+                                  'Remove From Cart',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
+            ],
+          ),
+        ),
       ),
     );
   }
+
+  onFavButtonClick(index) {}
 }

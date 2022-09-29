@@ -1,10 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:e_commerce_app/cubit/category_cubit.dart';
+import 'package:e_commerce_app/cubit/product_cubit.dart';
 import 'package:e_commerce_app/screen/category_screen.dart';
 import 'package:e_commerce_app/screen/product_page.dart';
-import 'package:e_commerce_app/utils/Scaling.dart';
+import 'package:e_commerce_app/utils/scaling.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '/utils/Scaling.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -24,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
     "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg"
   ];
 
-  List<String>? categoryImages = [
+  List<String> categoryImages = [
     "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
     "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg",
     "https://fakestoreapi.com/img/71kWymZ+c+L._AC_SX679_.jpg",
@@ -40,7 +42,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _controller.stopAutoPlay();
   }
@@ -56,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                'DLAasdadasd',
+                'DLA',
                 style: TextStyle(
                     fontSize: normalizedWidth(context, 30),
                     fontWeight: FontWeight.bold),
@@ -82,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     aspectRatio: 1 / 1,
                     viewportFraction: 1,
                     enlargeCenterPage: true,
-                    autoPlay: true,
+                    autoPlay: false,
                     onPageChanged: (position, reason) {
                       if (kDebugMode) {
                         print(reason);
@@ -115,7 +116,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const ProductPage())),
+                              builder: (context) =>
+                                  BlocProvider<ProductCubit>.value(
+                                    value:
+                                        BlocProvider.of<ProductCubit>(context),
+                                    child: BlocProvider<CategoryCubit>.value(
+                                      value: BlocProvider.of<CategoryCubit>(
+                                          context),
+                                      child: const ProductPage(),
+                                    ),
+                                  ))),
                       child: Row(
                         children: [
                           Text(
@@ -141,9 +151,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => CategoryScreen(
-                                    category: categoryName![index],
-                                  )));
+                            builder: (context) =>
+                                BlocProvider<CategoryCubit>.value(
+                              value: BlocProvider.of<CategoryCubit>(context),
+                              child: BlocProvider<ProductCubit>.value(
+                                value: BlocProvider.of<ProductCubit>(context),
+                                child: CategoryScreen(
+                                  category: categoryName![index],
+                                ),
+                              ),
+                            ),
+                          ));
                     },
                     child: Card(
                       margin: EdgeInsets.symmetric(
@@ -160,7 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 fit: BoxFit.fitHeight,
                                 height: normalizedHeight(context, 200),
                                 width: normalizedWidth(context, 200),
-                                image: NetworkImage(categoryImages![index])),
+                                image: NetworkImage(categoryImages[index])),
                             SizedBox(
                               height: normalizedHeight(context, 10),
                             ),
@@ -169,16 +187,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               style: TextStyle(
                                   fontSize: normalizedWidth(context, 16)),
                             ),
-                            // SizedBox(
-                            //   height: normalizedHeight(context, 10),
-                            // ),
-                            // Text('Rs. ${product.price}'),
                           ],
                         ),
                       ),
                     ),
                   ),
-                  itemCount: categoryImages?.length,
+                  itemCount: categoryImages.length,
                 ),
               ),
             ],
@@ -191,7 +205,9 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> indicators(imagesLength, currentIndex) {
     return List<Widget>.generate(imagesLength, (index) {
       return Container(
-        margin:  EdgeInsets.symmetric(horizontal: normalizedWidth(context, 3)!,vertical: normalizedHeight(context, 3)!),
+        margin: EdgeInsets.symmetric(
+            horizontal: normalizedWidth(context, 3)!,
+            vertical: normalizedHeight(context, 3)!),
         width: normalizedWidth(context, 10),
         height: normalizedHeight(context, 30),
         decoration: BoxDecoration(
