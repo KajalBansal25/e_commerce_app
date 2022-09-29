@@ -34,8 +34,9 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
             horizontal: normalizedWidth(context, 2)!,
             vertical: normalizedHeight(context, 2)!),
         child: ChoiceChip(
-          label: Text(item),
-          selectedColor: Colors.grey.shade600,
+          label: Text(item,style: const TextStyle(color: Colors.white),),
+          selectedColor: Colors.redAccent,
+          backgroundColor: Colors.grey.shade600,
           selected: selectedChoice == item,
           onSelected: (selected) {
             setState(() {
