@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/cubit/category_cubit.dart';
+import 'package:e_commerce_app/cubit/user_cubit.dart';
 import 'package:e_commerce_app/router.dart';
 import 'package:e_commerce_app/screen/tabs_screen.dart';
 
@@ -38,8 +39,11 @@ class _MyAppState extends State<MyApp> {
       create: (context) => ProductCubit(),
       child: BlocProvider(
         create: (context) => CategoryCubit(),
-        child: Tabs(
-          tabIndex: 0,
+        child: BlocProvider(
+          create: (context) => UserCubit(),
+          child: Tabs(
+            tabIndex: 0,
+          ),
         ),
       ),
     );
