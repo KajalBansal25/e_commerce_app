@@ -71,4 +71,28 @@ class ApiService {
     }
     return null;
   }
+  Future<Userdata?> putUserData({dynamic object}) async {
+    try {
+      var payload = jsonEncode(object);
+      var uri = Uri.parse('https://fakestoreapi.com/users/7');
+      var response = await http.put(
+        uri,
+        body: payload,
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      if (response.statusCode == 200) {
+        Userdata modal = Userdata.fromJson((jsonDecode(response.body)));
+        print("Post Data : $modal");
+        return modal;
+
+      }
+    } catch (e) {
+      log("Error postData $e");
+    }
+    return null;
+  }
+
+
 }

@@ -16,3 +16,8 @@ class UserLoaded extends UserState {
     required this.userdata,
   });
 }
+
+class UserUpdate extends UserState {
+  final Userdata userdata;
+  const UserUpdate({required this.userdata});
+}
