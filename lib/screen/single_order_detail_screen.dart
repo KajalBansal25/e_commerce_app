@@ -81,11 +81,12 @@ class _SingleOrderDetailScreenState extends State<SingleOrderDetailScreen> {
                       width: normalizedWidth(context, 250),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children:  [
+                        children: [
                           Text(
                             'Product Detail',
                             style: TextStyle(
-                                fontSize: normalizedWidth(context, 19), fontWeight: FontWeight.bold),
+                                fontSize: normalizedWidth(context, 19),
+                                fontWeight: FontWeight.bold),
                           ),
                           const Text('Color'),
                           SizedBox(
