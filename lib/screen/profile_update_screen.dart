@@ -1,4 +1,6 @@
+import 'package:e_commerce_app/cubit/user_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -14,8 +16,11 @@ class ProfileUpdate extends StatefulWidget {
 }
 
 class _ProfileUpdateState extends State<ProfileUpdate> {
+  // String firstName="";
+  // String email="";
+  // late int number;
   Name tempName = Name();
-  late Future<String?> updatedProfileData;
+  Userdata updatedProfileData = Userdata();
 
   Address tempAddress = Address(
       city: 'Jaipur',
@@ -36,8 +41,6 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
 
   @override
   void initState() {
-    // _getDataCall();
-    print('I am On Update Screen');
     super.initState();
   }
 
@@ -75,12 +78,13 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                       label: Text('First Name'),
                       contentPadding: EdgeInsets.all(15.0),
                       border: OutlineInputBorder(
-                          gapPadding: 1.0,
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(
-                              color: Colors.black,
-                              style: BorderStyle.solid,
-                              width: 2.0)),
+                        gapPadding: 1.0,
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        borderSide: BorderSide(
+                            color: Colors.black,
+                            style: BorderStyle.solid,
+                            width: 2.0),
+                      ),
                     ),
                     validator: (value) {
                       if ((value == null || value.isEmpty)) {
@@ -129,12 +133,13 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                       label: Text('Email'),
                       contentPadding: EdgeInsets.all(15.0),
                       border: OutlineInputBorder(
-                          gapPadding: 1.0,
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(
-                              color: Colors.black,
-                              style: BorderStyle.solid,
-                              width: 2.0)),
+                        gapPadding: 1.0,
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        borderSide: BorderSide(
+                            color: Colors.black,
+                            style: BorderStyle.solid,
+                            width: 2.0),
+                      ),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -184,16 +189,27 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                       ElevatedButton(
                         onPressed: () {
                           if (_formUpdateKey.currentState!.validate()) {
-                            updatedProfileData = send();
-
+                            updatedProfileData = Userdata(
+                              phone: phoneNoUpdate.text,
+                              name: Name(
+                                firstname: firstNameUpdate.text,
+                                lastname: lastNameUpdate.text,
+                              ),
+                              address: tempAddress,
+                              email: emailUpdate.text,
+                              password: '',
+                              id: 23,
+                              username: firstNameUpdate.text,
+                              v: 0,
+                            );
                             emailUpdate.clear();
                             phoneNoUpdate.clear();
                             firstNameUpdate.clear();
                             lastNameUpdate.clear();
-                            print(
-                                'Bye Update Screen ${updatedProfileData.toString()}');
-                            Navigator.pop(
-                                context, 'https://fakestoreapi.com/users/7');
+                            context
+                                .read<UserCubit>()
+                                .updateUser(u: updatedProfileData);
+                            Navigator.pop(context, "kajal");
                           } else {
                             setState(() {
                               _autovalidateMode = AutovalidateMode.always;
@@ -239,11 +255,9 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonEncode(tempBody));
-      print(response.body);
       return response.body;
     } catch (e) {
-      print('try and catch : ${e.toString()}');
+      throw ('try and catch : ${e.toString()}');
     }
-    return null;
   }
 }

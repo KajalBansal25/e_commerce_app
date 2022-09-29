@@ -74,7 +74,7 @@ class ApiService {
   Future<bool> postData({dynamic object}) async {
     try {
       var payload = jsonEncode(object);
-      var uri = Uri.parse(ApiConstants.baseUrl+ApiConstants.addToCart);
+      var uri = Uri.parse(ApiConstants.baseUrl + ApiConstants.addToCart);
       var response = await http.post(
         uri,
         body: payload,
@@ -82,11 +82,9 @@ class ApiService {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-      print("----------------------------- ${response.body}");
       if (response.statusCode == 200) {
         CartModel modal = CartModel.fromJson((jsonDecode(response.body)));
         return true;
-
       }
     } catch (e) {
       log("Error postData $e");
@@ -94,13 +92,25 @@ class ApiService {
     return false;
   }
 
-
-
-
-
-
-
-
-
-
+  Future<Userdata?> putUserData({dynamic object}) async {
+    try {
+      var payload = jsonEncode(object);
+      var uri = Uri.parse('https://fakestoreapi.com/users/7');
+      var response = await http.put(
+        uri,
+        body: payload,
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      if (response.statusCode == 200) {
+        Userdata modal = Userdata.fromJson((jsonDecode(response.body)));
+        print("Post Data : $modal");
+        return modal;
+      }
+    } catch (e) {
+      log("Error postData $e");
+    }
+    return null;
+  }
 }
