@@ -41,90 +41,92 @@ class _CartScreenState extends State<CartScreen>
     cartProductDataList = [];
     return SafeArea(
       child: Scaffold(
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16.0, 16.0, 8.0, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: const [
-                  Text(
-                    "Your Cart",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-                  )
-                ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16.0, 16.0, 8.0, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: const [
+                    Text(
+                      "Your Cart",
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                    )
+                  ],
+                ),
               ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.75,
-              child: BlocBuilder<ProductCubit, ProductState>(
-                builder: (context, state1) {
-                  if (state1 is ProductLoaded) {
-                    cartProductDataList = [];
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.75,
+                child: BlocBuilder<ProductCubit, ProductState>(
+                  builder: (context, state1) {
+                    if (state1 is ProductLoaded) {
+                      cartProductDataList = [];
 
-                    return BlocBuilder<CartCubit, CartState>(
-                        builder: (context, state2) {
-                      if (state2 is CartLoaded) {
-                        int cLen = state2.cartModel[0]?.products!.length ?? 0;
-                        for (var j = 0; j < cLen; j++) {
-                          for (var i = 0;
-                              i < state1.productModel!.length;
-                              i++) {
-                            if (state1.productModel![i].id ==
-                                state2.cartModel[0]?.products![j].productId) {
-                              {
-                                cartProductDataList.add({
-                                  'pdtImg': state1.productModel![i].image
-                                      .toString(),
-                                  'pdtTitle': state1.productModel![i].title
-                                      .toString(),
-                                  'pdtPrice': state1.productModel![i].price,
-                                  'crtPdtCount': state2
-                                      .cartModel[0]?.products![j].quantity,
-                                  "productId": state2
-                                      .cartModel[0]?.products![j].productId
-                                });
+                      return BlocBuilder<CartCubit, CartState>(
+                          builder: (context, state2) {
+                        if (state2 is CartLoaded) {
+                          int cLen = state2.cartModel[0]?.products!.length ?? 0;
+                          for (var j = 0; j < cLen; j++) {
+                            for (var i = 0;
+                                i < state1.productModel!.length;
+                                i++) {
+                              if (state1.productModel![i].id ==
+                                  state2.cartModel[0]?.products![j].productId) {
+                                {
+                                  cartProductDataList.add({
+                                    'pdtImg': state1.productModel![i].image
+                                        .toString(),
+                                    'pdtTitle': state1.productModel![i].title
+                                        .toString(),
+                                    'pdtPrice': state1.productModel![i].price,
+                                    'crtPdtCount': state2
+                                        .cartModel[0]?.products![j].quantity,
+                                    "productId": state2
+                                        .cartModel[0]?.products![j].productId
+                                  });
+                                }
                               }
                             }
                           }
+                          print('$totalAmount');
+                          print(cartProductDataList.length);
+                        } else if (state2 is! CartLoaded) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
                         }
-                        print('$totalAmount');
-                        print(cartProductDataList.length);
-                      } else if (state2 is! CartLoaded) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
 
-                      return _customColumn(cartProductDataList);
-                    });
-                  } else if (state1 is! ProductLoaded) {
-                    return const Center(
-                      child: Text("FAILED DUE TO state1 is! ProductLoaded "),
-                    );
-                  } else {
-                    return const Text('state1 is! ProductLoaded');
-                  }
-                },
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const PaymentScreen()));
-              },
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(
-                    horizontal: normalizedHeight(context, 140)!, vertical: normalizedWidth(context, 15)!),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0),
+                        return _customColumn(cartProductDataList);
+                      });
+                    } else if (state1 is! ProductLoaded) {
+                      return const Center(
+                        child: Text("FAILED DUE TO state1 is! ProductLoaded "),
+                      );
+                    } else {
+                      return const Text('state1 is! ProductLoaded');
+                    }
+                  },
                 ),
               ),
-              child: const Text('Payment'),
-            ),
-          ],
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const PaymentScreen()));
+                },
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: normalizedHeight(context, 140)!, vertical: normalizedWidth(context, 15)!),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                ),
+                child: const Text('Payment'),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:e_commerce_app/model/user_verification_model.dart';
 import 'package:http/http.dart' as http;
 
 import '../model/cart_model.dart';
@@ -83,7 +84,7 @@ class ApiService {
         },
       );
       if (response.statusCode == 200) {
-        CartModel modal = CartModel.fromJson((jsonDecode(response.body)));
+        // CartModel modal = CartModel.fromJson((jsonDecode(response.body)));
         return true;
       }
     } catch (e) {
@@ -113,4 +114,30 @@ class ApiService {
     }
     return null;
   }
+  Future<bool> postUserVerification({dynamic obj}) async {
+    try {
+     print('object ++++++++ $obj');
+      var payload = jsonEncode(obj);
+     print('payload ++++++++ $payload');
+
+     var uri = Uri.parse('https://fakestoreapi.com/auth/login');
+      var response = await http.post(
+        uri,
+        body: payload,
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      print("postUserVerification ${response.body}");
+      if (response.statusCode == 200) {
+        return true;
+      }
+    } catch (e) {
+      log("Error postData $e");
+    }
+    return false;
+  }
+
+
+
 }
