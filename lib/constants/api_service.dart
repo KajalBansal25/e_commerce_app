@@ -83,7 +83,6 @@ class ApiService {
         },
       );
       if (response.statusCode == 200) {
-        CartModel modal = CartModel.fromJson((jsonDecode(response.body)));
         return true;
       }
     } catch (e) {

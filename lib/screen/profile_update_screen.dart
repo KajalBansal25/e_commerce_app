@@ -8,8 +8,10 @@ import 'dart:convert';
 import '../model/user_data_modal.dart';
 
 class ProfileUpdate extends StatefulWidget {
+  final Address? tempAddress;
   const ProfileUpdate({
     Key? key,
+    this.tempAddress,
   }) : super(key: key);
 
   @override
@@ -22,14 +24,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
   // late int number;
   Name tempName = Name();
   Userdata updatedProfileData = Userdata();
-
-  Address tempAddress = Address(
-      city: 'Jaipur',
-      street: 'Rajpur',
-      zipcode: '112200',
-      number: 5,
-      geolocation: Geolocation(lat: '-37.3159', long: '81.1496'));
-
+  get tempAddress => widget.tempAddress;
   Userdata userDataModal = Userdata();
 
   final _formUpdateKey = GlobalKey<FormState>();
@@ -181,7 +176,8 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                           vertical: normalizedHeight(context, 15)!),
                       border: OutlineInputBorder(
                         gapPadding: normalizedHeight(context, 1)!,
-                        borderRadius: BorderRadius.all(Radius.circular(normalizedWidth(context, 10)!)),
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(normalizedWidth(context, 10)!)),
                         borderSide: BorderSide(
                             color: Colors.black,
                             style: BorderStyle.solid,
@@ -199,12 +195,14 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                   ),
                 ),
                 Padding(
-                  padding:  EdgeInsets.symmetric(vertical: normalizedHeight(context, 16)!),
+                  padding: EdgeInsets.symmetric(
+                      vertical: normalizedHeight(context, 16)!),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       ElevatedButton(
                         onPressed: () {
+                          print("temp add _ProfileUpdateState $tempAddress");
                           if (_formUpdateKey.currentState!.validate()) {
                             updatedProfileData = Userdata(
                               phone: phoneNoUpdate.text,
@@ -247,34 +245,5 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
         ),
       ),
     );
-  }
-
-  Future<String?> send() async {
-    var name = jsonEncode(
-        Name(firstname: firstNameUpdate.text, lastname: lastNameUpdate.text)
-            .toJson());
-    userDataModal = Userdata(
-      email: emailUpdate.text,
-      phone: phoneNoUpdate.text,
-      username: 'hello007',
-      password: 'temp@password',
-      address: tempAddress,
-      name:
-          Name(firstname: firstNameUpdate.text, lastname: lastNameUpdate.text),
-    );
-
-    try {
-      var url = Uri.parse('https://fakestoreapi.com/users/7');
-      var tempBody = userDataModal.toJson();
-      tempBody['name'] = name;
-      var response = await http.put(url,
-          headers: {
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(tempBody));
-      return response.body;
-    } catch (e) {
-      throw ('try and catch : ${e.toString()}');
-    }
   }
 }
