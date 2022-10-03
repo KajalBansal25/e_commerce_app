@@ -158,7 +158,7 @@ class _MyLoginFormState extends State<MyLoginForm> {
   }
 
   void navigateToHomePage() {
-    Navigator.push(
+    Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => MultiBlocProvider(

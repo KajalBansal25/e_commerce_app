@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/constants/api_service.dart';
 import 'package:e_commerce_app/cubit/user_cubit.dart';
+import 'package:e_commerce_app/screen/opening_screen.dart';
 import 'package:e_commerce_app/utils/scaling.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -544,10 +545,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                 ),
                                 onPressed: () {
-                                  Navigator.pushAndRemoveUntil(
+                                  Navigator.pushReplacement(
                                       context,
-                                      MaterialPageRoute(builder: (BuildContext context) => const MyLoginForm()),
-                                      ModalRoute.withName('/')
+                                      MaterialPageRoute(builder: (BuildContext context) => const OpeningScreen()),
                                   );
                                 },
                                 child: const Text(

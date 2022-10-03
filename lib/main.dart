@@ -30,33 +30,17 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return MaterialApp(
       title: 'E-commerce',
-        darkTheme: CustomTheme.darkTheme,
-        theme: CustomTheme.lightTheme,
-      home: const MediaQuery(
-        data: MediaQueryData(),
-        child:Directionality(
-            textDirection: TextDirection.rtl,
-            child:  OpeningScreen()),
-
-        // MultiBlocProvider(
-        //   providers: [
-        //     BlocProvider(
-        //       lazy: false,
-        //       create: (context) => ProductCubit(),
-        //     ),
-        //     BlocProvider(
-        //       create: (context) => CategoryCubit(),
-        //     ),
-        //     BlocProvider(
-        //       create: (context) => UserCubit(),
-        //     ),
-        //   ],
-        //   child: Tabs(
-        //     tabIndex: 0,
-        //   ),
-        // ),
+      darkTheme: CustomTheme.darkTheme,
+      theme: CustomTheme.lightTheme,
+      home: MediaQuery(
+        data: const MediaQueryData(),
+        child: WillPopScope(
+          onWillPop: () async => false,
+          child: const Directionality(
+              textDirection: TextDirection.rtl, child: OpeningScreen()),
+        ),
       ),
     );
   }

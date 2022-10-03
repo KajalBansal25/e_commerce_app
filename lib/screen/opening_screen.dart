@@ -9,7 +9,7 @@ class OpeningScreen extends StatefulWidget {
 }
 
 class _OpeningScreenState extends State<OpeningScreen> {
- @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
@@ -26,9 +26,10 @@ class _OpeningScreenState extends State<OpeningScreen> {
             ),
             ElevatedButton(
               style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.red)),
+                backgroundColor: MaterialStateProperty.all(Colors.red),
+              ),
               onPressed: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => const MyLoginForm(),
@@ -45,4 +46,4 @@ class _OpeningScreenState extends State<OpeningScreen> {
       ),
     );
   }
- }
+}
