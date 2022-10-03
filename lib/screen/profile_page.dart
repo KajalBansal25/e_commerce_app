@@ -10,7 +10,7 @@ import 'package:e_commerce_app/screen/order_detail_screen.dart';
 import 'package:e_commerce_app/screen/profile_update_screen.dart';
 import 'package:flutter/material.dart';
 import '../model/user_data_modal.dart';
-import 'package:http/http.dart' as http;
+import 'login_screen.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -427,6 +427,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                                 name: u.name,
                                                                 phone: u.phone);
                                                             await ApiService().putUserData(object: userDataModal);
+                                                            // ignore: use_build_context_synchronously
                                                             Navigator.pop(
                                                                 context);
                                                           },
@@ -507,10 +508,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                   tempAddress.city = city;
                                   tempAddress.zipcode = house;
                                   tempAddress.street = street;
-                                  print(tempAddress.city);
                                   Userdata u =
                                       context.read<UserCubit>().userData;
-                                  print(u.address?.number);
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -545,7 +544,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                 ),
                                 onPressed: () {
-                                  // Navigator.pop(context);
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(builder: (BuildContext context) => const MyLoginForm()),
+                                      ModalRoute.withName('/')
+                                  );
                                 },
                                 child: const Text(
                                   'LOG OUT',
@@ -564,22 +567,4 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  // Future<String?> send() async {
-  //   userDataModal = Userdata(
-  //     address: tempAddress,
-  //   );
-  //
-  //   try {
-  //     var url = Uri.parse('https://fakestoreapi.com/users/7');
-  //     var tempBody = userDataModal.toJson();
-  //     var response = await http.put(url,
-  //         headers: {
-  //           'Content-Type': 'application/json; charset=UTF-8',
-  //         },
-  //         body: jsonEncode(tempBody));
-  //     return response.body;
-  //   } catch (e) {
-  //     throw ('try and catch : ${e.toString()}');
-  //   }
-  // }
-}
+ }

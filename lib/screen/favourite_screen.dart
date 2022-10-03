@@ -49,7 +49,7 @@ class _FavouritePageState extends State<FavouritePage> {
                   } else {
                     List<ProductModel>? favProduct =
                         BlocProvider.of<ProductCubit>(context).favouriteList;
-                          print("hello Favourite Screen ${favProduct?.length}");
+                          // print("hello Favourite Screen ${favProduct?.length}");
                     return productCard(
                       productModel: favProduct,
                       onFavButtonClick: (int index) {

@@ -407,7 +407,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                         groupValue: _character,
                                         onChanged: (value) {
                                           setState(() {
-                                            print('kf');
+                                            // print('kf');
                                             _character = value;
                                           });
                                         },

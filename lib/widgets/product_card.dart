@@ -138,7 +138,7 @@ Widget productCard(
                                   ],
                                   v: 0,
                                 );
-                                var responseStatus =
+                                // var responseStatus =
                                     await ApiService().postData(object: cart);
                                 onAddToCaButtonClick(index);
                               },

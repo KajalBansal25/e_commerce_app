@@ -41,90 +41,94 @@ class _CartScreenState extends State<CartScreen>
     cartProductDataList = [];
     return SafeArea(
       child: Scaffold(
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16.0, 16.0, 8.0, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: const [
-                  Text(
-                    "Your Cart",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-                  )
-                ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16.0, 16.0, 8.0, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: const [
+                    Text(
+                      "Your Cart",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                    )
+                  ],
+                ),
               ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.75,
-              child: BlocBuilder<ProductCubit, ProductState>(
-                builder: (context, state1) {
-                  if (state1 is ProductLoaded) {
-                    cartProductDataList = [];
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.75,
+                child: BlocBuilder<ProductCubit, ProductState>(
+                  builder: (context, state1) {
+                    if (state1 is ProductLoaded) {
+                      cartProductDataList = [];
 
-                    return BlocBuilder<CartCubit, CartState>(
-                        builder: (context, state2) {
-                      if (state2 is CartLoaded) {
-                        int cLen = state2.cartModel[0]?.products!.length ?? 0;
-                        for (var j = 0; j < cLen; j++) {
-                          for (var i = 0;
-                              i < state1.productModel!.length;
-                              i++) {
-                            if (state1.productModel![i].id ==
-                                state2.cartModel[0]?.products![j].productId) {
-                              {
-                                cartProductDataList.add({
-                                  'pdtImg': state1.productModel![i].image
-                                      .toString(),
-                                  'pdtTitle': state1.productModel![i].title
-                                      .toString(),
-                                  'pdtPrice': state1.productModel![i].price,
-                                  'crtPdtCount': state2
-                                      .cartModel[0]?.products![j].quantity,
-                                  "productId": state2
-                                      .cartModel[0]?.products![j].productId
-                                });
+                      return BlocBuilder<CartCubit, CartState>(
+                          builder: (context, state2) {
+                        if (state2 is CartLoaded) {
+                          int cLen = state2.cartModel[0]?.products!.length ?? 0;
+                          for (var j = 0; j < cLen; j++) {
+                            for (var i = 0;
+                                i < state1.productModel!.length;
+                                i++) {
+                              if (state1.productModel![i].id ==
+                                  state2.cartModel[0]?.products![j].productId) {
+                                {
+                                  cartProductDataList.add({
+                                    'pdtImg': state1.productModel![i].image
+                                        .toString(),
+                                    'pdtTitle': state1.productModel![i].title
+                                        .toString(),
+                                    'pdtPrice': state1.productModel![i].price,
+                                    'crtPdtCount': state2
+                                        .cartModel[0]?.products![j].quantity,
+                                    "productId": state2
+                                        .cartModel[0]?.products![j].productId
+                                  });
+                                }
                               }
                             }
                           }
+                          // print('$totalAmount');
+                          // print(cartProductDataList.length);
+                        } else if (state2 is! CartLoaded) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
                         }
-                        print('$totalAmount');
-                        print(cartProductDataList.length);
-                      } else if (state2 is! CartLoaded) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
 
-                      return _customColumn(cartProductDataList);
-                    });
-                  } else if (state1 is! ProductLoaded) {
-                    return const Center(
-                      child: Text("FAILED DUE TO state1 is! ProductLoaded "),
-                    );
-                  } else {
-                    return const Text('state1 is! ProductLoaded');
-                  }
-                },
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const PaymentScreen()));
-              },
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(
-                    horizontal: normalizedHeight(context, 140)!, vertical: normalizedWidth(context, 15)!),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0),
+                        return _customColumn(cartProductDataList);
+                      });
+                    } else if (state1 is! ProductLoaded) {
+                      return const Center(
+                        child: Text("FAILED DUE TO state1 is! ProductLoaded "),
+                      );
+                    } else {
+                      return const Text('state1 is! ProductLoaded');
+                    }
+                  },
                 ),
               ),
-              child: const Text('Payment'),
-            ),
-          ],
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const PaymentScreen()));
+                },
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: normalizedHeight(context, 140)!,
+                      vertical: normalizedWidth(context, 15)!),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                ),
+                child: const Text('Payment'),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -137,12 +141,12 @@ class _CartScreenState extends State<CartScreen>
         Expanded(
           child: SingleChildScrollView(
             child: Column(
-              mainAxisSize:MainAxisSize.min,
-
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
-                    padding:  EdgeInsets.symmetric(
-                        horizontal: normalizedHeight(context, 1.0)!, vertical: normalizedWidth(context, 1)!),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: normalizedHeight(context, 1.0)!,
+                        vertical: normalizedWidth(context, 1)!),
                     child: Column(
                       children: cartList
                           .map<Widget>(
@@ -157,28 +161,29 @@ class _CartScreenState extends State<CartScreen>
                                     height: normalizedHeight(context, 100),
                                   ),
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                       SizedBox(
+                                      SizedBox(
                                         height: normalizedHeight(context, 10),
                                       ),
                                       SizedBox(
-                                        width:normalizedWidth(context,  120.0),
+                                        width: normalizedWidth(context, 120.0),
                                         child: Text(
                                           item["pdtTitle"],
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           softWrap: false,
-                                          style:  TextStyle(
-                                            fontSize: normalizedWidth(context, 16),
+                                          style: TextStyle(
+                                            fontSize:
+                                                normalizedWidth(context, 16),
                                           ),
                                         ),
                                       ),
-                                       SizedBox(
+                                      SizedBox(
                                         height: normalizedHeight(context, 10),
-
                                       ),
-                                       SizedBox(
+                                      SizedBox(
                                         width: normalizedWidth(context, 120),
                                         child: const Text(
                                           'Size: M',
@@ -187,25 +192,26 @@ class _CartScreenState extends State<CartScreen>
                                                   180, 180, 180, 1.0)),
                                         ),
                                       ),
-                                       SizedBox(
-                                         height: normalizedHeight(context, 10),
-                                       ),
+                                      SizedBox(
+                                        height: normalizedHeight(context, 10),
+                                      ),
                                       Text("\$ ${item["pdtPrice"].toString()}"),
                                     ],
                                   ),
-                                   SizedBox(
+                                  SizedBox(
                                     width: normalizedWidth(context, 83),
                                   ),
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
                                       IconButton(
                                         onPressed: () {
-                                          print('${item["productId"]}');
+                                          // print('${item["productId"]}');
                                           putUpdateCountApi(item["productId"],
                                               item["crtPdtCount"]);
                                         },
-                                        icon:  Icon(
+                                        icon: Icon(
                                           Icons.remove,
                                           size: normalizedWidth(context, 15),
                                         ),
@@ -215,14 +221,15 @@ class _CartScreenState extends State<CartScreen>
                                       Padding(
                                         padding: const EdgeInsets.fromLTRB(
                                             2.0, 0.0, 2.0, 0.0),
-                                        child: Text(item["crtPdtCount"].toString()),
+                                        child: Text(
+                                            item["crtPdtCount"].toString()),
                                       ),
-                                       SizedBox(
-                                         height: normalizedHeight(context, 10),
-                                       ),
+                                      SizedBox(
+                                        height: normalizedHeight(context, 10),
+                                      ),
                                       IconButton(
                                         onPressed: () {},
-                                        icon:  Icon(
+                                        icon: Icon(
                                           Icons.add,
                                           size: normalizedWidth(context, 15),
                                         ),
@@ -244,7 +251,9 @@ class _CartScreenState extends State<CartScreen>
         Column(
           children: [
             Padding(
-              padding:  EdgeInsets.symmetric(horizontal: normalizedHeight(context, 20.0)!, vertical: normalizedWidth(context, 10.0)!),
+              padding: EdgeInsets.symmetric(
+                  horizontal: normalizedHeight(context, 20.0)!,
+                  vertical: normalizedWidth(context, 10.0)!),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -255,13 +264,14 @@ class _CartScreenState extends State<CartScreen>
                   BlocBuilder<CartCubit, CartState>(
                     builder: (context, state) {
                       if (state is CartLoaded) {
-                        totalAmount=0.0;
+                        totalAmount = 0.0;
                         totalAmount = _getTotalAmount(cartList);
 
                         return Text(
                           '\$ $totalAmount ',
-                          style:  TextStyle(
-                              fontSize: normalizedWidth(context, 15), fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: normalizedWidth(context, 15),
+                              fontWeight: FontWeight.bold),
                         );
                       }
                       return const Text('Price::');
@@ -282,7 +292,7 @@ class _CartScreenState extends State<CartScreen>
       var response = await http.put(url);
 
       if (response.statusCode == 200) {
-        print("=================>>${response.body}");
+        debugPrint("=================>>${response.body}");
       }
     } catch (e) {
       log(e.toString());

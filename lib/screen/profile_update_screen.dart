@@ -2,8 +2,6 @@ import 'package:e_commerce_app/cubit/user_cubit.dart';
 import 'package:e_commerce_app/utils/scaling.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 import '../model/user_data_modal.dart';
 
@@ -202,7 +200,6 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                     children: [
                       ElevatedButton(
                         onPressed: () {
-                          print("temp add _ProfileUpdateState $tempAddress");
                           if (_formUpdateKey.currentState!.validate()) {
                             updatedProfileData = Userdata(
                               phone: phoneNoUpdate.text,
@@ -247,3 +244,33 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
     );
   }
 }
+
+//   Future<String?> send() async {
+//     var name = jsonEncode(
+//         Name(firstname: firstNameUpdate.text, lastname: lastNameUpdate.text)
+//             .toJson());
+//     userDataModal = Userdata(
+//       email: emailUpdate.text,
+//       phone: phoneNoUpdate.text,
+//       username: 'hello007',
+//       password: 'temp@password',
+//       address: tempAddress,
+//       name:
+//           Name(firstname: firstNameUpdate.text, lastname: lastNameUpdate.text),
+//     );
+//
+//     try {
+//       var url = Uri.parse('https://fakestoreapi.com/users/7');
+//       var tempBody = userDataModal.toJson();
+//       tempBody['name'] = name;
+//       var response = await http.put(url,
+//           headers: {
+//             'Content-Type': 'application/json; charset=UTF-8',
+//           },
+//           body: jsonEncode(tempBody));
+//       return response.body;
+//     } catch (e) {
+//       throw ('try and catch : ${e.toString()}');
+//     }
+//   }
+// }
