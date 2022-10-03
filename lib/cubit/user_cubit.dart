@@ -20,7 +20,6 @@ class UserCubit extends Cubit<UserState> {
 
   void updateUser({required Userdata u}) async {
     Userdata userDataUpdated = (await ApiService().putUserData(object: u))!;
-
     emit(UserUpdate(userdata: userDataUpdated));
     emit(UserLoaded(userdata: userDataUpdated));
   }
