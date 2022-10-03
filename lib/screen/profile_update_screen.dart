@@ -6,8 +6,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../model/user_data_modal.dart';
 
 class ProfileUpdate extends StatefulWidget {
+  final Address? tempAddress;
   const ProfileUpdate({
     Key? key,
+    this.tempAddress,
   }) : super(key: key);
 
   @override
@@ -20,14 +22,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
   // late int number;
   Name tempName = Name();
   Userdata updatedProfileData = Userdata();
-
-  Address tempAddress = Address(
-      city: 'Jaipur',
-      street: 'Rajpur',
-      zipcode: '112200',
-      number: 5,
-      geolocation: Geolocation(lat: '-37.3159', long: '81.1496'));
-
+  get tempAddress => widget.tempAddress;
   Userdata userDataModal = Userdata();
 
   final _formUpdateKey = GlobalKey<FormState>();
@@ -205,6 +200,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                     children: [
                       ElevatedButton(
                         onPressed: () {
+                          print("temp add _ProfileUpdateState $tempAddress");
                           if (_formUpdateKey.currentState!.validate()) {
                             updatedProfileData = Userdata(
                               phone: phoneNoUpdate.text,

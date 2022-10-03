@@ -17,7 +17,6 @@ class UserCubit extends Cubit<UserState> {
       emit(UserLoaded(userdata: userdata));
     });
   }
-
   void updateUser({required Userdata u}) async {
     Userdata userDataUpdated = (await ApiService().putUserData(object: u))!;
     if (userDataUpdated != null) {
@@ -27,4 +26,5 @@ class UserCubit extends Cubit<UserState> {
       print(" Emit data Moadal  :::::::::::::::");
     }
   }
+
 }

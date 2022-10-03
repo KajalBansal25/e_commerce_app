@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/constants/api_service.dart';
 import 'package:e_commerce_app/cubit/user_cubit.dart';
 import 'package:e_commerce_app/screen/opening_screen.dart';
 import 'package:e_commerce_app/utils/scaling.dart';
@@ -24,13 +25,15 @@ class _ProfilePageState extends State<ProfilePage> {
   final houseTextField = TextEditingController();
   final floorTextField = TextEditingController();
   final cityTextField = TextEditingController();
-  final countryTextField = TextEditingController();
+  final streetTextField = TextEditingController();
   String house = '';
   String floor = '';
   String city = '';
-  String country = '';
+  String street = '';
   String currentAddress = '';
   late Position currentPosition;
+  Address tempAddress = Address();
+  Userdata userDataModal = Userdata();
 
   Future<Position?> _determinePosition() async {
     bool serviceEnabled;
@@ -62,10 +65,10 @@ class _ProfilePageState extends State<ProfilePage> {
       setState(() {
         currentPosition = position;
         currentAddress =
-            '${place.locality},${place.postalCode},${place.country}';
+            '${place.locality},${place.postalCode},${place.street}';
         house = place.name!;
         city = place.locality!;
-        country = place.country!;
+        street = place.street!;
         floor = place.postalCode!;
       });
     } catch (e) {
@@ -342,13 +345,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                                     ),
                                                     TextFormField(
                                                       controller:
-                                                          countryTextField,
+                                                          streetTextField,
                                                       textInputAction:
                                                           TextInputAction.done,
                                                       decoration:
                                                           const InputDecoration(
                                                               labelText:
-                                                                  'Country'),
+                                                                  'street'),
                                                     ),
                                                     const SizedBox(
                                                       height: 10,
@@ -375,7 +378,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                                                   context, 20),
                                                         ),
                                                         ElevatedButton(
-                                                          onPressed: () {
+                                                          onPressed: () async {
+                                                            // print("${u.id}");
                                                             setState(() {
                                                               house =
                                                                   houseTextField
@@ -386,10 +390,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                                               city =
                                                                   cityTextField
                                                                       .text;
-                                                              country =
-                                                                  countryTextField
+                                                              street =
+                                                                  streetTextField
                                                                       .text;
-                                                              countryTextField
+                                                              streetTextField
                                                                   .clear();
                                                               houseTextField
                                                                   .clear();
@@ -398,6 +402,32 @@ class _ProfilePageState extends State<ProfilePage> {
                                                               cityTextField
                                                                   .clear();
                                                             });
+                                                            Userdata u = context
+                                                                .read<
+                                                                    UserCubit>()
+                                                                .userData;
+                                                            userDataModal = Userdata(
+                                                                v: 0,
+                                                                username:
+                                                                    u.username,
+                                                                id: u.id,
+                                                                password:
+                                                                    u.password,
+                                                                email: u.email,
+                                                                address: Address(
+                                                                    city: city,
+                                                                    number: floor
+                                                                        as int,
+                                                                    geolocation:
+                                                                        Geolocation(),
+                                                                    street:
+                                                                        street,
+                                                                    zipcode: u
+                                                                        .address
+                                                                        ?.zipcode),
+                                                                name: u.name,
+                                                                phone: u.phone);
+                                                            await ApiService().putUserData(object: userDataModal);
                                                             Navigator.pop(
                                                                 context);
                                                           },
@@ -475,6 +505,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                 ),
                                 onPressed: () {
+                                  tempAddress.city = city;
+                                  tempAddress.zipcode = house;
+                                  tempAddress.street = street;
+                                  print(tempAddress.city);
+                                  Userdata u =
+                                      context.read<UserCubit>().userData;
+                                  print(u.address?.number);
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -482,7 +519,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                           BlocProvider<UserCubit>.value(
                                         value:
                                             BlocProvider.of<UserCubit>(context),
-                                        child: const ProfileUpdate(),
+                                        child: ProfileUpdate(
+                                            tempAddress: u.address!),
                                       ),
                                     ),
                                   );
@@ -530,4 +568,23 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
+
+  // Future<String?> send() async {
+  //   userDataModal = Userdata(
+  //     address: tempAddress,
+  //   );
+  //
+  //   try {
+  //     var url = Uri.parse('https://fakestoreapi.com/users/7');
+  //     var tempBody = userDataModal.toJson();
+  //     var response = await http.put(url,
+  //         headers: {
+  //           'Content-Type': 'application/json; charset=UTF-8',
+  //         },
+  //         body: jsonEncode(tempBody));
+  //     return response.body;
+  //   } catch (e) {
+  //     throw ('try and catch : ${e.toString()}');
+  //   }
+  // }
 }
