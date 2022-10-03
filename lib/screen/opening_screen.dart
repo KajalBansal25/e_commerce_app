@@ -22,7 +22,7 @@ class _OpeningScreenState extends State<OpeningScreen> {
               child: Image.asset("assets/images/Logo.png"),
             ),
             const SizedBox(
-              height: 100,
+              height: 250,
             ),
             ElevatedButton(
               style: ButtonStyle(
