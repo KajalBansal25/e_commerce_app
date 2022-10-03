@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/router.dart';
 import 'package:e_commerce_app/screen/opening_screen.dart';
+import 'package:e_commerce_app/screen/splash_screen.dart';
 import 'package:e_commerce_app/themes/app_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -38,25 +39,7 @@ class _MyAppState extends State<MyApp> {
         data: MediaQueryData(),
         child:Directionality(
             textDirection: TextDirection.rtl,
-            child:  OpeningScreen()),
-
-        // MultiBlocProvider(
-        //   providers: [
-        //     BlocProvider(
-        //       lazy: false,
-        //       create: (context) => ProductCubit(),
-        //     ),
-        //     BlocProvider(
-        //       create: (context) => CategoryCubit(),
-        //     ),
-        //     BlocProvider(
-        //       create: (context) => UserCubit(),
-        //     ),
-        //   ],
-        //   child: Tabs(
-        //     tabIndex: 0,
-        //   ),
-        // ),
+            child:  SplashScreen()),
       ),
     );
   }

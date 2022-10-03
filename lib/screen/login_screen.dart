@@ -35,7 +35,7 @@ class _MyLoginFormState extends State<MyLoginForm> {
 
   @override
   Widget build(BuildContext context) {
-        return GestureDetector(
+    return GestureDetector(
       onTap: oFocusFunction,
       child: Scaffold(
         body: Form(
