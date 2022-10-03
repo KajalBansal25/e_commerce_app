@@ -26,7 +26,16 @@ if(userDataTemp!=null){
 else{
   print(" Emit data Moadal  :::::::::::::::");
 }
-
-
   }
+
+  void updateAddress({required Userdata ua})async{
+    Userdata? userDataTemp=await ApiService().putUserData(object: ua);
+    if(userDataTemp!=null){
+      emit(UserUpdate(userdata: userDataTemp));
+    }
+    else{
+      print(" Emit data Moadal  :::::::::::::::");
+    }
+  }
+
 }
