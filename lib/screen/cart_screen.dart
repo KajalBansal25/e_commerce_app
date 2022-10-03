@@ -89,8 +89,8 @@ class _CartScreenState extends State<CartScreen>
                               }
                             }
                           }
-                          print('$totalAmount');
-                          print(cartProductDataList.length);
+                          // print('$totalAmount');
+                          // print(cartProductDataList.length);
                         } else if (state2 is! CartLoaded) {
                           return const Center(
                             child: CircularProgressIndicator(),
@@ -203,7 +203,7 @@ class _CartScreenState extends State<CartScreen>
                                     children: [
                                       IconButton(
                                         onPressed: () {
-                                          print('${item["productId"]}');
+                                          // print('${item["productId"]}');
                                           putUpdateCountApi(item["productId"],
                                               item["crtPdtCount"]);
                                         },

@@ -3,7 +3,6 @@ import 'package:e_commerce_app/screen/tabs_screen.dart';
 import 'package:e_commerce_app/utils/scaling.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../cubit/category_cubit.dart';
 import '../cubit/product_cubit.dart';
 import '../cubit/user_cubit.dart';
@@ -36,13 +35,8 @@ class _MyLoginFormState extends State<MyLoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    // return MaterialApp(
-    //   title: 'E-commerce',
-    //   darkTheme: CustomTheme.darkTheme,
-    //   theme: CustomTheme.lightTheme,
-    //   home:
-    return GestureDetector(
-      onTap:oFocusFunction,
+        return GestureDetector(
+      onTap: oFocusFunction,
       child: Scaffold(
         body: Form(
           key: _formKey,
@@ -143,8 +137,6 @@ class _MyLoginFormState extends State<MyLoginForm> {
                             status == true
                                 ? navigateToHomePage()
                                 : alertMessage();
-                            // ignore: use_build_context_synchronously
-
                             username.clear();
                             password.clear();
                           }
@@ -196,7 +188,7 @@ class _MyLoginFormState extends State<MyLoginForm> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  void oFocusFunction(){
+  void oFocusFunction() {
     FocusScopeNode currentFocus = FocusScope.of(context);
     if (!currentFocus.hasPrimaryFocus) {
       currentFocus.unfocus();
