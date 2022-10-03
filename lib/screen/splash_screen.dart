@@ -24,13 +24,8 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Image.asset("assets/images/Logo.png"),
-          const CircularProgressIndicator(color: Colors.yellow,),
-        ],
+      body: Center(
+        child: Image.asset("assets/images/Logo.png"),
       ),
     );
   }
