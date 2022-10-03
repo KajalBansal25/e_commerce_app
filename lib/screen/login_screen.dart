@@ -62,6 +62,7 @@ class _MyLoginFormState extends State<MyLoginForm> {
                       vertical: normalizedHeight(context, 8.0)!),
                   child: TextFormField(
                     controller: username,
+                    textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.name,
                     decoration: const InputDecoration(
                       hintText: 'Enter your username',

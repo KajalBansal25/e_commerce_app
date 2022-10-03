@@ -245,32 +245,3 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
   }
 }
 
-//   Future<String?> send() async {
-//     var name = jsonEncode(
-//         Name(firstname: firstNameUpdate.text, lastname: lastNameUpdate.text)
-//             .toJson());
-//     userDataModal = Userdata(
-//       email: emailUpdate.text,
-//       phone: phoneNoUpdate.text,
-//       username: 'hello007',
-//       password: 'temp@password',
-//       address: tempAddress,
-//       name:
-//           Name(firstname: firstNameUpdate.text, lastname: lastNameUpdate.text),
-//     );
-//
-//     try {
-//       var url = Uri.parse('https://fakestoreapi.com/users/7');
-//       var tempBody = userDataModal.toJson();
-//       tempBody['name'] = name;
-//       var response = await http.put(url,
-//           headers: {
-//             'Content-Type': 'application/json; charset=UTF-8',
-//           },
-//           body: jsonEncode(tempBody));
-//       return response.body;
-//     } catch (e) {
-//       throw ('try and catch : ${e.toString()}');
-//     }
-//   }
-// }

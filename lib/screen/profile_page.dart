@@ -427,7 +427,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                                                         ?.zipcode),
                                                                 name: u.name,
                                                                 phone: u.phone);
-                                                            await ApiService().putUserData(object: userDataModal);
+                                                            await ApiService()
+                                                                .putUserData(
+                                                                    object:
+                                                                        userDataModal);
                                                             // ignore: use_build_context_synchronously
                                                             Navigator.pop(
                                                                 context);
@@ -546,8 +549,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                                 onPressed: () {
                                   Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(builder: (BuildContext context) => const OpeningScreen()),
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            const MyLoginForm()),
                                   );
                                 },
                                 child: const Text(
@@ -566,5 +571,4 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
-
- }
+}
