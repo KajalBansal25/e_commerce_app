@@ -32,7 +32,6 @@ class ProductCubit extends Cubit<ProductState> {
           favList: favouriteList,
           addToCartList: addToCaList));
     }
-    print(" getProductData : Product Loaded");
   }
 
   void updateFavouriteList(ProductModel favItem) {
@@ -53,12 +52,10 @@ class ProductCubit extends Cubit<ProductState> {
     //     productModel: productModel!,
     //     favList: favouriteList,
     //     addToCartList: addToCaList));
-    for (var i = 0; i < favouriteList!.length; i++) {
-      print(">>>>>>>${favouriteList![i].id}");
-    }
-    for (var i = 0; i < ids!.length; i++) {
-      print("<<<<<<<${ids![i]}");
-    }
+    // for (var i = 0; i < favouriteList!.length; i++) {
+    // }
+    // for (var i = 0; i < ids!.length; i++) {
+    // }
   }
 
   void updateAddToCaList(ProductModel item) {
@@ -74,12 +71,12 @@ class ProductCubit extends Cubit<ProductState> {
       productModel![index].isAddToCart = true;
     }
 
-    for (var i = 0; i < addToCaList!.length; i++) {
-      print("add To Cart List id ${addToCaList![i].id}");
-    }
-    for (var i = 0; i < productId!.length; i++) {
-      print("updateAddToCaList productId ${productId![i]}");
-    }
+    // for (var i = 0; i < addToCaList!.length; i++) {
+    //   print("add To Cart List id ${addToCaList![i].id}");
+    // }
+    // for (var i = 0; i < productId!.length; i++) {
+    //   print("updateAddToCaList productId ${productId![i]}");
+    // }
   }
 
   void updateFavouriteListFromDetailScreen(ProductModel favItem) {
@@ -96,11 +93,11 @@ class ProductCubit extends Cubit<ProductState> {
       productModel![index].isFavourite = true;
     }
 
-    for (var i = 0; i < favouriteList!.length; i++) {
-      print(">>>>>>>${favouriteList![i].id}");
-    }
+    // for (var i = 0; i < favouriteList!.length; i++) {
+    //   print(">>>>>>>${favouriteList![i].id}");
+    // }
     for (var i = 0; i < ids!.length; i++) {
-      print("<<<<<<<${ids![i]}");
+      // print("<<<<<<<${ids![i]}");
       emit(
           FavouriteUpdated(productModel: productModel, favList: favouriteList));
     }
@@ -121,11 +118,11 @@ class ProductCubit extends Cubit<ProductState> {
     }
 
     emit(AddToCaUpdated(productModel: productModel, addToCaList: addToCaList));
-    for (var i = 0; i < addToCaList!.length; i++) {
-      print(">>>>>>>${addToCaList![i].id}");
-    }
-    for (var i = 0; i < productId!.length; i++) {
-      print("<<<<<<<${productId![i]}");
-    }
+    // for (var i = 0; i < addToCaList!.length; i++) {
+    //   print(">>>>>>>${addToCaList![i].id}");
+    // }
+    // for (var i = 0; i < productId!.length; i++) {
+    //   print("<<<<<<<${productId![i]}");
+    // }
   }
 }

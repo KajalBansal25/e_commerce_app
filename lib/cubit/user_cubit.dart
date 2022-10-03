@@ -17,23 +17,12 @@ class UserCubit extends Cubit<UserState> {
       emit(UserLoaded(userdata: userdata));
     });
   }
-
-  void updateUser({required Userdata u } ) async{
-    Userdata? userDataTemp = await ApiService().putUserData(object: u);
-if(userDataTemp!=null){
-  emit(UserUpdate(userdata: userDataTemp));
-}
-else{
-  print(" Emit data Moadal  :::::::::::::::");
-}
-  }
-
-  void updateAddress({required Userdata ua})async{
-    Userdata? userDataTemp=await ApiService().putUserData(object: ua);
-    if(userDataTemp!=null){
-      emit(UserUpdate(userdata: userDataTemp));
-    }
-    else{
+  void updateUser({required Userdata u}) async {
+    Userdata userDataUpdated = (await ApiService().putUserData(object: u))!;
+    if (userDataUpdated != null) {
+      emit(UserUpdate(userdata: userDataUpdated));
+      emit(UserLoaded(userdata: userDataUpdated));
+    } else {
       print(" Emit data Moadal  :::::::::::::::");
     }
   }

@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:http/http.dart' as http;
-
 import '../model/cart_model.dart';
 import '../model/product_model.dart';
 import '../model/user_data_modal.dart';
@@ -104,7 +102,6 @@ class ApiService {
       );
       if (response.statusCode == 200) {
         Userdata modal = Userdata.fromJson((jsonDecode(response.body)));
-        print("Post Data : $modal");
         return modal;
       }
     } catch (e) {
@@ -112,4 +109,26 @@ class ApiService {
     }
     return null;
   }
+  Future<bool> postUserVerification({dynamic obj}) async {
+    try {
+      var payload = jsonEncode(obj);
+     var uri = Uri.parse('https://fakestoreapi.com/auth/login');
+      var response = await http.post(
+        uri,
+        body: payload,
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      if (response.statusCode == 200) {
+        return true;
+      }
+    } catch (e) {
+      log("Error postData $e");
+    }
+    return false;
+  }
+
+
+
 }

@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/constants/api_service.dart';
 import 'package:e_commerce_app/cubit/user_cubit.dart';
+import 'package:e_commerce_app/screen/opening_screen.dart';
 import 'package:e_commerce_app/utils/scaling.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,7 +11,7 @@ import 'package:e_commerce_app/screen/order_detail_screen.dart';
 import 'package:e_commerce_app/screen/profile_update_screen.dart';
 import 'package:flutter/material.dart';
 import '../model/user_data_modal.dart';
-import 'package:http/http.dart' as http;
+import 'login_screen.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -545,7 +546,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                 ),
                                 onPressed: () {
-                                  // Navigator.pop(context);
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(builder: (BuildContext context) => const MyLoginForm()),
+                                      ModalRoute.withName('/')
+                                  );
                                 },
                                 child: const Text(
                                   'LOG OUT',
