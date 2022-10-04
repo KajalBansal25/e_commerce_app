@@ -131,7 +131,7 @@ class _MyLoginFormState extends State<MyLoginForm> {
                             var pass = password.text;
                             SharedPreferences pref =
                                 await SharedPreferences.getInstance();
-                            pref.setString("username", password.text);
+                            pref.setString("username", username.text);
                             UserVerificationModel userObj1 =
                                 UserVerificationModel(
                               username: user,

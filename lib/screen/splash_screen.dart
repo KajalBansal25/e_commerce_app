@@ -16,7 +16,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  String finalUsername = "";
+  String? finalUsername = "";
 
   @override
   void initState() {
@@ -60,12 +60,12 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future getLoginData() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    finalUsername = sharedPreferences.getString("username")!;
+    finalUsername = sharedPreferences.getString("username");
   }
 
   getTimer() {
     Timer(const Duration(seconds: 2), () {
-      finalUsername.isEmpty
+      finalUsername == null
           ? Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => const MyLoginForm()),
