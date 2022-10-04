@@ -32,13 +32,14 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'E-commerce',
-        darkTheme: CustomTheme.darkTheme,
-        theme: CustomTheme.lightTheme,
+      darkTheme: CustomTheme.darkTheme,
+      theme: CustomTheme.lightTheme,
       home: const MediaQuery(
         data: MediaQueryData(),
-        child:Directionality(
-            textDirection: TextDirection.rtl,
-            child:  SplashScreen()),
+        child: Directionality(
+          textDirection: TextDirection.rtl,
+          child: SplashScreen(),
+        ),
       ),
     );
   }

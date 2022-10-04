@@ -109,16 +109,14 @@ class ApiService {
     }
     return null;
   }
-  Future<bool> postUserVerification({dynamic obj}) async {
+
+  Future<bool> postUserVerification(
+      {required String username, required String password}) async {
     try {
-      var payload = jsonEncode(obj);
-     var uri = Uri.parse('https://fakestoreapi.com/auth/login');
+      var uri = Uri.parse('https://fakestoreapi.com/auth/login');
       var response = await http.post(
         uri,
-        body: payload,
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
+        body: {"username": username, "password": password},
       );
       if (response.statusCode == 200) {
         return true;
@@ -128,7 +126,4 @@ class ApiService {
     }
     return false;
   }
-
-
-
 }

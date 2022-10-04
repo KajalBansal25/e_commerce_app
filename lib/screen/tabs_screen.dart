@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:e_commerce_app/cubit/cart_cubit.dart';
 import 'package:e_commerce_app/cubit/category_cubit.dart';
 import 'package:e_commerce_app/cubit/user_cubit.dart';
@@ -6,8 +8,8 @@ import 'package:e_commerce_app/screen/favourite_screen.dart';
 import 'package:e_commerce_app/screen/home_screen.dart';
 import 'package:e_commerce_app/screen/profile_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../cubit/product_cubit.dart';
 import '../themes/app_theme.dart';
 
@@ -21,69 +23,86 @@ class Tabs extends StatefulWidget {
 
 class _TabsState extends State<Tabs> {
   get tabIndex => widget.tabIndex;
+  bool canback = false;
+
   @override
   Widget build(BuildContext pcontext) {
     return MaterialApp(
       title: 'E-commerce',
       darkTheme: CustomTheme.darkTheme,
       theme: CustomTheme.lightTheme,
-      home: Scaffold(
-        body: IndexedStack(index: tabIndex, children: <Widget>[
-          MultiBlocProvider(
-            providers: [
-              BlocProvider<ProductCubit>.value(
-                value: BlocProvider.of<ProductCubit>(context),
+      home: WillPopScope(
+        onWillPop: _onWillPop,
+        child: Scaffold(
+          body: IndexedStack(
+            index: tabIndex,
+            children: <Widget>[
+              MultiBlocProvider(
+                providers: [
+                  BlocProvider<ProductCubit>.value(
+                    value: BlocProvider.of<ProductCubit>(context),
+                  ),
+                  BlocProvider<CategoryCubit>.value(
+                    value: BlocProvider.of<CategoryCubit>(context),
+                  ),
+                ],
+                child: const HomeScreen(),
               ),
-              BlocProvider<CategoryCubit>.value(
-                value: BlocProvider.of<CategoryCubit>(context),
+              MultiBlocProvider(
+                providers: [
+                  BlocProvider<ProductCubit>.value(
+                    value: BlocProvider.of<ProductCubit>(context),
+                  ),
+                  BlocProvider<CategoryCubit>.value(
+                    value: BlocProvider.of<CategoryCubit>(context),
+                  ),
+                ],
+                child: const FavouritePage(),
+              ),
+              MultiBlocProvider(
+                providers: [
+                  BlocProvider<ProductCubit>.value(
+                    value: BlocProvider.of<ProductCubit>(context),
+                  ),
+                  BlocProvider(
+                    create: (context) => CartCubit(),
+                  ),
+                ],
+                child: const CartScreen(),
+              ),
+              BlocProvider<UserCubit>.value(
+                value: BlocProvider.of<UserCubit>(context),
+                child: const ProfilePage(),
               ),
             ],
-            child: const HomeScreen(),
           ),
-          MultiBlocProvider(
-            providers: [
-              BlocProvider<ProductCubit>.value(
-                value: BlocProvider.of<ProductCubit>(context),
+          bottomNavigationBar: BottomNavigationBar(
+            showUnselectedLabels: false,
+            unselectedItemColor: CustomTheme.darkTheme.primaryColor,
+            iconSize: 30,
+            selectedItemColor: Colors.redAccent,
+            elevation: 100,
+            currentIndex: tabIndex,
+            onTap: _onItemTapped,
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
               ),
-              BlocProvider<CategoryCubit>.value(
-                value: BlocProvider.of<CategoryCubit>(context),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.favorite),
+                label: 'Favourites',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.shopping_cart_outlined),
+                label: 'Cart',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                label: 'Profile',
               ),
             ],
-            child: const FavouritePage(),
           ),
-          MultiBlocProvider(
-            providers: [
-              BlocProvider<ProductCubit>.value(
-                value: BlocProvider.of<ProductCubit>(context),
-              ),
-              BlocProvider(
-                create: (context) => CartCubit(),
-              ),
-            ],
-            child: const CartScreen(),
-          ),
-          BlocProvider<UserCubit>.value(
-            value: BlocProvider.of<UserCubit>(context),
-            child: const ProfilePage(),
-          ),
-        ]),
-        bottomNavigationBar: BottomNavigationBar(
-          showUnselectedLabels: false,
-          // backgroundColor:Colors.lightGreen,
-          unselectedItemColor: CustomTheme.darkTheme.primaryColor,
-          iconSize: 30,
-          selectedItemColor: Colors.redAccent,
-          elevation: 100,
-          currentIndex: tabIndex,
-          onTap: _onItemTapped,
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.favorite), label: 'Favourites'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_cart_outlined), label: 'Cart'),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-          ],
         ),
       ),
     );
@@ -93,5 +112,22 @@ class _TabsState extends State<Tabs> {
     setState(() {
       widget.tabIndex = index;
     });
+  }
+
+  Future<bool> _onWillPop() async {
+    if (canback == true) {
+      SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+    } else {
+      setState(() {
+        widget.tabIndex = 0;
+      });
+    }
+
+    Timer(const Duration(seconds: 2), () {
+      setState(() {
+        canback = false;
+      });
+    });
+    return canback = true;
   }
 }
