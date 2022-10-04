@@ -110,7 +110,8 @@ class ApiService {
     return null;
   }
 
-  Future<bool> postUserVerification({required String username, required String password}) async {
+  Future<bool> postUserVerification(
+      {required String username, required String password}) async {
     try {
       var uri = Uri.parse('https://fakestoreapi.com/auth/login');
       var response = await http.post(

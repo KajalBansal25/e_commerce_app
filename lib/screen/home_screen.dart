@@ -158,11 +158,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             MaterialPageRoute(
                               builder: (context) =>
                                   BlocProvider<CategoryCubit>.value(
-                                value:
-                                    BlocProvider.of<CategoryCubit>(context),
+                                value: BlocProvider.of<CategoryCubit>(context),
                                 child: BlocProvider<ProductCubit>.value(
-                                  value:
-                                      BlocProvider.of<ProductCubit>(context),
+                                  value: BlocProvider.of<ProductCubit>(context),
                                   child: CategoryScreen(
                                     category: categoryName![index],
                                   ),

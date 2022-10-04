@@ -3,13 +3,13 @@ import 'package:e_commerce_app/screen/tabs_screen.dart';
 import 'package:e_commerce_app/utils/scaling.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../cubit/category_cubit.dart';
 import '../cubit/product_cubit.dart';
 import '../cubit/user_cubit.dart';
 
 // ignore: must_be_immutable
 class MyLoginForm extends StatefulWidget {
-
   const MyLoginForm({
     Key? key,
   }) : super(key: key);
@@ -49,7 +49,6 @@ class _MyLoginFormState extends State<MyLoginForm> {
                 ),
                 const SizedBox(
                   height: 50,
-                  // normalizedHeight(context, 100),
                 ),
                 const Text('Username'),
                 Padding(
@@ -62,14 +61,15 @@ class _MyLoginFormState extends State<MyLoginForm> {
                     decoration: const InputDecoration(
                       hintText: 'Enter your username',
                       contentPadding: EdgeInsets.all(15.0),
-                      // border:OutlineInputBorder()
                       border: OutlineInputBorder(
-                          gapPadding: 1.0,
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(
-                              color: Colors.black,
-                              style: BorderStyle.solid,
-                              width: 2.0)),
+                        gapPadding: 1.0,
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                          style: BorderStyle.solid,
+                          width: 2.0,
+                        ),
+                      ),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -82,7 +82,9 @@ class _MyLoginFormState extends State<MyLoginForm> {
                 const SizedBox(
                   height: 20.0,
                 ),
-                const Text('Password'), // password
+                const Text(
+                  'Password',
+                ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
                   child: TextFormField(
@@ -95,9 +97,10 @@ class _MyLoginFormState extends State<MyLoginForm> {
                         gapPadding: 1.0,
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                         borderSide: BorderSide(
-                            color: Colors.black,
-                            style: BorderStyle.solid,
-                            width: 2.0),
+                          color: Colors.black,
+                          style: BorderStyle.solid,
+                          width: 2.0,
+                        ),
                       ),
                     ),
                     validator: (value) {
@@ -110,7 +113,6 @@ class _MyLoginFormState extends State<MyLoginForm> {
                     },
                   ),
                 ),
-
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: Column(
@@ -118,16 +120,19 @@ class _MyLoginFormState extends State<MyLoginForm> {
                     children: [
                       ElevatedButton(
                         style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.pinkAccent)),
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.pinkAccent),
+                        ),
                         onPressed: () async {
                           oFocusFunction();
                           if (_formKey.currentState!.validate()) {
                             var user = username.text;
                             var pass = password.text;
-
+                            SharedPreferences pref =
+                                await SharedPreferences.getInstance();
+                            pref.setString("username", username.text);
                             bool status = await ApiService()
-                                .postUserVerification(username: user,password: pass);
+                                .postUserVerification(password: pass , username: user);
                             status == true
                                 ? navigateToHomePage()
                                 : alertMessage();
