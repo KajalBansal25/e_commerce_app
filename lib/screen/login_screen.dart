@@ -6,15 +6,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/category_cubit.dart';
 import '../cubit/product_cubit.dart';
 import '../cubit/user_cubit.dart';
-import '../model/user_verification_model.dart';
 
 // ignore: must_be_immutable
 class MyLoginForm extends StatefulWidget {
-  // int? tabIndex = 0;
 
   const MyLoginForm({
     Key? key,
-    // this.tabIndex,
   }) : super(key: key);
 
   @override
@@ -22,8 +19,6 @@ class MyLoginForm extends StatefulWidget {
 }
 
 class _MyLoginFormState extends State<MyLoginForm> {
-  // get tabIndex => widget.tabIndex;
-
   final _formKey = GlobalKey<FormState>();
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
@@ -130,11 +125,9 @@ class _MyLoginFormState extends State<MyLoginForm> {
                           if (_formKey.currentState!.validate()) {
                             var user = username.text;
                             var pass = password.text;
-                            UserVerificationModel userObj1 =
-                                UserVerificationModel(
-                                    username: user, password: pass);
+
                             bool status = await ApiService()
-                                .postUserVerification(obj: userObj1);
+                                .postUserVerification(username: user,password: pass);
                             status == true
                                 ? navigateToHomePage()
                                 : alertMessage();
