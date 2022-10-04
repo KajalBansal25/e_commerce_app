@@ -11,11 +11,8 @@ import '../model/user_verification_model.dart';
 
 // ignore: must_be_immutable
 class MyLoginForm extends StatefulWidget {
-  // int? tabIndex = 0;
-
   const MyLoginForm({
     Key? key,
-    // this.tabIndex,
   }) : super(key: key);
 
   @override
@@ -23,8 +20,6 @@ class MyLoginForm extends StatefulWidget {
 }
 
 class _MyLoginFormState extends State<MyLoginForm> {
-  // get tabIndex => widget.tabIndex;
-
   final _formKey = GlobalKey<FormState>();
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
@@ -55,7 +50,6 @@ class _MyLoginFormState extends State<MyLoginForm> {
                 ),
                 const SizedBox(
                   height: 50,
-                  // normalizedHeight(context, 100),
                 ),
                 const Text('Username'),
                 Padding(
@@ -68,14 +62,15 @@ class _MyLoginFormState extends State<MyLoginForm> {
                     decoration: const InputDecoration(
                       hintText: 'Enter your username',
                       contentPadding: EdgeInsets.all(15.0),
-                      // border:OutlineInputBorder()
                       border: OutlineInputBorder(
-                          gapPadding: 1.0,
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(
-                              color: Colors.black,
-                              style: BorderStyle.solid,
-                              width: 2.0)),
+                        gapPadding: 1.0,
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                          style: BorderStyle.solid,
+                          width: 2.0,
+                        ),
+                      ),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -88,7 +83,9 @@ class _MyLoginFormState extends State<MyLoginForm> {
                 const SizedBox(
                   height: 20.0,
                 ),
-                const Text('Password'), // password
+                const Text(
+                  'Password',
+                ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
                   child: TextFormField(
@@ -101,9 +98,10 @@ class _MyLoginFormState extends State<MyLoginForm> {
                         gapPadding: 1.0,
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                         borderSide: BorderSide(
-                            color: Colors.black,
-                            style: BorderStyle.solid,
-                            width: 2.0),
+                          color: Colors.black,
+                          style: BorderStyle.solid,
+                          width: 2.0,
+                        ),
                       ),
                     ),
                     validator: (value) {
@@ -116,7 +114,6 @@ class _MyLoginFormState extends State<MyLoginForm> {
                     },
                   ),
                 ),
-
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: Column(
@@ -124,21 +121,22 @@ class _MyLoginFormState extends State<MyLoginForm> {
                     children: [
                       ElevatedButton(
                         style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.pinkAccent)),
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.pinkAccent),
+                        ),
                         onPressed: () async {
-                          final SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
-                          sharedPreferences.setString("username",username.text);
-                          navigateToHomePage();
-                          // setLoginData([username.text,password.text]);
-                          // print(username.text);
                           oFocusFunction();
                           if (_formKey.currentState!.validate()) {
                             var user = username.text;
                             var pass = password.text;
+                            SharedPreferences pref =
+                                await SharedPreferences.getInstance();
+                            pref.setString("username", password.text);
                             UserVerificationModel userObj1 =
                                 UserVerificationModel(
-                                    username: user, password: pass);
+                              username: user,
+                              password: pass,
+                            );
                             bool status = await ApiService()
                                 .postUserVerification(obj: userObj1);
                             status == true
@@ -201,8 +199,4 @@ class _MyLoginFormState extends State<MyLoginForm> {
       currentFocus.unfocus();
     }
   }
-  // Future<void> setLoginData(loginData) async{
-  //   final SharedPreferences pref=await SharedPreferences.getInstance();
-  //   pref.setStringList("loginValue", [loginData]);
-  // }
 }

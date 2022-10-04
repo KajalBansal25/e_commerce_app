@@ -9,7 +9,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:e_commerce_app/screen/order_detail_screen.dart';
 import 'package:e_commerce_app/screen/profile_update_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../model/user_data_modal.dart';
 import 'login_screen.dart';
 

@@ -1,12 +1,12 @@
 import 'dart:async';
-
-import 'package:e_commerce_app/screen/home_screen.dart';
+import 'package:e_commerce_app/cubit/category_cubit.dart';
+import 'package:e_commerce_app/cubit/product_cubit.dart';
+import 'package:e_commerce_app/cubit/user_cubit.dart';
 import 'package:e_commerce_app/screen/login_screen.dart';
 import 'package:e_commerce_app/screen/tabs_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-String? finalUsername;
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -16,32 +16,12 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  String? loginData;
+  String finalUsername = "";
+
   @override
   void initState() {
-    // getLoginData();
-
     super.initState();
-    getLoginData().whenComplete(() async {
-      Timer(const Duration(seconds: 2), () {
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) => finalUsername == null
-                    ? const MyLoginForm()
-                    :  const HomeScreen()));
-      });
-    });
-  }
-
-  Future getLoginData() async {
-    final SharedPreferences sharedPreferences =
-        await SharedPreferences.getInstance();
-    var obtainedUsername = sharedPreferences.getString("username");
-    setState(() {
-      finalUsername = obtainedUsername!;
-    });
-    print(finalUsername);
+    asynCheck();
   }
 
   @override
@@ -49,13 +29,54 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: Image.asset("assets/images/Logo.png"),
+        child: Image.asset("assets/images/splash.gif"),
       ),
     );
   }
-  // void getLoginData()async{
-  //   final SharedPreferences pref=await SharedPreferences.getInstance();
-  //  loginData= pref.getString("loginValue");
 
-  // }
+  navigateToHomePage() {
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                lazy: false,
+                create: (context) => ProductCubit(),
+              ),
+              BlocProvider(
+                create: (context) => CategoryCubit(),
+              ),
+              BlocProvider(
+                create: (context) => UserCubit(),
+              ),
+            ],
+            child: Tabs(
+              tabIndex: 0,
+            ),
+          ),
+        ));
+  }
+
+  Future getLoginData() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    finalUsername = sharedPreferences.getString("username")!;
+  }
+
+  getTimer() {
+    Timer(const Duration(seconds: 2), () {
+      finalUsername.isEmpty
+          ? Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const MyLoginForm()),
+            )
+          : navigateToHomePage();
+    });
+  }
+
+  Future asynCheck() async {
+    getLoginData().whenComplete(() async {
+      getTimer();
+    });
+  }
 }
