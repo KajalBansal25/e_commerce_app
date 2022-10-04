@@ -9,6 +9,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:e_commerce_app/screen/order_detail_screen.dart';
 import 'package:e_commerce_app/screen/profile_update_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../model/user_data_modal.dart';
 import 'login_screen.dart';
 
@@ -426,7 +427,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                                                         ?.zipcode),
                                                                 name: u.name,
                                                                 phone: u.phone);
-                                                            await ApiService().putUserData(object: userDataModal);
+                                                            await ApiService()
+                                                                .putUserData(
+                                                                    object:
+                                                                        userDataModal);
                                                             // ignore: use_build_context_synchronously
                                                             Navigator.pop(
                                                                 context);
@@ -544,11 +548,14 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                 ),
                                 onPressed: () {
+// final SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
+// sharedPreferences.remove("username");
                                   Navigator.pushAndRemoveUntil(
                                       context,
-                                      MaterialPageRoute(builder: (BuildContext context) => const MyLoginForm()),
-                                      ModalRoute.withName('/')
-                                  );
+                                      MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              const MyLoginForm()),
+                                      ModalRoute.withName('/'));
                                 },
                                 child: const Text(
                                   'LOG OUT',
@@ -566,5 +573,4 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
-
- }
+}

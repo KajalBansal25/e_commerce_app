@@ -3,6 +3,7 @@ import 'package:e_commerce_app/screen/tabs_screen.dart';
 import 'package:e_commerce_app/utils/scaling.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../cubit/category_cubit.dart';
 import '../cubit/product_cubit.dart';
 import '../cubit/user_cubit.dart';
@@ -125,6 +126,11 @@ class _MyLoginFormState extends State<MyLoginForm> {
                             backgroundColor:
                                 MaterialStateProperty.all(Colors.pinkAccent)),
                         onPressed: () async {
+                          final SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
+                          sharedPreferences.setString("username",username.text);
+                          navigateToHomePage();
+                          // setLoginData([username.text,password.text]);
+                          // print(username.text);
                           oFocusFunction();
                           if (_formKey.currentState!.validate()) {
                             var user = username.text;
@@ -194,4 +200,8 @@ class _MyLoginFormState extends State<MyLoginForm> {
       currentFocus.unfocus();
     }
   }
+  // Future<void> setLoginData(loginData) async{
+  //   final SharedPreferences pref=await SharedPreferences.getInstance();
+  //   pref.setStringList("loginValue", [loginData]);
+  // }
 }

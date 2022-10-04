@@ -3,6 +3,7 @@ import 'package:e_commerce_app/screen/opening_screen.dart';
 import 'package:e_commerce_app/screen/splash_screen.dart';
 import 'package:e_commerce_app/themes/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(MyApp(
