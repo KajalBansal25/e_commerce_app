@@ -7,7 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../cubit/category_cubit.dart';
 import '../cubit/product_cubit.dart';
 import '../cubit/user_cubit.dart';
-import '../model/user_verification_model.dart';
 
 // ignore: must_be_immutable
 class MyLoginForm extends StatefulWidget {
@@ -132,13 +131,8 @@ class _MyLoginFormState extends State<MyLoginForm> {
                             SharedPreferences pref =
                                 await SharedPreferences.getInstance();
                             pref.setString("username", username.text);
-                            UserVerificationModel userObj1 =
-                                UserVerificationModel(
-                              username: user,
-                              password: pass,
-                            );
                             bool status = await ApiService()
-                                .postUserVerification(obj: userObj1);
+                                .postUserVerification(password: pass , username: user);
                             status == true
                                 ? navigateToHomePage()
                                 : alertMessage();
