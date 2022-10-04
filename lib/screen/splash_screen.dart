@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    asynCheck();
+    asyncCheck();
   }
 
   @override
@@ -74,7 +74,7 @@ class _SplashScreenState extends State<SplashScreen> {
     });
   }
 
-  Future asynCheck() async {
+  Future asyncCheck() async {
     getLoginData().whenComplete(() async {
       getTimer();
     });

@@ -126,4 +126,18 @@ class ApiService {
     }
     return false;
   }
+
+  Future<List<dynamic>?> getAllCategory() async {
+    try {
+      var url = Uri.parse("https://fakestoreapi.com/products/categories");
+      var response = await http.get(url);
+      if (response.statusCode == 200) {
+        List<dynamic> allCategories = jsonDecode(response.body);
+        return allCategories;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+    return [];
+  }
 }

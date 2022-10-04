@@ -25,6 +25,8 @@ class _MyLoginFormState extends State<MyLoginForm> {
 
   @override
   void dispose() {
+    username.dispose();
+    password.dispose();
     super.dispose();
   }
 
@@ -132,7 +134,8 @@ class _MyLoginFormState extends State<MyLoginForm> {
                                 await SharedPreferences.getInstance();
                             pref.setString("username", username.text);
                             bool status = await ApiService()
-                                .postUserVerification(password: pass , username: user);
+                                .postUserVerification(
+                                    password: pass, username: user);
                             status == true
                                 ? navigateToHomePage()
                                 : alertMessage();

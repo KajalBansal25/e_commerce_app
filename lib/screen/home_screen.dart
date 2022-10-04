@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:e_commerce_app/constants/api_service.dart';
 import 'package:e_commerce_app/cubit/category_cubit.dart';
 import 'package:e_commerce_app/cubit/product_cubit.dart';
 import 'package:e_commerce_app/screen/category_screen.dart';
@@ -17,7 +18,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final CarouselController _controller = CarouselController();
-
+  List<dynamic> categoryName = [];
   List<String>? images = [
     "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
     "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
@@ -27,18 +28,24 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   List<String> categoryImages = [
-    "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
-    "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg",
     "https://fakestoreapi.com/img/71kWymZ+c+L._AC_SX679_.jpg",
+    "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg",
+    "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
     "https://fakestoreapi.com/img/51eg55uWmdL._AC_UX679_.jpg",
   ];
 
-  List<String>? categoryName = [
-    "men's clothing",
-    "jewelery",
-    "electronics",
-    "women's clothing"
-  ];
+  @override
+  void initState() {
+    getCategory();
+    super.initState();
+  }
+
+  getCategory() async {
+    var a = (await ApiService().getAllCategory())!;
+    setState(() {
+      categoryName = a;
+    });
+  }
 
   @override
   void dispose() {
@@ -116,18 +123,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       onWillPop: () async => false,
                       child: GestureDetector(
                         onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    BlocProvider<ProductCubit>.value(
-                                      value: BlocProvider.of<ProductCubit>(
-                                          context),
-                                      child: BlocProvider<CategoryCubit>.value(
-                                        value: BlocProvider.of<CategoryCubit>(
-                                            context),
-                                        child: const ProductPage(),
-                                      ),
-                                    ))),
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                BlocProvider<ProductCubit>.value(
+                              value: BlocProvider.of<ProductCubit>(context),
+                              child: BlocProvider<CategoryCubit>.value(
+                                value: BlocProvider.of<CategoryCubit>(context),
+                                child: const ProductPage(),
+                              ),
+                            ),
+                          ),
+                        ),
                         child: Row(
                           children: [
                             Text(
@@ -146,60 +153,66 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               WillPopScope(
                 onWillPop: () async => false,
-                child: SizedBox(
-                  height: normalizedHeight(context, 308),
-                  width: double.infinity,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) => GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  BlocProvider<CategoryCubit>.value(
-                                value: BlocProvider.of<CategoryCubit>(context),
-                                child: BlocProvider<ProductCubit>.value(
-                                  value: BlocProvider.of<ProductCubit>(context),
-                                  child: CategoryScreen(
-                                    category: categoryName![index],
-                                  ),
+                child: categoryName.isEmpty
+                    ? const Center(child: CircularProgressIndicator())
+                    : SizedBox(
+                        height: normalizedHeight(context, 308),
+                        width: double.infinity,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) => GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        BlocProvider<CategoryCubit>.value(
+                                      value: BlocProvider.of<CategoryCubit>(
+                                          context),
+                                      child: BlocProvider<ProductCubit>.value(
+                                        value: BlocProvider.of<ProductCubit>(
+                                            context),
+                                        child: CategoryScreen(
+                                          category: categoryName[index],
+                                        ),
+                                      ),
+                                    ),
+                                  ));
+                            },
+                            child: Card(
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: normalizedHeight(context, 10)!,
+                                  vertical: normalizedWidth(context, 20)!),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: normalizedHeight(context, 8)!,
+                                    vertical: normalizedWidth(context, 8)!),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Image(
+                                        fit: BoxFit.fitHeight,
+                                        height: normalizedHeight(context, 200),
+                                        width: normalizedWidth(context, 200),
+                                        image: NetworkImage(
+                                            categoryImages[index])),
+                                    SizedBox(
+                                      height: normalizedHeight(context, 10),
+                                    ),
+                                    Text(
+                                      categoryName[index].toUpperCase(),
+                                      style: TextStyle(
+                                          fontSize:
+                                              normalizedWidth(context, 16)),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ));
-                      },
-                      child: Card(
-                        margin: EdgeInsets.symmetric(
-                            horizontal: normalizedHeight(context, 10)!,
-                            vertical: normalizedWidth(context, 20)!),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: normalizedHeight(context, 8)!,
-                              vertical: normalizedWidth(context, 8)!),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Image(
-                                  fit: BoxFit.fitHeight,
-                                  height: normalizedHeight(context, 200),
-                                  width: normalizedWidth(context, 200),
-                                  image: NetworkImage(categoryImages[index])),
-                              SizedBox(
-                                height: normalizedHeight(context, 10),
-                              ),
-                              Text(
-                                categoryName![index].toUpperCase(),
-                                style: TextStyle(
-                                    fontSize: normalizedWidth(context, 16)),
-                              ),
-                            ],
+                            ),
                           ),
+                          itemCount: categoryImages.length,
                         ),
                       ),
-                    ),
-                    itemCount: categoryImages.length,
-                  ),
-                ),
               ),
             ],
           ),

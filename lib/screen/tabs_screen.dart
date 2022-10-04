@@ -23,7 +23,7 @@ class Tabs extends StatefulWidget {
 
 class _TabsState extends State<Tabs> {
   get tabIndex => widget.tabIndex;
-  bool canback = false;
+  bool canBack = false;
 
   @override
   Widget build(BuildContext pcontext) {
@@ -115,7 +115,7 @@ class _TabsState extends State<Tabs> {
   }
 
   Future<bool> _onWillPop() async {
-    if (canback == true) {
+    if (canBack == true) {
       SystemChannels.platform.invokeMethod('SystemNavigator.pop');
     } else {
       setState(() {
@@ -125,9 +125,9 @@ class _TabsState extends State<Tabs> {
 
     Timer(const Duration(seconds: 2), () {
       setState(() {
-        canback = false;
+        canBack = false;
       });
     });
-    return canback = true;
+    return canBack = true;
   }
 }
