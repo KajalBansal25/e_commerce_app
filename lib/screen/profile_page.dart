@@ -548,14 +548,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                 ),
                                 onPressed: () {
-// final SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
-// sharedPreferences.remove("username");
-                                  Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              const MyLoginForm()),
-                                      ModalRoute.withName('/'));
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            const MyLoginForm()),
+                                  );
                                 },
                                 child: const Text(
                                   'LOG OUT',

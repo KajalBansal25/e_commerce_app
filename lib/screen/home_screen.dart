@@ -112,87 +112,95 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontSize: normalizedWidth(context, 18),
                           fontWeight: FontWeight.bold),
                     ),
-                    GestureDetector(
-                      onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  BlocProvider<ProductCubit>.value(
-                                    value:
-                                        BlocProvider.of<ProductCubit>(context),
-                                    child: BlocProvider<CategoryCubit>.value(
-                                      value: BlocProvider.of<CategoryCubit>(
+                    WillPopScope(
+                      onWillPop: () async => false,
+                      child: GestureDetector(
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    BlocProvider<ProductCubit>.value(
+                                      value: BlocProvider.of<ProductCubit>(
                                           context),
-                                      child: const ProductPage(),
-                                    ),
-                                  ))),
-                      child: Row(
-                        children: [
-                          Text(
-                            'All Products',
-                            style: TextStyle(
-                                fontSize: normalizedWidth(context, 18),
-                                fontWeight: FontWeight.bold),
-                          ),
-                          const Icon(Icons.play_arrow)
-                        ],
+                                      child: BlocProvider<CategoryCubit>.value(
+                                        value: BlocProvider.of<CategoryCubit>(
+                                            context),
+                                        child: const ProductPage(),
+                                      ),
+                                    ))),
+                        child: Row(
+                          children: [
+                            Text(
+                              'All Products',
+                              style: TextStyle(
+                                  fontSize: normalizedWidth(context, 18),
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            const Icon(Icons.play_arrow)
+                          ],
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
-              SizedBox(
-                height: normalizedHeight(context, 308),
-                width: double.infinity,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) => GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                BlocProvider<CategoryCubit>.value(
-                              value: BlocProvider.of<CategoryCubit>(context),
-                              child: BlocProvider<ProductCubit>.value(
-                                value: BlocProvider.of<ProductCubit>(context),
-                                child: CategoryScreen(
-                                  category: categoryName![index],
+              WillPopScope(
+                onWillPop: () async => false,
+                child: SizedBox(
+                  height: normalizedHeight(context, 308),
+                  width: double.infinity,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) => GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  BlocProvider<CategoryCubit>.value(
+                                value:
+                                    BlocProvider.of<CategoryCubit>(context),
+                                child: BlocProvider<ProductCubit>.value(
+                                  value:
+                                      BlocProvider.of<ProductCubit>(context),
+                                  child: CategoryScreen(
+                                    category: categoryName![index],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ));
-                    },
-                    child: Card(
-                      margin: EdgeInsets.symmetric(
-                          horizontal: normalizedHeight(context, 10)!,
-                          vertical: normalizedWidth(context, 20)!),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: normalizedHeight(context, 8)!,
-                            vertical: normalizedWidth(context, 8)!),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Image(
-                                fit: BoxFit.fitHeight,
-                                height: normalizedHeight(context, 200),
-                                width: normalizedWidth(context, 200),
-                                image: NetworkImage(categoryImages[index])),
-                            SizedBox(
-                              height: normalizedHeight(context, 10),
-                            ),
-                            Text(
-                              categoryName![index].toUpperCase(),
-                              style: TextStyle(
-                                  fontSize: normalizedWidth(context, 16)),
-                            ),
-                          ],
+                            ));
+                      },
+                      child: Card(
+                        margin: EdgeInsets.symmetric(
+                            horizontal: normalizedHeight(context, 10)!,
+                            vertical: normalizedWidth(context, 20)!),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: normalizedHeight(context, 8)!,
+                              vertical: normalizedWidth(context, 8)!),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Image(
+                                  fit: BoxFit.fitHeight,
+                                  height: normalizedHeight(context, 200),
+                                  width: normalizedWidth(context, 200),
+                                  image: NetworkImage(categoryImages[index])),
+                              SizedBox(
+                                height: normalizedHeight(context, 10),
+                              ),
+                              Text(
+                                categoryName![index].toUpperCase(),
+                                style: TextStyle(
+                                    fontSize: normalizedWidth(context, 16)),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
+                    itemCount: categoryImages.length,
                   ),
-                  itemCount: categoryImages.length,
                 ),
               ),
             ],

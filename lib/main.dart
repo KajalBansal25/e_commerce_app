@@ -1,5 +1,4 @@
 import 'package:e_commerce_app/router.dart';
-import 'package:e_commerce_app/screen/opening_screen.dart';
 import 'package:e_commerce_app/screen/splash_screen.dart';
 import 'package:e_commerce_app/themes/app_theme.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +31,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return MaterialApp(
       title: 'E-commerce',
         darkTheme: CustomTheme.darkTheme,
         theme: CustomTheme.lightTheme,
