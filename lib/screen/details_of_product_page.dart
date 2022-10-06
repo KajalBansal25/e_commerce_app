@@ -249,7 +249,8 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                                       setState(() {
                                         BlocProvider.of<ProductCubit>(context)
                                             .updateFavouriteListFromDetailScreen(
-                                                widget.productModal);   context.read<ProductCubit>().getProductData();
+                                                widget.productModal);
+                                        context.read<ProductCubit>().getProductData();
                                        
                                       });
                                     },
@@ -290,6 +291,7 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                                         .updateAddToCartList(
                                         widget.productModal.id ??0);
                                   });
+                                  // ignore: use_build_context_synchronously
                                   context.read<ProductCubit>().getProductData();
                                 },
                                 child: const Text(
