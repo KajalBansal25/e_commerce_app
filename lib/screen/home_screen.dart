@@ -57,6 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<ProductCubit>(context).getProductData();
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(

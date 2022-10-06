@@ -17,7 +17,6 @@ class ProductPage extends StatefulWidget {
 class _ProductPageState extends State<ProductPage> {
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<ProductCubit>(context).getProductData();
     return SafeArea(
         top: true,
         child: Scaffold(
@@ -34,7 +33,7 @@ class _ProductPageState extends State<ProductPage> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        context.read<ProductCubit>().stream;
+                        // context.read<ProductCubit>().stream;
 
                         Navigator.pop(
                           context,
@@ -74,13 +73,14 @@ class _ProductPageState extends State<ProductPage> {
                         return productCard(
                           productModel: (state).productModel!,
                           onFavButtonClick: (int index) {
+
+
                             setState(() {
                               BlocProvider.of<ProductCubit>(context)
                                   .updateFavouriteList(
                                       (state).productModel![index]);
-                              BlocProvider.of<CategoryCubit>(context)
-                                  .updateFavouriteList(
-                                      (state).productModel![index].id!);
+
+                              context.read<ProductCubit>().getProductData();
                             });
                             return null;
                           },

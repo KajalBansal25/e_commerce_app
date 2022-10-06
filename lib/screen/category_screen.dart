@@ -1,4 +1,3 @@
-import 'package:e_commerce_app/cubit/category_cubit.dart';
 import 'package:e_commerce_app/cubit/product_cubit.dart';
 import 'package:e_commerce_app/screen/tabs_screen.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +15,8 @@ class CategoryScreen extends StatefulWidget {
 class _CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<CategoryCubit>(context).getProdByCategory(widget.category);
+    BlocProvider.of<ProductCubit>(context)
+        .getProductByCategories(widget.category);
     return SafeArea(
       top: true,
       child: Scaffold(
@@ -30,9 +30,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
               children: [
                 IconButton(
                   onPressed: () {
-                    BlocProvider.of<CategoryCubit>(context)
-                        .updateCateogyState();
-                    context.read<ProductCubit>().getProductData();
+                    // BlocProvider.of<CategoryCubit>(context)
+                    //     .updateCateogyState();
+                    // context.read<ProductCubit>().getProductData();
                     Navigator.pop(
                       context,
                     );
@@ -63,58 +63,98 @@ class _CategoryScreenState extends State<CategoryScreen> {
               height: normalizedHeight(context, 20),
             ),
             Expanded(
-              child: BlocBuilder<CategoryCubit, CategoryState>(
-                builder: (context, state) {
-                  if (state is! CatergoryLoaded) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else {
-                    return BlocBuilder<ProductCubit, ProductState>(
-                      builder: (context, state1) {
-                        if (state1 is ProductLoaded ||
-                            state1 is FavouriteUpdated || state1 is AddToCaUpdated) {
-                          return productCard(
-                            productModel:
-                                state.listOfAllCatergory[widget.category],
-                            onFavButtonClick: (int index) {
-                              setState(() {
-                                BlocProvider.of<ProductCubit>(context)
-                                    .updateFavouriteListFromDetailScreen(state
-                                            .listOfAllCatergory[widget.category]
-                                        [index]);
+            //     child: BlocConsumer<ProductCubit, ProductState>(
+            //     listener: (context, state) {
+            //     if (state is ProductLoaded) {
+            //       context
+            //           .read<ProductCubit>()
+            //           .getProductByCategories(widget.category);
+            //     }
+            //     // if (state is! ProductLoaded) {
+            //     //   context
+            //     //       .read<ProductCubit>()
+            //     //       .getProductByCategories(widget.category);
+            //     // }
+            //   },
+            //   builder: (context, state) {
+            //     if (state is! ProductByCategory) {
+            //       return const CircularProgressIndicator();
+            //     } else {
+            //       return productCard(
+            //         productModel: state.categoriesData!,
+            //         onFavButtonClick: (int index) {
+            //           setState(() {
+            //             BlocProvider.of<ProductCubit>(context)
+            //                 .updateFavouriteList(
+            //                     (state).categoriesData![index]);
+            //           });
+            //           return null;
+            //         },
+            //         onAddToCaButtonClick: (int index) {
+            //           setState(() {
+            //             BlocProvider.of<ProductCubit>(context)
+            //                 .updateAddToCaList((state).categoriesData![index]);
+            //           });
+            //           return null;
+            //         },
+            //         parentContext: context,
+            //       );
+            //     }
+            //   },
+            // )
 
-                                BlocProvider.of<CategoryCubit>(context)
-                                    .updateFavouriteList(state
-                                        .listOfAllCatergory[widget.category]
-                                            [index]
-                                        .id);
-                              });
-                              return null;
-                            },
-                            onAddToCaButtonClick: (int index) {
-                              setState(() {
-                                BlocProvider.of<ProductCubit>(context)
-                                    .updateAddToCaListFromDetailScreen(state
-                                            .listOfAllCatergory[widget.category]
-                                        [index]);
+               child :  BlocBuilder<ProductCubit, ProductState>(
+                  builder: (context, state) {
+                   if (state is ProductLoaded) {
+                      return productCard(
+                        productModel: state.categoriesData![widget.category],
+                        onFavButtonClick: (int index) {
+                          setState(() {
+                            BlocProvider.of<ProductCubit>(context)
+                                .updateFavouriteList(
+                                    (state).categoriesData![widget.category][index]);
 
-                                BlocProvider.of<CategoryCubit>(context)
-                                    .updateAddToCartList(state
-                                        .listOfAllCatergory[widget.category]
-                                            [index]
-                                        .id);
-                              });
-                              return null;
-                            },
-                            parentContext: context,
-                          );
-                        }
-                        return const Center(child: CircularProgressIndicator());
-                      },
-                    );
-                  }
-                },
-              ),
-            )
+                            context.read<ProductCubit>().getProductData();
+                          });
+                          return null;
+                        },
+                        onAddToCaButtonClick: (int index) {
+                          setState(() {
+                            BlocProvider.of<ProductCubit>(context)
+                                .updateAddToCaList(
+                                    (state).categoriesData![widget.category][index]);
+                          });
+                          return null;
+                        },
+                        parentContext: context,
+                      );
+                    }
+                   // if (state is ProductLoaded) {
+                   //   return productCard(
+                   //     productModel: state.productModel!,
+                   //     onFavButtonClick: (int index) {
+                   //       setState(() {
+                   //         BlocProvider.of<ProductCubit>(context)
+                   //             .updateFavouriteList(
+                   //             (state).productModel![index]);
+                   //       });
+                   //       return null;
+                   //     },
+                   //     onAddToCaButtonClick: (int index) {
+                   //       setState(() {
+                   //         BlocProvider.of<ProductCubit>(context)
+                   //             .updateAddToCaList(
+                   //             (state).productModel![index]);
+                   //       });
+                   //       return null;
+                   //     },
+                   //     parentContext: context,
+                   //   );
+                   // }
+                   return const Text("data");
+                  },
+                ),
+                )
           ],
         ),
       )),

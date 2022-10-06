@@ -17,7 +17,7 @@ class _FavouritePageState extends State<FavouritePage> {
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<ProductCubit>(context).getProductData();
-    BlocProvider.of<CategoryCubit>(context).updateCateogyState();
+    // BlocProvider.of<CategoryCubit>(context).updateCateogyState();
 
     return SafeArea(
       top: true,
@@ -47,6 +47,9 @@ class _FavouritePageState extends State<FavouritePage> {
                   if (state is! ProductLoaded) {
                     return const Center(child: CircularProgressIndicator());
                   } else {
+                    print(">>>>>>>>> ${BlocProvider
+                        .of<ProductCubit>(context)
+                        .favouriteList}");
                     List<ProductModel>? favProduct =
                         BlocProvider.of<ProductCubit>(context).favouriteList;
                           // print("hello Favourite Screen ${favProduct?.length}");

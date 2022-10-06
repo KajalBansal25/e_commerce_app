@@ -25,6 +25,7 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
   String selectedChoice = "S";
   bool responseStatus = false;
   get prodId => widget.prodId;
+  get proCat => widget.productModal.category;
 
    _buildChoiceList() {
     List<Widget> choices = [];
@@ -66,7 +67,7 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                 children: [
                   IconButton(
                     onPressed: () {
-                      context.read<ProductCubit>().getProductData();
+                      // context.read<ProductCubit>().getProductData();
                       Navigator.pop(
                         context,
                       );
@@ -219,6 +220,7 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                                     icon: const Icon(Icons.favorite_outline,
                                         color: Colors.white),
                                     onPressed: () {
+                                      context.read<ProductCubit>().getProductData();
                                       setState(() {
                                         BlocProvider.of<ProductCubit>(context)
                                             .updateFavouriteListFromDetailScreen(
@@ -243,13 +245,12 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                                     icon: const Icon(Icons.favorite,
                                         color: Colors.white),
                                     onPressed: () {
+
                                       setState(() {
                                         BlocProvider.of<ProductCubit>(context)
                                             .updateFavouriteListFromDetailScreen(
-                                                widget.productModal);
-                                        BlocProvider.of<CategoryCubit>(context)
-                                            .updateFavouriteList(
-                                            widget.productModal.id ??0);
+                                                widget.productModal);   context.read<ProductCubit>().getProductData();
+                                       
                                       });
                                     },
                                   ),
@@ -289,6 +290,7 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                                         .updateAddToCartList(
                                         widget.productModal.id ??0);
                                   });
+                                  context.read<ProductCubit>().getProductData();
                                 },
                                 child: const Text(
                                   'Add to Cart',
@@ -314,6 +316,7 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                                         .updateAddToCartList(
                                         widget.productModal.id);
                                   });
+                                  context.read<ProductCubit>().getProductData();
                                 },
                                 child: const Text(
                                   'Remove From Cart',

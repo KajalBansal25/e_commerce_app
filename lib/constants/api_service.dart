@@ -116,7 +116,10 @@ class ApiService {
       var uri = Uri.parse('https://fakestoreapi.com/auth/login');
       var response = await http.post(
         uri,
-        body: {"username": username, "password": password},
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({"username": username, "password": password}),
       );
       if (response.statusCode == 200) {
         return true;
