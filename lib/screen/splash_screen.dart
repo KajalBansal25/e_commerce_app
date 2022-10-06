@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:e_commerce_app/cubit/category_cubit.dart';
 import 'package:e_commerce_app/cubit/product_cubit.dart';
 import 'package:e_commerce_app/cubit/user_cubit.dart';
 import 'package:e_commerce_app/screen/login_screen.dart';
@@ -44,9 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 lazy: false,
                 create: (context) => ProductCubit(),
               ),
-              BlocProvider(
-                create: (context) => CategoryCubit(),
-              ),
+
               BlocProvider(
                 create: (context) => UserCubit(),
               ),

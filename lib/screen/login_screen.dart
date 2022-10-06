@@ -4,7 +4,6 @@ import 'package:e_commerce_app/utils/scaling.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../cubit/category_cubit.dart';
 import '../cubit/product_cubit.dart';
 import '../cubit/user_cubit.dart';
 
@@ -169,9 +168,7 @@ class _MyLoginFormState extends State<MyLoginForm> {
                 lazy: false,
                 create: (context) => ProductCubit(),
               ),
-              BlocProvider(
-                create: (context) => CategoryCubit(),
-              ),
+
               BlocProvider(
                 create: (context) => UserCubit(),
               ),

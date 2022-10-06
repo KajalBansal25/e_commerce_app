@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:e_commerce_app/cubit/cart_cubit.dart';
-import 'package:e_commerce_app/cubit/category_cubit.dart';
 import 'package:e_commerce_app/cubit/user_cubit.dart';
 import 'package:e_commerce_app/screen/cart_screen.dart';
 import 'package:e_commerce_app/screen/favourite_screen.dart';
@@ -42,9 +41,6 @@ class _TabsState extends State<Tabs> {
                   BlocProvider<ProductCubit>.value(
                     value: BlocProvider.of<ProductCubit>(context),
                   ),
-                  BlocProvider<CategoryCubit>.value(
-                    value: BlocProvider.of<CategoryCubit>(context),
-                  ),
                 ],
                 child: const HomeScreen(),
               ),
@@ -52,9 +48,6 @@ class _TabsState extends State<Tabs> {
                 providers: [
                   BlocProvider<ProductCubit>.value(
                     value: BlocProvider.of<ProductCubit>(context),
-                  ),
-                  BlocProvider<CategoryCubit>.value(
-                    value: BlocProvider.of<CategoryCubit>(context),
                   ),
                 ],
                 child: const FavouritePage(),

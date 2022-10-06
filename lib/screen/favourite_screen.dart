@@ -1,4 +1,3 @@
-import 'package:e_commerce_app/cubit/category_cubit.dart';
 import 'package:e_commerce_app/cubit/product_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,8 +16,6 @@ class _FavouritePageState extends State<FavouritePage> {
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<ProductCubit>(context).getProductData();
-    // BlocProvider.of<CategoryCubit>(context).updateCateogyState();
-
     return SafeArea(
       top: true,
       child: Scaffold(
@@ -54,19 +51,15 @@ class _FavouritePageState extends State<FavouritePage> {
                       productModel: favProduct,
                       onFavButtonClick: (int index) {
                         setState(() {
-                          BlocProvider.of<CategoryCubit>(context)
-                              .updateFavouriteList(favProduct![index].id!);
                           BlocProvider.of<ProductCubit>(context)
-                              .updateFavouriteList(favProduct[index]);
+                              .updateFavouriteList(favProduct![index]);
                         });
                         return null;
                       },
                       onAddToCaButtonClick: (int index){
                         setState(() {
-                          BlocProvider.of<CategoryCubit>(context)
-                              .updateAddToCartList(favProduct![index].id!);
                           BlocProvider.of<ProductCubit>(context)
-                              .updateAddToCaList(favProduct[index]);
+                              .updateAddToCaList(favProduct![index]);
                         });
                         return null;
                       },

@@ -30,10 +30,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               children: [
                 IconButton(
                   onPressed: () {
-                    // BlocProvider.of<CategoryCubit>(context)
-                    //     .updateCateogyState();
-                    // context.read<ProductCubit>().getProductData();
-                    Navigator.pop(
+                   Navigator.pop(
                       context,
                     );
                   },

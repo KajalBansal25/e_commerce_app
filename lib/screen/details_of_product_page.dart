@@ -1,5 +1,4 @@
 import 'package:e_commerce_app/constants/api_service.dart';
-import 'package:e_commerce_app/cubit/category_cubit.dart';
 import 'package:e_commerce_app/cubit/product_cubit.dart';
 import 'package:e_commerce_app/model/cart_model.dart';
 import 'package:e_commerce_app/screen/product_image_preview_screen.dart';
@@ -225,9 +224,6 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                                         BlocProvider.of<ProductCubit>(context)
                                             .updateFavouriteListFromDetailScreen(
                                                 widget.productModal);
-                                        BlocProvider.of<CategoryCubit>(context)
-                                            .updateFavouriteList(
-                                            widget.productModal.id!);
                                       });
                                     },
                                   ),
@@ -287,9 +283,7 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                                     BlocProvider.of<ProductCubit>(context)
                                         .updateAddToCaListFromDetailScreen(
                                             widget.productModal);
-                                    BlocProvider.of<CategoryCubit>(context)
-                                        .updateAddToCartList(
-                                        widget.productModal.id ??0);
+
                                   });
                                   // ignore: use_build_context_synchronously
                                   context.read<ProductCubit>().getProductData();
@@ -314,9 +308,7 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                                     BlocProvider.of<ProductCubit>(context)
                                         .updateAddToCaListFromDetailScreen(
                                             widget.productModal);
-                                    BlocProvider.of<CategoryCubit>(context)
-                                        .updateAddToCartList(
-                                        widget.productModal.id);
+
                                   });
                                   context.read<ProductCubit>().getProductData();
                                 },

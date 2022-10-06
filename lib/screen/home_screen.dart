@@ -1,6 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:e_commerce_app/constants/api_service.dart';
-import 'package:e_commerce_app/cubit/category_cubit.dart';
 import 'package:e_commerce_app/cubit/product_cubit.dart';
 import 'package:e_commerce_app/screen/category_screen.dart';
 import 'package:e_commerce_app/screen/product_page.dart';
@@ -129,10 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             builder: (context) =>
                                 BlocProvider<ProductCubit>.value(
                               value: BlocProvider.of<ProductCubit>(context),
-                              child: BlocProvider<CategoryCubit>.value(
-                                value: BlocProvider.of<CategoryCubit>(context),
-                                child: const ProductPage(),
-                              ),
+                              child: const ProductPage(),
                             ),
                           ),
                         ),
@@ -164,21 +160,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           itemBuilder: (context, index) => GestureDetector(
                             onTap: () {
                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        BlocProvider<CategoryCubit>.value(
-                                      value: BlocProvider.of<CategoryCubit>(
-                                          context),
-                                      child: BlocProvider<ProductCubit>.value(
-                                        value: BlocProvider.of<ProductCubit>(
-                                            context),
-                                        child: CategoryScreen(
-                                          category: categoryName[index],
-                                        ),
-                                      ),
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      BlocProvider<ProductCubit>.value(
+                                    value:
+                                        BlocProvider.of<ProductCubit>(context),
+                                    child: CategoryScreen(
+                                      category: categoryName[index],
                                     ),
-                                  ));
+                                  ),
+                                ),
+                              );
                             },
                             child: Card(
                               margin: EdgeInsets.symmetric(

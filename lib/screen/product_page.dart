@@ -88,9 +88,7 @@ class _ProductPageState extends State<ProductPage> {
                               BlocProvider.of<ProductCubit>(context)
                                   .updateAddToCaList(
                                   (state).productModel![index]);
-                              // BlocProvider.of<CategoryCubit>(context)
-                              //     .updateFavouriteList(
-                              //     (state).productModel![index].id!);
+
                             });
                             return null;
                           },
