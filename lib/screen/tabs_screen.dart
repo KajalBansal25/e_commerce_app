@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:e_commerce_app/cubit/cart_cubit.dart';
 import 'package:e_commerce_app/cubit/user_cubit.dart';
 import 'package:e_commerce_app/screen/cart_screen.dart';
@@ -9,8 +8,8 @@ import 'package:e_commerce_app/screen/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../cubit/product_cubit.dart';
-import '../themes/app_theme.dart';
+import 'package:e_commerce_app/cubit/product_cubit.dart';
+import 'package:e_commerce_app/themes/app_theme.dart';
 
 // ignore: must_be_immutable
 class Tabs extends StatefulWidget {
@@ -36,20 +35,12 @@ class _TabsState extends State<Tabs> {
           body: IndexedStack(
             index: tabIndex,
             children: <Widget>[
-              MultiBlocProvider(
-                providers: [
-                  BlocProvider<ProductCubit>.value(
-                    value: BlocProvider.of<ProductCubit>(context),
-                  ),
-                ],
+              BlocProvider<ProductCubit>.value(
+                value: BlocProvider.of<ProductCubit>(context),
                 child: const HomeScreen(),
               ),
-              MultiBlocProvider(
-                providers: [
-                  BlocProvider<ProductCubit>.value(
-                    value: BlocProvider.of<ProductCubit>(context),
-                  ),
-                ],
+              BlocProvider<ProductCubit>.value(
+                value: BlocProvider.of<ProductCubit>(context),
                 child: const FavouritePage(),
               ),
               MultiBlocProvider(

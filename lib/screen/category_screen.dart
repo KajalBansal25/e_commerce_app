@@ -2,7 +2,7 @@ import 'package:e_commerce_app/cubit/product_cubit.dart';
 import 'package:e_commerce_app/screen/tabs_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../widgets/product_card.dart';
+import 'package:e_commerce_app/widgets/product_card.dart';
 import 'package:e_commerce_app/utils/scaling.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -20,97 +20,59 @@ class _CategoryScreenState extends State<CategoryScreen> {
     return SafeArea(
       top: true,
       child: Scaffold(
-          body: Padding(
-        padding: EdgeInsets.fromLTRB(normalizedWidth(context, 8)!,
-            normalizedHeight(context, 16)!, normalizedWidth(context, 8)!, 0),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  onPressed: () {
-                   Navigator.pop(
-                      context,
-                    );
-                  },
-                  icon: const Icon(Icons.arrow_back_ios_rounded),
-                ),
-                Text(
-                  widget.category.toString().toUpperCase(),
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: normalizedWidth(context, 22)!),
-                ),
-                IconButton(
-                  padding: const EdgeInsets.all(0),
-                  onPressed: () {
-                    Navigator.push(
+        body: Padding(
+          padding: EdgeInsets.fromLTRB(normalizedWidth(context, 8)!,
+              normalizedHeight(context, 16)!, normalizedWidth(context, 8)!, 0),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(
+                        context,
+                      );
+                    },
+                    icon: const Icon(Icons.arrow_back_ios_rounded),
+                  ),
+                  Text(
+                    widget.category.toString().toUpperCase(),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: normalizedWidth(context, 22)!),
+                  ),
+                  IconButton(
+                    padding: const EdgeInsets.all(0),
+                    onPressed: () {
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => Tabs(
-                                  tabIndex: 2,
-                                )));
-                  },
-                  icon: const Icon(Icons.shopping_cart_outlined),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: normalizedHeight(context, 20),
-            ),
-            Expanded(
-            //     child: BlocConsumer<ProductCubit, ProductState>(
-            //     listener: (context, state) {
-            //     if (state is ProductLoaded) {
-            //       context
-            //           .read<ProductCubit>()
-            //           .getProductByCategories(widget.category);
-            //     }
-            //     // if (state is! ProductLoaded) {
-            //     //   context
-            //     //       .read<ProductCubit>()
-            //     //       .getProductByCategories(widget.category);
-            //     // }
-            //   },
-            //   builder: (context, state) {
-            //     if (state is! ProductByCategory) {
-            //       return const CircularProgressIndicator();
-            //     } else {
-            //       return productCard(
-            //         productModel: state.categoriesData!,
-            //         onFavButtonClick: (int index) {
-            //           setState(() {
-            //             BlocProvider.of<ProductCubit>(context)
-            //                 .updateFavouriteList(
-            //                     (state).categoriesData![index]);
-            //           });
-            //           return null;
-            //         },
-            //         onAddToCaButtonClick: (int index) {
-            //           setState(() {
-            //             BlocProvider.of<ProductCubit>(context)
-            //                 .updateAddToCaList((state).categoriesData![index]);
-            //           });
-            //           return null;
-            //         },
-            //         parentContext: context,
-            //       );
-            //     }
-            //   },
-            // )
-
-               child :  BlocBuilder<ProductCubit, ProductState>(
+                          builder: (context) => Tabs(
+                            tabIndex: 2,
+                          ),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.shopping_cart_outlined),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: normalizedHeight(context, 20),
+              ),
+              Expanded(
+                child: BlocBuilder<ProductCubit, ProductState>(
                   builder: (context, state) {
-                   if (state is ProductLoaded) {
+                    if (state is ProductLoaded) {
                       return productCard(
+                        parentContext: context,
                         productModel: state.categoriesData![widget.category],
                         onFavButtonClick: (int index) {
                           setState(() {
                             BlocProvider.of<ProductCubit>(context)
-                                .updateFavouriteList(
-                                    (state).categoriesData![widget.category][index]);
-
+                                .updateFavouriteList((state)
+                                    .categoriesData![widget.category][index]);
                             context.read<ProductCubit>().getProductData();
                           });
                           return null;
@@ -118,43 +80,21 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         onAddToCaButtonClick: (int index) {
                           setState(() {
                             BlocProvider.of<ProductCubit>(context)
-                                .updateAddToCaList(
-                                    (state).categoriesData![widget.category][index]);
+                                .updateAddToCaList((state)
+                                    .categoriesData![widget.category][index]);
                           });
                           return null;
                         },
-                        parentContext: context,
                       );
                     }
-                   // if (state is ProductLoaded) {
-                   //   return productCard(
-                   //     productModel: state.productModel!,
-                   //     onFavButtonClick: (int index) {
-                   //       setState(() {
-                   //         BlocProvider.of<ProductCubit>(context)
-                   //             .updateFavouriteList(
-                   //             (state).productModel![index]);
-                   //       });
-                   //       return null;
-                   //     },
-                   //     onAddToCaButtonClick: (int index) {
-                   //       setState(() {
-                   //         BlocProvider.of<ProductCubit>(context)
-                   //             .updateAddToCaList(
-                   //             (state).productModel![index]);
-                   //       });
-                   //       return null;
-                   //     },
-                   //     parentContext: context,
-                   //   );
-                   // }
-                   return const Text("data");
+                    return const Text("data");
                   },
                 ),
-                )
-          ],
+              )
+            ],
+          ),
         ),
-      )),
+      ),
     );
   }
 }

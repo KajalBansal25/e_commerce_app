@@ -4,8 +4,8 @@ import 'package:e_commerce_app/utils/scaling.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../cubit/product_cubit.dart';
-import '../cubit/user_cubit.dart';
+import 'package:e_commerce_app/cubit/product_cubit.dart';
+import 'package:e_commerce_app/cubit/user_cubit.dart';
 
 // ignore: must_be_immutable
 class MyLoginForm extends StatefulWidget {
@@ -44,9 +44,10 @@ class _MyLoginFormState extends State<MyLoginForm> {
                 Text(
                   'LOG IN',
                   style: TextStyle(
-                      color: Colors.grey[500],
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
+                    color: Colors.grey[500],
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(
                   height: 50,
@@ -54,7 +55,8 @@ class _MyLoginFormState extends State<MyLoginForm> {
                 const Text('Username'),
                 Padding(
                   padding: EdgeInsets.symmetric(
-                      vertical: normalizedHeight(context, 8.0)!),
+                    vertical: normalizedHeight(context, 8.0)!,
+                  ),
                   child: TextFormField(
                     controller: username,
                     textInputAction: TextInputAction.next,
@@ -160,24 +162,24 @@ class _MyLoginFormState extends State<MyLoginForm> {
 
   void navigateToHomePage() {
     Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                lazy: false,
-                create: (context) => ProductCubit(),
-              ),
-
-              BlocProvider(
-                create: (context) => UserCubit(),
-              ),
-            ],
-            child: Tabs(
-              tabIndex: 0,
+      context,
+      MaterialPageRoute(
+        builder: (context) => MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              lazy: false,
+              create: (context) => ProductCubit(),
             ),
+            BlocProvider(
+              create: (context) => UserCubit(),
+            ),
+          ],
+          child: Tabs(
+            tabIndex: 0,
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   void alertMessage() {

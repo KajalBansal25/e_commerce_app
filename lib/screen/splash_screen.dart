@@ -35,24 +35,24 @@ class _SplashScreenState extends State<SplashScreen> {
 
   navigateToHomePage() {
     Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                lazy: false,
-                create: (context) => ProductCubit(),
-              ),
-
-              BlocProvider(
-                create: (context) => UserCubit(),
-              ),
-            ],
-            child: Tabs(
-              tabIndex: 0,
+      context,
+      MaterialPageRoute(
+        builder: (context) => MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              lazy: false,
+              create: (context) => ProductCubit(),
             ),
+            BlocProvider(
+              create: (context) => UserCubit(),
+            ),
+          ],
+          child: Tabs(
+            tabIndex: 0,
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   Future getLoginData() async {
@@ -61,19 +61,24 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   getTimer() {
-    Timer(const Duration(seconds: 3), () {
-      finalUsername == null
-          ? Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const MyLoginForm()),
-            )
-          : navigateToHomePage();
-    });
+    Timer(
+      const Duration(seconds: 3),
+      () {
+        finalUsername == null
+            ? Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const MyLoginForm()),
+              )
+            : navigateToHomePage();
+      },
+    );
   }
 
   Future asyncCheck() async {
-    getLoginData().whenComplete(() async {
-      getTimer();
-    });
+    getLoginData().whenComplete(
+      () async {
+        getTimer();
+      },
+    );
   }
 }
