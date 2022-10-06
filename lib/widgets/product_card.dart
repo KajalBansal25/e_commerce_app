@@ -1,13 +1,13 @@
+import 'package:e_commerce_app/constants/api_service.dart';
 import 'package:e_commerce_app/cubit/category_cubit.dart';
+import 'package:e_commerce_app/cubit/product_cubit.dart';
+import 'package:e_commerce_app/model/cart_model.dart';
+import 'package:e_commerce_app/model/product_model.dart';
+import 'package:e_commerce_app/screen/details_of_product_page.dart';
+import 'package:e_commerce_app/utils/scaling.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import '../constants/api_service.dart';
-import '../cubit/product_cubit.dart';
-import '../model/cart_model.dart';
-import '../model/product_model.dart';
-import '../screen/details_of_product_page.dart';
-import '../utils/scaling.dart';
 
 Widget productCard(
     {required List<ProductModel>? productModel,
@@ -17,28 +17,29 @@ Widget productCard(
   return productModel == null
       ? const Center(child: CircularProgressIndicator())
       : GridView.builder(
-    itemCount: productModel.length,
-    itemBuilder: (context, index) {
-      return GestureDetector(
+          itemCount: productModel.length,
+          itemBuilder: (context, index) {
+            return GestureDetector(
               onTap: () {
                 Navigator.push(
-                    parentContext!,
-                    MaterialPageRoute(
-                        builder: (parentContext) => MultiBlocProvider(
-                              providers: [
-                                BlocProvider<ProductCubit>.value(
-                                  value: BlocProvider.of<ProductCubit>(context),
-                                ),
-                                BlocProvider<CategoryCubit>.value(
-                                  value:
-                                      BlocProvider.of<CategoryCubit>(context),
-                                ),
-                              ],
-                              child: CustomDetailPage(
-                                prodId: productModel[index].id,
-                                productModal: productModel[index],
-                              ),
-                            )));
+                  parentContext!,
+                  MaterialPageRoute(
+                    builder: (parentContext) => MultiBlocProvider(
+                      providers: [
+                        BlocProvider<ProductCubit>.value(
+                          value: BlocProvider.of<ProductCubit>(context),
+                        ),
+                        BlocProvider<CategoryCubit>.value(
+                          value: BlocProvider.of<CategoryCubit>(context),
+                        ),
+                      ],
+                      child: CustomDetailPage(
+                        prodId: productModel[index].id,
+                        productModal: productModel[index],
+                      ),
+                    ),
+                  ),
+                );
               },
               child: Card(
                 shape: RoundedRectangleBorder(
@@ -54,13 +55,15 @@ Widget productCard(
                         Stack(children: [
                           Padding(
                             padding: EdgeInsets.symmetric(
-                                vertical: normalizedHeight(context, 5)!,
-                                horizontal: normalizedWidth(context, 16)!),
+                              vertical: normalizedHeight(context, 5)!,
+                              horizontal: normalizedWidth(context, 16)!,
+                            ),
                             child: Center(
                               child: Image.network(
-                                  fit: BoxFit.scaleDown,
-                                  height: normalizedHeight(context, 180),
-                                  '${productModel[index].image}'),
+                                fit: BoxFit.scaleDown,
+                                height: normalizedHeight(context, 180),
+                                '${productModel[index].image}',
+                              ),
                             ),
                           ),
                           Row(
@@ -68,51 +71,58 @@ Widget productCard(
                             children: [
                               productModel[index].isFavourite == false
                                   ? IconButton(
-                                      icon: const Icon(Icons.favorite_outline,
-                                          color:
-                                              Color.fromARGB(255, 255, 17, 0)),
-                                      onPressed: () => onFavButtonClick(index))
+                                      icon: const Icon(
+                                        Icons.favorite_outline,
+                                        color: Color.fromARGB(255, 255, 17, 0),
+                                      ),
+                                      onPressed: () => onFavButtonClick(index),
+                                    )
                                   : IconButton(
-                                      icon: const Icon(Icons.favorite,
-                                          color:
-                                              Color.fromARGB(255, 255, 17, 0)),
-                                      onPressed: () => onFavButtonClick(index))
+                                      icon: const Icon(
+                                        Icons.favorite,
+                                        color: Color.fromARGB(255, 255, 17, 0),
+                                      ),
+                                      onPressed: () => onFavButtonClick(index),
+                                    )
                             ],
                           ),
                         ]),
                       ],
                     ),
                     Expanded(
-                        child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
                               horizontal: normalizedWidth(context, 8)!,
-                              vertical: normalizedHeight(context, 8)!),
-                          child: Text(
-                            "${productModel[index].title}",
-                            softWrap: true,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
+                              vertical: normalizedHeight(context, 8)!,
+                            ),
+                            child: Text(
+                              "${productModel[index].title}",
+                              softWrap: true,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: normalizedHeight(context, 16)!,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Text(
+                            "\$ ${productModel[index].price}",
                             style: TextStyle(
                               fontSize: normalizedHeight(context, 16)!,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                        ),
-                        Text(
-                          "\$ ${productModel[index].price}",
-                          style: TextStyle(
-                            fontSize: normalizedHeight(context, 16)!,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    )),
+                        ],
+                      ),
+                    ),
                     Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: normalizedWidth(context, 8)!),
+                        horizontal: normalizedWidth(context, 8)!,
+                      ),
                       child: productModel[index].isAddToCart == false
                           ? ElevatedButton(
                               style: ButtonStyle(
@@ -120,7 +130,8 @@ Widget productCard(
                                     RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(
-                                        normalizedWidth(context, 25)!),
+                                      normalizedWidth(context, 25)!,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -139,10 +150,11 @@ Widget productCard(
                                   v: 0,
                                 );
                                 // var responseStatus =
-                                    await ApiService().postData(object: cart);
+                                await ApiService().postData(object: cart);
                                 onAddToCaButtonClick(index);
                               },
-                              child: const Center(child: Text("Add to Cart")))
+                              child: const Center(child: Text("Add to Cart")),
+                            )
                           : ElevatedButton(
                               style: ButtonStyle(
                                 backgroundColor:
@@ -152,24 +164,26 @@ Widget productCard(
                                     RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(
-                                        normalizedWidth(context, 25)!),
+                                      normalizedWidth(context, 25)!,
+                                    ),
                                   ),
                                 ),
                               ),
                               onPressed: () => onAddToCaButtonClick(index),
-                              child: const Center(
-                                  child: Text("Remove From Cart"))),
+                              child:
+                                  const Center(child: Text("Remove From Cart")),
+                            ),
                     )
                   ],
                 ),
               ),
             );
-    },
-    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: normalizedWidth(parentContext!, 200)!,
-        mainAxisExtent: MediaQuery.of(parentContext).size.height * 0.45,
-        // childAspectRatio: 0.55,
-        crossAxisSpacing: normalizedWidth(parentContext, 10)!,
-        mainAxisSpacing: normalizedHeight(parentContext, 20)!),
-  );
+          },
+          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: normalizedWidth(parentContext!, 200)!,
+            mainAxisExtent: MediaQuery.of(parentContext).size.height * 0.45,
+            crossAxisSpacing: normalizedWidth(parentContext, 10)!,
+            mainAxisSpacing: normalizedHeight(parentContext, 20)!,
+          ),
+        );
 }
