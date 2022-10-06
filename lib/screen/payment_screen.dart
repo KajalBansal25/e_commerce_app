@@ -1,11 +1,11 @@
-import 'package:e_commerce_app/screen/order_detail_screen.dart';
-import 'package:e_commerce_app/screen/tabs_screen.dart';
-import 'package:e_commerce_app/utils/scaling.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter/foundation.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:e_commerce_app/utils/scaling.dart';
+import 'package:e_commerce_app/screen/tabs_screen.dart';
+import 'package:e_commerce_app/screen/order_detail_screen.dart';
 
 enum PaymentMethod { masterCard, googlePay, phonePay, visaCard }
 
@@ -197,7 +197,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                               textInputAction:
                                                   TextInputAction.next,
                                               decoration: const InputDecoration(
-                                                  labelText: 'Floor (Optional)'),
+                                                  labelText:
+                                                      'Floor (Optional)'),
                                             ),
                                             TextFormField(
                                               controller: cityTextField,
@@ -244,10 +245,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                                             houseTextField.text;
                                                         floor =
                                                             floorTextField.text;
-                                                        city = cityTextField.text;
+                                                        city =
+                                                            cityTextField.text;
                                                         country =
-                                                            countryTextField.text;
-                                                        countryTextField.clear();
+                                                            countryTextField
+                                                                .text;
+                                                        countryTextField
+                                                            .clear();
                                                         houseTextField.clear();
                                                         floorTextField.clear();
                                                         cityTextField.clear();
@@ -357,7 +361,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                           0,
                                           normalizedHeight(context, 8)!),
                                       child: Text(
-                                        'Choose Your Payment Methord',
+                                        'Choose Your Payment Method',
                                         style: TextStyle(
                                             fontSize:
                                                 normalizedWidth(context, 20),
@@ -407,7 +411,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                         groupValue: _character,
                                         onChanged: (value) {
                                           setState(() {
-                                            // print('kf');
                                             _character = value;
                                           });
                                         },
@@ -425,7 +428,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   ),
                 ]),
               ),
-              // const Expanded(child: SizedBox()),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -436,7 +438,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     ),
                   ),
                   Text(
-                    'Rs. 1500',
+                    '\$ 799',
                     style: TextStyle(
                         fontSize: normalizedWidth(context, 16),
                         fontWeight: FontWeight.bold),
@@ -453,7 +455,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     ),
                   ),
                   Text(
-                    'Rs. 99',
+                    '\$ 100',
                     style: TextStyle(
                         fontSize: normalizedWidth(context, 16),
                         fontWeight: FontWeight.bold),
@@ -473,11 +475,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   Text(
                     'Total',
                     style: TextStyle(
-                        fontSize: normalizedWidth(context, 16),
-                        fontWeight: FontWeight.bold),
+                      fontSize: normalizedWidth(context, 16),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   Text(
-                    'Rs. 1599',
+                    '\$ 899',
                     style: TextStyle(
                         fontSize: normalizedWidth(context, 16),
                         fontWeight: FontWeight.bold),
@@ -491,66 +494,72 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 padding: EdgeInsets.fromLTRB(normalizedWidth(context, 20)!, 0,
                     normalizedWidth(context, 20)!, 0),
                 child: ElevatedButton(
-                    style: ButtonStyle(
-                        elevation: MaterialStateProperty.all(10),
-                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              normalizedWidth(context, 15)!),
-                        ))),
-                    onPressed: () {
-                      showModalBottomSheet(
-                          isScrollControlled: true,
-                          context: context,
-                          builder: (context) {
-                            return SingleChildScrollView(
-                              padding: MediaQuery.of(context).viewInsets,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  TextFormField(
-                                    controller: houseTextField,
-                                    textInputAction: TextInputAction.next,
-                                    decoration: const InputDecoration(
-                                        labelText: 'Enter Coupon Code'),
-                                  ),
-                                  SizedBox(
-                                    height: normalizedHeight(context, 10),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      ElevatedButton(
-                                          onPressed: () {
-                                            Fluttertoast.showToast(
-                                                msg:
-                                                    '${houseTextField.text} is not applicable');
-                                            houseTextField.clear();
-                                            Navigator.of(context).pop();
-                                          },
-                                          child:
-                                              const Text('Check for Coupons')),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            );
-                          });
-                    },
-                    child: Center(
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(
-                            0,
-                            normalizedHeight(context, 18)!,
-                            0,
-                            normalizedHeight(context, 18)!),
-                        child: Text(
-                          'Apply Coupons',
-                          style: TextStyle(
-                            fontSize: normalizedWidth(context, 20),
-                          ),
+                  style: ButtonStyle(
+                    elevation: MaterialStateProperty.all(10),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                          normalizedWidth(context, 15)!,
                         ),
                       ),
-                    )),
+                    ),
+                  ),
+                  onPressed: () {
+                    showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (context) {
+                          return SingleChildScrollView(
+                            padding: MediaQuery.of(context).viewInsets,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                TextFormField(
+                                  controller: houseTextField,
+                                  textInputAction: TextInputAction.next,
+                                  decoration: const InputDecoration(
+                                      labelText: 'Enter Coupon Code'),
+                                ),
+                                SizedBox(
+                                  height: normalizedHeight(context, 10),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Fluttertoast.showToast(
+                                            msg:
+                                                '${houseTextField.text} is not applicable');
+                                        houseTextField.clear();
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text('Check for Coupons'),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          );
+                        });
+                  },
+                  child: Center(
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(
+                        0,
+                        normalizedHeight(context, 18)!,
+                        0,
+                        normalizedHeight(context, 18)!,
+                      ),
+                      child: Text(
+                        'Apply Coupons',
+                        style: TextStyle(
+                          fontSize: normalizedWidth(context, 20),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ),
               SizedBox(
                 height: normalizedHeight(context, 10),
@@ -559,34 +568,41 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 padding: EdgeInsets.fromLTRB(normalizedWidth(context, 20)!, 0,
                     normalizedWidth(context, 20)!, 0),
                 child: ElevatedButton(
-                    style: ButtonStyle(
-                        elevation: MaterialStateProperty.all(10),
-                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              normalizedWidth(context, 15)!),
-                        ))),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const OrderDetailScreen()));
-                    },
-                    child: Center(
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(
-                          normalizedWidth(context, 0)!,
-                          normalizedHeight(context, 18)!,
-                          normalizedWidth(context, 0)!,
-                          normalizedHeight(context, 18)!,
-                        ),
-                        child: Text(
-                          'Place Order',
-                          style: TextStyle(
-                            fontSize: normalizedWidth(context, 20),
-                          ),
+                  style: ButtonStyle(
+                    elevation: MaterialStateProperty.all(10),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                          normalizedWidth(context, 15)!,
                         ),
                       ),
-                    )),
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const OrderDetailScreen(),
+                      ),
+                    );
+                  },
+                  child: Center(
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(
+                        normalizedWidth(context, 0)!,
+                        normalizedHeight(context, 18)!,
+                        normalizedWidth(context, 0)!,
+                        normalizedHeight(context, 18)!,
+                      ),
+                      child: Text(
+                        'Place Order',
+                        style: TextStyle(
+                          fontSize: normalizedWidth(context, 20),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               )
             ],
           ),

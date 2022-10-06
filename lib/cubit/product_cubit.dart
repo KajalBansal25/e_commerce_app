@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:e_commerce_app/constants/api_service.dart';
 import 'package:e_commerce_app/model/product_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 part 'product_state.dart';
 
 class ProductCubit extends Cubit<ProductState> {

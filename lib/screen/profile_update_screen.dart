@@ -3,7 +3,7 @@ import 'package:e_commerce_app/utils/scaling.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../model/user_data_modal.dart';
+import 'package:e_commerce_app/model/user_data_modal.dart';
 
 class ProfileUpdate extends StatefulWidget {
   final Address? tempAddress;
@@ -17,9 +17,6 @@ class ProfileUpdate extends StatefulWidget {
 }
 
 class _ProfileUpdateState extends State<ProfileUpdate> {
-  // String firstName="";
-  // String email="";
-  // late int number;
   Name tempName = Name();
   Userdata updatedProfileData = Userdata();
   get tempAddress => widget.tempAddress;
@@ -40,6 +37,10 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
 
   @override
   void dispose() {
+    emailUpdate.dispose();
+    phoneNoUpdate.dispose();
+    firstNameUpdate.dispose();
+    lastNameUpdate.dispose();
     super.dispose();
   }
 
@@ -68,53 +69,29 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(
-                      vertical: normalizedHeight(context, 8)!),
+                    vertical: normalizedHeight(context, 8)!,
+                  ),
                   child: TextFormField(
                     controller: firstNameUpdate,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
                       label: const Text('First Name'),
                       contentPadding: EdgeInsets.symmetric(
-                          horizontal: normalizedWidth(context, 15)!,
-                          vertical: normalizedHeight(context, 15)!),
-                      border: OutlineInputBorder(
-                          gapPadding: normalizedHeight(context, 1)!,
-                          borderRadius: BorderRadius.all(
-                              Radius.circular(normalizedWidth(context, 10)!)),
-                          borderSide: BorderSide(
-                              color: Colors.black,
-                              style: BorderStyle.solid,
-                              width: normalizedWidth(context, 2)!)),
-                    ),
-                    validator: (value) {
-                      if ((value == null || value.isEmpty)) {
-                        return 'Please enter some text';
-                      } else if (!RegExp("^[A-Za-z]").hasMatch(value)) {
-                        return 'Please Enter a valid Name';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      vertical: normalizedHeight(context, 8)!),
-                  child: TextFormField(
-                    controller: lastNameUpdate,
-                    textInputAction: TextInputAction.next,
-                    decoration: InputDecoration(
-                      label: const Text('Last Name'),
-                      contentPadding: EdgeInsets.symmetric(
-                          horizontal: normalizedWidth(context, 15)!,
-                          vertical: normalizedHeight(context, 15)!),
+                        horizontal: normalizedWidth(context, 15)!,
+                        vertical: normalizedHeight(context, 15)!,
+                      ),
                       border: OutlineInputBorder(
                         gapPadding: normalizedHeight(context, 1)!,
                         borderRadius: BorderRadius.all(
-                            Radius.circular(normalizedWidth(context, 10)!)),
+                          Radius.circular(
+                            normalizedWidth(context, 10)!,
+                          ),
+                        ),
                         borderSide: BorderSide(
-                            color: Colors.black,
-                            style: BorderStyle.solid,
-                            width: normalizedWidth(context, 2)!),
+                          color: Colors.black,
+                          style: BorderStyle.solid,
+                          width: normalizedWidth(context, 2)!,
+                        ),
                       ),
                     ),
                     validator: (value) {
@@ -129,7 +106,45 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(
-                      vertical: normalizedHeight(context, 8)!),
+                    vertical: normalizedHeight(context, 8)!,
+                  ),
+                  child: TextFormField(
+                    controller: lastNameUpdate,
+                    textInputAction: TextInputAction.next,
+                    decoration: InputDecoration(
+                      label: const Text('Last Name'),
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: normalizedWidth(context, 15)!,
+                        vertical: normalizedHeight(context, 15)!,
+                      ),
+                      border: OutlineInputBorder(
+                        gapPadding: normalizedHeight(context, 1)!,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(
+                            normalizedWidth(context, 10)!,
+                          ),
+                        ),
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                          style: BorderStyle.solid,
+                          width: normalizedWidth(context, 2)!,
+                        ),
+                      ),
+                    ),
+                    validator: (value) {
+                      if ((value == null || value.isEmpty)) {
+                        return 'Please enter some text';
+                      } else if (!RegExp("^[A-Za-z]").hasMatch(value)) {
+                        return 'Please Enter a valid Name';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: normalizedHeight(context, 8)!,
+                  ),
                   child: TextFormField(
                     controller: emailUpdate,
                     textInputAction: TextInputAction.next,
@@ -137,20 +152,25 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                     decoration: InputDecoration(
                       label: const Text('Email'),
                       contentPadding: EdgeInsets.symmetric(
-                          horizontal: normalizedWidth(context, 15)!,
-                          vertical: normalizedHeight(context, 15)!),
+                        horizontal: normalizedWidth(context, 15)!,
+                        vertical: normalizedHeight(context, 15)!,
+                      ),
                       border: OutlineInputBorder(
-                          gapPadding: normalizedHeight(context, 1)!,
-                          borderRadius: BorderRadius.all(
-                              Radius.circular(normalizedWidth(context, 10)!)),
-                          borderSide: BorderSide(
-                              color: Colors.black,
-                              style: BorderStyle.solid,
-                              width: normalizedWidth(context, 2)!)),
+                        gapPadding: normalizedHeight(context, 1)!,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(
+                            normalizedWidth(context, 10)!,
+                          ),
+                        ),
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                          style: BorderStyle.solid,
+                          width: normalizedWidth(context, 2)!,
+                        ),
+                      ),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        // print(value);
                         return 'Please enter some text';
                       } else if (!RegExp(
                               r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
@@ -163,19 +183,24 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(
-                      vertical: normalizedHeight(context, 8)!),
+                    vertical: normalizedHeight(context, 8)!,
+                  ),
                   child: TextFormField(
                     controller: phoneNoUpdate,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       label: const Text('Mobile No'),
                       contentPadding: EdgeInsets.symmetric(
-                          horizontal: normalizedWidth(context, 15)!,
-                          vertical: normalizedHeight(context, 15)!),
+                        horizontal: normalizedWidth(context, 15)!,
+                        vertical: normalizedHeight(context, 15)!,
+                      ),
                       border: OutlineInputBorder(
                         gapPadding: normalizedHeight(context, 1)!,
                         borderRadius: BorderRadius.all(
-                            Radius.circular(normalizedWidth(context, 10)!)),
+                          Radius.circular(
+                            normalizedWidth(context, 10)!,
+                          ),
+                        ),
                         borderSide: BorderSide(
                             color: Colors.black,
                             style: BorderStyle.solid,
@@ -194,7 +219,8 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(
-                      vertical: normalizedHeight(context, 16)!),
+                    vertical: normalizedHeight(context, 16)!,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [

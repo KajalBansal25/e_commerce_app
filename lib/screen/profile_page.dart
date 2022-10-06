@@ -1,17 +1,17 @@
-import 'package:e_commerce_app/constants/api_service.dart';
-import 'package:e_commerce_app/cubit/user_cubit.dart';
-import 'package:e_commerce_app/utils/scaling.dart';
+import 'login_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:e_commerce_app/utils/scaling.dart';
+import 'package:e_commerce_app/cubit/user_cubit.dart';
+import 'package:e_commerce_app/model/user_data_modal.dart';
+import 'package:e_commerce_app/constants/api_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:e_commerce_app/screen/order_detail_screen.dart';
 import 'package:e_commerce_app/screen/profile_update_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../model/user_data_modal.dart';
-import 'login_screen.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -120,7 +120,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                   builder: (context, state) {
                                     if (state is UserLoaded) {
                                       return Text(
-                                        '${(state).userdata.name!.firstname.toString().toUpperCase()} ${(state).userdata.name!.lastname.toString().toUpperCase()}',
+                                        '${state.userdata.name!.firstname.toString().toUpperCase()}'
+                                        ' ${state.userdata.name!.lastname.toString().toUpperCase()}',
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize:
@@ -132,7 +133,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                       return const CircularProgressIndicator();
                                     } else {
                                       return Text(
-                                        '${(state).userdata.name!.firstname.toString().toUpperCase()} ${(state).userdata.name!.lastname.toString().toUpperCase()}',
+                                        '${(state).userdata.name!.firstname.toString().toUpperCase()}'
+                                        ' ${(state).userdata.name!.lastname.toString().toUpperCase()}',
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontSize:
@@ -169,7 +171,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     height: normalizedHeight(context, 470),
                     child: Card(
                       elevation: 10,
-                      // color: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),

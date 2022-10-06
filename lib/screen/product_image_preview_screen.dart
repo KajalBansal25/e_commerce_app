@@ -1,6 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:e_commerce_app/utils/scaling.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class ProductImagePreviewScreen extends StatefulWidget {
@@ -27,16 +26,14 @@ class _ProductImagePreviewScreenState extends State<ProductImagePreviewScreen> {
         onTap: () {
           setState(() {
             currentIndex = index;
-            if (kDebugMode) {
-              print(currentIndex);
-            }
           });
           _controller.jumpToPage(currentIndex);
         },
         child: Container(
           margin: EdgeInsets.symmetric(
-              vertical: normalizedHeight(context, 3)!,
-              horizontal: normalizedWidth(context, 3)!),
+            vertical: normalizedHeight(context, 3)!,
+            horizontal: normalizedWidth(context, 3)!,
+          ),
           width: MediaQuery.of(context).size.width * 0.16,
           height: MediaQuery.of(context).size.height * 0.1,
           decoration: BoxDecoration(
@@ -58,45 +55,53 @@ class _ProductImagePreviewScreenState extends State<ProductImagePreviewScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-      body: Center(
-          child: Column(children: [
-        Row(
-          children: [
-            IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(Icons.arrow_back_ios_new))
-          ],
-        ),
-        CarouselSlider(
-            carouselController: _controller,
-            items: images.map<Widget>((index) {
-              return Builder(builder: (BuildContext context) {
-                return Container(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    decoration: BoxDecoration(
+      child: Scaffold(
+        body: Center(
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(Icons.arrow_back_ios_new))
+                ],
+              ),
+              CarouselSlider(
+                carouselController: _controller,
+                items: images.map<Widget>((index) {
+                  return Builder(builder: (BuildContext context) {
+                    return Container(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: NetworkImage(index), fit: BoxFit.contain)));
-              });
-            }).toList(),
-            options: CarouselOptions(
-                // initialPage: currentIndex,
-                height: MediaQuery.of(context).size.height * 0.6,
-                viewportFraction: 1,
-                enableInfiniteScroll: false,
-                onPageChanged: (position, reason) {
-                  setState(() {
-                    currentIndex = position;
+                            image: NetworkImage(index), fit: BoxFit.contain),
+                      ),
+                    );
                   });
-                })),
-        const Expanded(child: Text('')),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: indicators(images.length, currentIndex),
-        )
-      ])),
-    ));
+                }).toList(),
+                options: CarouselOptions(
+                    height: MediaQuery.of(context).size.height * 0.6,
+                    viewportFraction: 1,
+                    enableInfiniteScroll: false,
+                    onPageChanged: (position, reason) {
+                      setState(() {
+                        currentIndex = position;
+                      });
+                    }),
+              ),
+              const Expanded(
+                child: Text(''),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: indicators(images.length, currentIndex),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
