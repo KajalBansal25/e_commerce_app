@@ -85,7 +85,7 @@ Widget productCard(
                                         ),
                                         onPressed: () =>
                                             onFavButtonClick(index),
-                                      )
+                                      ),
                               ],
                             ),
                           ],
