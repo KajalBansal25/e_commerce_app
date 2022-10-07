@@ -3,14 +3,16 @@ import 'package:equatable/equatable.dart';
 import 'package:e_commerce_app/constants/api_service.dart';
 import 'package:e_commerce_app/model/product_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 part 'product_state.dart';
 
 class ProductCubit extends Cubit<ProductState> {
   List<ProductModel>? productModel = [];
+  final Map<String, dynamic>? categoriesData = {};
   List<ProductModel>? favouriteList = [];
   List<ProductModel>? addToCaList = [];
-  List<int>? ids = [];
-  List<int>? productId = [];
+  List<int>? favIds = [];
+  List<int>? addToCartIds = [];
 
   ProductCubit() : super(ProductInitial());
 
@@ -19,110 +21,99 @@ class ProductCubit extends Cubit<ProductState> {
   void getProductData() {
     if (productModel != []) {
       fetchData.then((productModal) {
-        productModel = productModal;
-
-        emit(ProductLoaded(
-            productModel: productModal!,
-            favList: favouriteList,
-            addToCartList: addToCaList));
+        productModel = productModal!;
+        emit(
+          ProductLoaded(
+              productModel: productModal,
+              favList: favouriteList,
+              addToCartList: addToCaList,
+              categoriesData: categoriesData),
+        );
       });
     } else {
-      emit(ProductLoaded(
-          productModel: productModel!,
+      emit(
+        ProductLoaded(
+            productModel: productModel,
+            favList: favouriteList,
+            addToCartList: addToCaList,
+            categoriesData: categoriesData),
+      );
+    }
+  }
+
+  void getProductByCategories(String categoriesName) {
+    List<ProductModel> tempModal = [];
+    if (categoriesData!.keys.contains(categoriesName)) {
+    } else {
+      for (int i = 0; i < productModel!.length; i++) {
+        if (productModel![i].category == categoriesName) {
+          tempModal.add(productModel![i]);
+          categoriesData![categoriesName] = tempModal;
+        }
+      }
+      ProductLoaded(
+          productModel: productModel,
           favList: favouriteList,
-          addToCartList: addToCaList));
+          addToCartList: addToCaList,
+          categoriesData: categoriesData);
     }
   }
 
   void updateFavouriteList(ProductModel favItem) {
     var index = productModel!.indexWhere((element) => element.id == favItem.id);
-
-    if (ids!.contains(favItem.id)) {
+    if (favIds!.contains(favItem.id)) {
       favouriteList!.remove(favItem);
-      ids!.remove(favItem.id!);
+      favIds!.remove(favItem.id!);
       productModel![index].isFavourite = false;
     } else {
       favouriteList!.add(favItem);
-      ids!.add(favItem.id!);
+      favIds!.add(favItem.id!);
       productModel![index].isFavourite = true;
     }
-    // emit(
-    //     FavouriteUpdated(productModel: productModel, favList: favouriteList));
-    // emit(ProductLoaded(
-    //     productModel: productModel!,
-    //     favList: favouriteList,
-    //     addToCartList: addToCaList));
-    // for (var i = 0; i < favouriteList!.length; i++) {
-    // }
-    // for (var i = 0; i < ids!.length; i++) {
-    // }
+    emit(FavouriteUpdated(productModel: productModel, favList: favouriteList));
   }
 
   void updateAddToCaList(ProductModel item) {
     var index = productModel!.indexWhere((element) => element.id == item.id);
 
-    if (productId!.contains(item.id)) {
+    if (addToCartIds!.contains(item.id)) {
       addToCaList!.remove(item);
-      productId!.remove(item.id!);
+      addToCartIds!.remove(item.id!);
       productModel![index].isAddToCart = false;
     } else {
       addToCaList!.add(item);
-      productId!.add(item.id!);
+      addToCartIds!.add(item.id!);
       productModel![index].isAddToCart = true;
     }
-
-    // for (var i = 0; i < addToCaList!.length; i++) {
-    //   print("add To Cart List id ${addToCaList![i].id}");
-    // }
-    // for (var i = 0; i < productId!.length; i++) {
-    //   print("updateAddToCaList productId ${productId![i]}");
-    // }
   }
 
   void updateFavouriteListFromDetailScreen(ProductModel favItem) {
     var index = productModel!.indexWhere((element) => element.id == favItem.id);
 
-    if (ids!.contains(favItem.id)) {
+    if (favIds!.contains(favItem.id)) {
       favouriteList!.removeWhere((element) => element.title == favItem.title);
-      // favouriteList!.remove(favItem);
-      ids!.remove(favItem.id!);
+      favIds!.remove(favItem.id!);
       productModel![index].isFavourite = false;
     } else {
       favouriteList!.add(favItem);
-      ids!.add(favItem.id!);
+      favIds!.add(favItem.id!);
       productModel![index].isFavourite = true;
     }
-
-    // for (var i = 0; i < favouriteList!.length; i++) {
-    //   print(">>>>>>>${favouriteList![i].id}");
-    // }
-    for (var i = 0; i < ids!.length; i++) {
-      // print("<<<<<<<${ids![i]}");
-      emit(
-          FavouriteUpdated(productModel: productModel, favList: favouriteList));
-    }
+    emit(FavouriteUpdated(productModel: productModel, favList: favouriteList));
   }
 
   void updateAddToCaListFromDetailScreen(ProductModel item) {
     var index = productModel!.indexWhere((element) => element.id == item.id);
 
-    if (productId!.contains(item.id)) {
+    if (addToCartIds!.contains(item.id)) {
       addToCaList!.removeWhere((element) => element.title == item.title);
-      // favouriteList!.remove(favItem);
-      productId!.remove(item.id!);
+      addToCartIds!.remove(item.id!);
       productModel![index].isAddToCart = false;
     } else {
       addToCaList!.add(item);
-      productId!.add(item.id!);
+      addToCartIds!.add(item.id!);
       productModel![index].isAddToCart = true;
     }
-
     emit(AddToCaUpdated(productModel: productModel, addToCaList: addToCaList));
-    // for (var i = 0; i < addToCaList!.length; i++) {
-    //   print(">>>>>>>${addToCaList![i].id}");
-    // }
-    // for (var i = 0; i < productId!.length; i++) {
-    //   print("<<<<<<<${productId![i]}");
-    // }
   }
 }

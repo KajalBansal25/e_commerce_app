@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:http/http.dart' as http;
+import 'api_constants.dart';
 import '../model/cart_model.dart';
 import '../model/product_model.dart';
 import '../model/user_data_modal.dart';
-import 'api_constants.dart';
+import 'package:http/http.dart' as http;
 
 class ApiService {
   Future<List<ProductModel>?> getProducts() async {
@@ -23,24 +23,7 @@ class ApiService {
     }
     return [];
   }
-
-  Future<List<ProductModel>?> getProductsByCategory(category) async {
-    try {
-      var url = Uri.parse(
-          ApiConstants.baseUrl + ApiConstants.usersEndpointCategory + category);
-      var response = await http.get(url);
-      if (response.statusCode == 200) {
-        List data = jsonDecode(response.body);
-        Map<String, dynamic> output = {"products": data};
-        ProductListModel model = ProductListModel.fromJson(output);
-        return model.products;
-      }
-    } catch (e) {
-      log(e.toString());
-    }
-    return null;
-  }
-
+  
   Future<List<CartModel>?> getCartProduct() async {
     try {
       var url = Uri.parse(
@@ -116,7 +99,10 @@ class ApiService {
       var uri = Uri.parse('https://fakestoreapi.com/auth/login');
       var response = await http.post(
         uri,
-        body: {"username": username, "password": password},
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({"username": username, "password": password}),
       );
       if (response.statusCode == 200) {
         return true;
@@ -125,5 +111,19 @@ class ApiService {
       log("Error postData $e");
     }
     return false;
+  }
+
+  Future<List<dynamic>?> getAllCategory() async {
+    try {
+      var url = Uri.parse("https://fakestoreapi.com/products/categories");
+      var response = await http.get(url);
+      if (response.statusCode == 200) {
+        List<dynamic> allCategories = jsonDecode(response.body);
+        return allCategories;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+    return [];
   }
 }

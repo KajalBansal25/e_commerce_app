@@ -1,14 +1,13 @@
-import 'package:e_commerce_app/constants/api_service.dart';
-import 'package:e_commerce_app/cubit/category_cubit.dart';
-import 'package:e_commerce_app/cubit/product_cubit.dart';
-import 'package:e_commerce_app/model/cart_model.dart';
-import 'package:e_commerce_app/screen/product_image_preview_screen.dart';
-import 'package:e_commerce_app/screen/tabs_screen.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
-import '../model/product_model.dart';
-import '../utils/scaling.dart';
+import 'package:e_commerce_app/utils/scaling.dart';
+import 'package:e_commerce_app/model/cart_model.dart';
+import 'package:e_commerce_app/screen/tabs_screen.dart';
+import 'package:e_commerce_app/cubit/product_cubit.dart';
+import 'package:e_commerce_app/model/product_model.dart';
+import 'package:e_commerce_app/constants/api_service.dart';
+import 'package:e_commerce_app/screen/product_image_preview_screen.dart';
 
 //ignore: must_be_immutable
 class CustomDetailPage extends StatefulWidget {
@@ -26,25 +25,30 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
   bool responseStatus = false;
   get prodId => widget.prodId;
 
-   _buildChoiceList() {
+  _buildChoiceList() {
     List<Widget> choices = [];
     for (var item in reportList) {
-      choices.add(Container(
-        padding: EdgeInsets.symmetric(
-            horizontal: normalizedWidth(context, 2)!,
-            vertical: normalizedHeight(context, 2)!),
-        child: ChoiceChip(
-          label: Text(item,style: const TextStyle(color: Colors.white),),
-          selectedColor: Colors.redAccent,
-          backgroundColor: Colors.grey.shade600,
-          selected: selectedChoice == item,
-          onSelected: (selected) {
-            setState(() {
-              selectedChoice = item;
-            });
-          },
+      choices.add(
+        Container(
+          padding: EdgeInsets.symmetric(
+              horizontal: normalizedWidth(context, 2)!,
+              vertical: normalizedHeight(context, 2)!),
+          child: ChoiceChip(
+            label: Text(
+              item,
+              style: const TextStyle(color: Colors.white),
+            ),
+            selectedColor: Colors.redAccent,
+            backgroundColor: Colors.grey.shade600,
+            selected: selectedChoice == item,
+            onSelected: (selected) {
+              setState(() {
+                selectedChoice = item;
+              });
+            },
+          ),
         ),
-      ));
+      );
     }
     return choices;
   }
@@ -55,10 +59,11 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
       child: Scaffold(
         body: Padding(
           padding: EdgeInsets.fromLTRB(
-              normalizedWidth(context, 8)!,
-              normalizedHeight(context, 16)!,
-              normalizedWidth(context, 8)!,
-              normalizedHeight(context, 0)!),
+            normalizedWidth(context, 8)!,
+            normalizedHeight(context, 16)!,
+            normalizedWidth(context, 8)!,
+            normalizedHeight(context, 0)!,
+          ),
           child: Column(
             children: [
               Row(
@@ -66,7 +71,6 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                 children: [
                   IconButton(
                     onPressed: () {
-                      context.read<ProductCubit>().getProductData();
                       Navigator.pop(
                         context,
                       );
@@ -78,7 +82,8 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => Tabs(tabIndex: 2)),
+                          builder: (context) => Tabs(tabIndex: 2),
+                        ),
                         ModalRoute.withName('/'),
                       );
                     },
@@ -95,15 +100,18 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ProductImagePreviewScreen()));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const ProductImagePreviewScreen(),
+                            ),
+                          );
                         },
                         child: Padding(
                           padding: EdgeInsets.symmetric(
-                              horizontal: normalizedWidth(context, 10)!,
-                              vertical: normalizedHeight(context, 10)!),
+                            horizontal: normalizedWidth(context, 10)!,
+                            vertical: normalizedHeight(context, 10)!,
+                          ),
                           child: Image(
                             image: NetworkImage("${widget.productModal.image}"),
                             height: normalizedHeight(context, 350),
@@ -219,13 +227,13 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                                     icon: const Icon(Icons.favorite_outline,
                                         color: Colors.white),
                                     onPressed: () {
+                                      context
+                                          .read<ProductCubit>()
+                                          .getProductData();
                                       setState(() {
                                         BlocProvider.of<ProductCubit>(context)
                                             .updateFavouriteListFromDetailScreen(
                                                 widget.productModal);
-                                        BlocProvider.of<CategoryCubit>(context)
-                                            .updateFavouriteList(
-                                            widget.productModal.id!);
                                       });
                                     },
                                   ),
@@ -247,9 +255,9 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                                         BlocProvider.of<ProductCubit>(context)
                                             .updateFavouriteListFromDetailScreen(
                                                 widget.productModal);
-                                        BlocProvider.of<CategoryCubit>(context)
-                                            .updateFavouriteList(
-                                            widget.productModal.id ??0);
+                                        context
+                                            .read<ProductCubit>()
+                                            .getProductData();
                                       });
                                     },
                                   ),
@@ -265,7 +273,7 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                                       borderRadius: BorderRadius.circular(
                                           normalizedWidth(context, 60)!),
                                     )),
-                                onPressed: ()  async{
+                                onPressed: () async {
                                   CartModel cart = CartModel(
                                     id: 11,
                                     userId: prodId,
@@ -273,7 +281,7 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                                         .format(DateTime.now()),
                                     products: [
                                       Product(
-                                        productId:2,
+                                        productId: 2,
                                         quantity: 1,
                                       ),
                                     ],
@@ -285,10 +293,9 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                                     BlocProvider.of<ProductCubit>(context)
                                         .updateAddToCaListFromDetailScreen(
                                             widget.productModal);
-                                    BlocProvider.of<CategoryCubit>(context)
-                                        .updateAddToCartList(
-                                        widget.productModal.id ??0);
                                   });
+                                  // ignore: use_build_context_synchronously
+                                  context.read<ProductCubit>().getProductData();
                                 },
                                 child: const Text(
                                   'Add to Cart',
@@ -310,10 +317,8 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                                     BlocProvider.of<ProductCubit>(context)
                                         .updateAddToCaListFromDetailScreen(
                                             widget.productModal);
-                                    BlocProvider.of<CategoryCubit>(context)
-                                        .updateAddToCartList(
-                                        widget.productModal.id);
                                   });
+                                  context.read<ProductCubit>().getProductData();
                                 },
                                 child: const Text(
                                   'Remove From Cart',

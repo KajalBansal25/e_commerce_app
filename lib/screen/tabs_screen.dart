@@ -1,7 +1,5 @@
 import 'dart:async';
-
 import 'package:e_commerce_app/cubit/cart_cubit.dart';
-import 'package:e_commerce_app/cubit/category_cubit.dart';
 import 'package:e_commerce_app/cubit/user_cubit.dart';
 import 'package:e_commerce_app/screen/cart_screen.dart';
 import 'package:e_commerce_app/screen/favourite_screen.dart';
@@ -10,8 +8,8 @@ import 'package:e_commerce_app/screen/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../cubit/product_cubit.dart';
-import '../themes/app_theme.dart';
+import 'package:e_commerce_app/cubit/product_cubit.dart';
+import 'package:e_commerce_app/themes/app_theme.dart';
 
 // ignore: must_be_immutable
 class Tabs extends StatefulWidget {
@@ -23,7 +21,7 @@ class Tabs extends StatefulWidget {
 
 class _TabsState extends State<Tabs> {
   get tabIndex => widget.tabIndex;
-  bool canback = false;
+  bool canBack = false;
 
   @override
   Widget build(BuildContext pcontext) {
@@ -37,26 +35,12 @@ class _TabsState extends State<Tabs> {
           body: IndexedStack(
             index: tabIndex,
             children: <Widget>[
-              MultiBlocProvider(
-                providers: [
-                  BlocProvider<ProductCubit>.value(
-                    value: BlocProvider.of<ProductCubit>(context),
-                  ),
-                  BlocProvider<CategoryCubit>.value(
-                    value: BlocProvider.of<CategoryCubit>(context),
-                  ),
-                ],
+              BlocProvider<ProductCubit>.value(
+                value: BlocProvider.of<ProductCubit>(context),
                 child: const HomeScreen(),
               ),
-              MultiBlocProvider(
-                providers: [
-                  BlocProvider<ProductCubit>.value(
-                    value: BlocProvider.of<ProductCubit>(context),
-                  ),
-                  BlocProvider<CategoryCubit>.value(
-                    value: BlocProvider.of<CategoryCubit>(context),
-                  ),
-                ],
+              BlocProvider<ProductCubit>.value(
+                value: BlocProvider.of<ProductCubit>(context),
                 child: const FavouritePage(),
               ),
               MultiBlocProvider(
@@ -115,7 +99,7 @@ class _TabsState extends State<Tabs> {
   }
 
   Future<bool> _onWillPop() async {
-    if (canback == true) {
+    if (canBack == true) {
       SystemChannels.platform.invokeMethod('SystemNavigator.pop');
     } else {
       setState(() {
@@ -125,9 +109,9 @@ class _TabsState extends State<Tabs> {
 
     Timer(const Duration(seconds: 2), () {
       setState(() {
-        canback = false;
+        canBack = false;
       });
     });
-    return canback = true;
+    return canBack = true;
   }
 }

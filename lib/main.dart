@@ -4,10 +4,12 @@ import 'package:e_commerce_app/themes/app_theme.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp(
-    tabIndex: 0,
-    router: AppRouter(),
-  ));
+  runApp(
+    MyApp(
+      tabIndex: 0,
+      router: AppRouter(),
+    ),
+  );
 }
 
 //ignore: must_be_immutable

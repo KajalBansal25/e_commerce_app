@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:e_commerce_app/cubit/category_cubit.dart';
 import 'package:e_commerce_app/cubit/product_cubit.dart';
 import 'package:e_commerce_app/cubit/user_cubit.dart';
 import 'package:e_commerce_app/screen/login_screen.dart';
@@ -21,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    asynCheck();
+    asyncCheck();
   }
 
   @override
@@ -36,26 +35,24 @@ class _SplashScreenState extends State<SplashScreen> {
 
   navigateToHomePage() {
     Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                lazy: false,
-                create: (context) => ProductCubit(),
-              ),
-              BlocProvider(
-                create: (context) => CategoryCubit(),
-              ),
-              BlocProvider(
-                create: (context) => UserCubit(),
-              ),
-            ],
-            child: Tabs(
-              tabIndex: 0,
+      context,
+      MaterialPageRoute(
+        builder: (context) => MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              lazy: false,
+              create: (context) => ProductCubit(),
             ),
+            BlocProvider(
+              create: (context) => UserCubit(),
+            ),
+          ],
+          child: Tabs(
+            tabIndex: 0,
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   Future getLoginData() async {
@@ -64,19 +61,24 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   getTimer() {
-    Timer(const Duration(seconds: 2), () {
-      finalUsername == null
-          ? Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const MyLoginForm()),
-            )
-          : navigateToHomePage();
-    });
+    Timer(
+      const Duration(seconds: 3),
+      () {
+        finalUsername == null
+            ? Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const MyLoginForm()),
+              )
+            : navigateToHomePage();
+      },
+    );
   }
 
-  Future asynCheck() async {
-    getLoginData().whenComplete(() async {
-      getTimer();
-    });
+  Future asyncCheck() async {
+    getLoginData().whenComplete(
+      () async {
+        getTimer();
+      },
+    );
   }
 }

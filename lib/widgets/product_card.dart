@@ -1,13 +1,12 @@
-import 'package:e_commerce_app/constants/api_service.dart';
-import 'package:e_commerce_app/cubit/category_cubit.dart';
-import 'package:e_commerce_app/cubit/product_cubit.dart';
-import 'package:e_commerce_app/model/cart_model.dart';
-import 'package:e_commerce_app/model/product_model.dart';
-import 'package:e_commerce_app/screen/details_of_product_page.dart';
-import 'package:e_commerce_app/utils/scaling.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
+import 'package:e_commerce_app/utils/scaling.dart';
+import 'package:e_commerce_app/model/cart_model.dart';
+import 'package:e_commerce_app/cubit/product_cubit.dart';
+import 'package:e_commerce_app/model/product_model.dart';
+import 'package:e_commerce_app/constants/api_service.dart';
+import 'package:e_commerce_app/screen/details_of_product_page.dart';
 
 Widget productCard(
     {required List<ProductModel>? productModel,
@@ -29,9 +28,6 @@ Widget productCard(
                         BlocProvider<ProductCubit>.value(
                           value: BlocProvider.of<ProductCubit>(context),
                         ),
-                        BlocProvider<CategoryCubit>.value(
-                          value: BlocProvider.of<CategoryCubit>(context),
-                        ),
                       ],
                       child: CustomDetailPage(
                         prodId: productModel[index].id,
@@ -43,8 +39,9 @@ Widget productCard(
               },
               child: Card(
                 shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.circular(normalizedWidth(context, 15)!),
+                  borderRadius: BorderRadius.circular(
+                    normalizedWidth(context, 15)!,
+                  ),
                 ),
                 elevation: 5,
                 child: Column(
@@ -52,41 +49,47 @@ Widget productCard(
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Stack(children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                              vertical: normalizedHeight(context, 5)!,
-                              horizontal: normalizedWidth(context, 16)!,
-                            ),
-                            child: Center(
-                              child: Image.network(
-                                fit: BoxFit.scaleDown,
-                                height: normalizedHeight(context, 180),
-                                '${productModel[index].image}',
+                        Stack(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                vertical: normalizedHeight(context, 5)!,
+                                horizontal: normalizedWidth(context, 16)!,
+                              ),
+                              child: Center(
+                                child: Image.network(
+                                  fit: BoxFit.scaleDown,
+                                  height: normalizedHeight(context, 180),
+                                  '${productModel[index].image}',
+                                ),
                               ),
                             ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              productModel[index].isFavourite == false
-                                  ? IconButton(
-                                      icon: const Icon(
-                                        Icons.favorite_outline,
-                                        color: Color.fromARGB(255, 255, 17, 0),
-                                      ),
-                                      onPressed: () => onFavButtonClick(index),
-                                    )
-                                  : IconButton(
-                                      icon: const Icon(
-                                        Icons.favorite,
-                                        color: Color.fromARGB(255, 255, 17, 0),
-                                      ),
-                                      onPressed: () => onFavButtonClick(index),
-                                    )
-                            ],
-                          ),
-                        ]),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                productModel[index].isFavourite == false
+                                    ? IconButton(
+                                        icon: const Icon(
+                                          Icons.favorite_outline,
+                                          color:
+                                              Color.fromARGB(255, 255, 17, 0),
+                                        ),
+                                        onPressed: () =>
+                                            onFavButtonClick(index),
+                                      )
+                                    : IconButton(
+                                        icon: const Icon(
+                                          Icons.favorite,
+                                          color:
+                                              Color.fromARGB(255, 255, 17, 0),
+                                        ),
+                                        onPressed: () =>
+                                            onFavButtonClick(index),
+                                      )
+                              ],
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                     Expanded(
@@ -149,11 +152,12 @@ Widget productCard(
                                   ],
                                   v: 0,
                                 );
-                                // var responseStatus =
                                 await ApiService().postData(object: cart);
                                 onAddToCaButtonClick(index);
                               },
-                              child: const Center(child: Text("Add to Cart")),
+                              child: const Center(
+                                child: Text("Add to Cart"),
+                              ),
                             )
                           : ElevatedButton(
                               style: ButtonStyle(
@@ -170,8 +174,9 @@ Widget productCard(
                                 ),
                               ),
                               onPressed: () => onAddToCaButtonClick(index),
-                              child:
-                                  const Center(child: Text("Remove From Cart")),
+                              child: const Center(
+                                child: Text("Remove From Cart"),
+                              ),
                             ),
                     )
                   ],

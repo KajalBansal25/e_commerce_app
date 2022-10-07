@@ -1,17 +1,15 @@
-import 'package:e_commerce_app/constants/api_service.dart';
-import 'package:e_commerce_app/cubit/user_cubit.dart';
-import 'package:e_commerce_app/utils/scaling.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:geocoding/geocoding.dart';
+
+import 'login_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:e_commerce_app/utils/scaling.dart';
+import 'package:e_commerce_app/cubit/user_cubit.dart';
+import 'package:e_commerce_app/model/user_data_modal.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:e_commerce_app/screen/order_detail_screen.dart';
 import 'package:e_commerce_app/screen/profile_update_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../model/user_data_modal.dart';
-import 'login_screen.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -34,50 +32,6 @@ class _ProfilePageState extends State<ProfilePage> {
   late Position currentPosition;
   Address tempAddress = Address();
   Userdata userDataModal = Userdata();
-
-  Future<Position?> _determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      Fluttertoast.showToast(msg: "Please keep your location on");
-    }
-    permission = await Geolocator.checkPermission();
-
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        Fluttertoast.showToast(msg: 'Location Permission Denied');
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      Fluttertoast.showToast(msg: 'Location permission is denied Forever');
-    }
-
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-
-    try {
-      List<Placemark> placemarks =
-          await placemarkFromCoordinates(position.latitude, position.longitude);
-      Placemark place = placemarks[0];
-      setState(() {
-        currentPosition = position;
-        currentAddress =
-            '${place.locality},${place.postalCode},${place.street}';
-        house = place.name!;
-        city = place.locality!;
-        street = place.street!;
-        floor = place.postalCode!;
-      });
-    } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
-    }
-    return null;
-  }
 
   bool circular = false;
 
@@ -120,19 +74,22 @@ class _ProfilePageState extends State<ProfilePage> {
                                   builder: (context, state) {
                                     if (state is UserLoaded) {
                                       return Text(
-                                        '${(state).userdata.name!.firstname.toString().toUpperCase()} ${(state).userdata.name!.lastname.toString().toUpperCase()}',
+                                        '${state.userdata.name!.firstname.toString().toUpperCase()}'
+                                        ' ${state.userdata.name!.lastname.toString().toUpperCase()}',
                                         style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize:
-                                                normalizedWidth(context, 20),
-                                            fontStyle: FontStyle.italic,
-                                            fontWeight: FontWeight.w500),
+                                          color: Colors.white,
+                                          fontSize:
+                                              normalizedWidth(context, 20),
+                                          fontStyle: FontStyle.italic,
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                       );
                                     } else if (state is! UserUpdate) {
                                       return const CircularProgressIndicator();
                                     } else {
                                       return Text(
-                                        '${(state).userdata.name!.firstname.toString().toUpperCase()} ${(state).userdata.name!.lastname.toString().toUpperCase()}',
+                                        '${(state).userdata.name!.firstname.toString().toUpperCase()}'
+                                        ' ${(state).userdata.name!.lastname.toString().toUpperCase()}',
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontSize:
@@ -169,7 +126,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     height: normalizedHeight(context, 470),
                     child: Card(
                       elevation: 10,
-                      // color: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -215,7 +171,8 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                             Padding(
                               padding: EdgeInsets.symmetric(
-                                  horizontal: normalizedHeight(context, 20)!),
+                                horizontal: normalizedHeight(context, 20)!,
+                              ),
                               child: Divider(
                                 height: normalizedHeight(context, 1),
                                 thickness: normalizedWidth(context, 1),
@@ -269,29 +226,31 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                               children: [
                                 ListTile(
-                                  title: Wrap(children: [
-                                    BlocBuilder<UserCubit, UserState>(
-                                      builder: (context, state) {
-                                        if (state is UserLoaded) {
-                                          return Text(
-                                            '${(state).userdata.address?.number.toString().toUpperCase()} '
-                                            '${(state).userdata.address?.street.toString().toUpperCase()} '
-                                            '${(state).userdata.address?.city.toString().toUpperCase()} '
-                                            '${(state).userdata.address?.zipcode.toString().toUpperCase()} ',
-                                          );
-                                        } else if (state is! UserUpdate) {
-                                          return const CircularProgressIndicator();
-                                        } else {
-                                          return Text(
-                                            '${(state).userdata.address?.number.toString().toUpperCase()} '
-                                            '${(state).userdata.address?.street.toString().toUpperCase()} '
-                                            '${(state).userdata.address?.city.toString().toUpperCase()} '
-                                            '${(state).userdata.address?.zipcode.toString().toUpperCase()} ',
-                                          );
-                                        }
-                                      },
-                                    ),
-                                  ]),
+                                  title: Wrap(
+                                    children: [
+                                      BlocBuilder<UserCubit, UserState>(
+                                        builder: (context, state) {
+                                          if (state is UserLoaded) {
+                                            return Text(
+                                              '${(state).userdata.address?.number.toString().toUpperCase()} '
+                                              '${(state).userdata.address?.street.toString().toUpperCase()} '
+                                              '${(state).userdata.address?.city.toString().toUpperCase()} '
+                                              '${(state).userdata.address?.zipcode.toString().toUpperCase()} ',
+                                            );
+                                          } else if (state is! UserUpdate) {
+                                            return const CircularProgressIndicator();
+                                          } else {
+                                            return Text(
+                                              '${(state).userdata.address?.number.toString().toUpperCase()} '
+                                              '${(state).userdata.address?.street.toString().toUpperCase()} '
+                                              '${(state).userdata.address?.city.toString().toUpperCase()} '
+                                              '${(state).userdata.address?.zipcode.toString().toUpperCase()} ',
+                                            );
+                                          }
+                                        },
+                                      ),
+                                    ],
+                                  ),
                                   trailing: TextButton(
                                     style: ButtonStyle(
                                         padding: MaterialStateProperty.all(
@@ -306,10 +265,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                                   .viewInsets,
                                               child: Padding(
                                                 padding: EdgeInsets.symmetric(
-                                                    horizontal: normalizedWidth(
-                                                        context, 10)!,
-                                                    vertical: normalizedHeight(
-                                                        context, 10)!),
+                                                  horizontal: normalizedWidth(
+                                                      context, 10)!,
+                                                  vertical: normalizedHeight(
+                                                      context, 10)!,
+                                                ),
                                                 child: Column(
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.end,
@@ -326,13 +286,20 @@ class _ProfilePageState extends State<ProfilePage> {
                                                     ),
                                                     TextFormField(
                                                       controller:
-                                                          floorTextField,
+                                                          streetTextField,
                                                       textInputAction:
-                                                          TextInputAction.next,
+                                                          TextInputAction.done,
                                                       decoration:
                                                           const InputDecoration(
                                                               labelText:
-                                                                  'Floor (Optional)'),
+                                                                  'Street'),
+                                                      validator: (value) {
+                                                        if ((value == null ||
+                                                            value.isEmpty)) {
+                                                          return 'Please enter valid number';
+                                                        }
+                                                        return null;
+                                                      },
                                                     ),
                                                     TextFormField(
                                                       controller: cityTextField,
@@ -345,101 +312,87 @@ class _ProfilePageState extends State<ProfilePage> {
                                                     ),
                                                     TextFormField(
                                                       controller:
-                                                          streetTextField,
+                                                          floorTextField,
                                                       textInputAction:
-                                                          TextInputAction.done,
+                                                          TextInputAction.next,
                                                       decoration:
                                                           const InputDecoration(
                                                               labelText:
-                                                                  'street'),
+                                                                  'Zip Code'),
                                                     ),
                                                     const SizedBox(
                                                       height: 10,
                                                     ),
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.end,
-                                                      children: [
-                                                        TextButton(
-                                                            style: ButtonStyle(
-                                                                padding: MaterialStateProperty
-                                                                    .all(EdgeInsets
-                                                                        .zero)),
-                                                            onPressed: () {
-                                                              _determinePosition();
-                                                              Navigator.pop(
-                                                                  context);
-                                                            },
-                                                            child: const Text(
-                                                                'Use Current Location')),
-                                                        SizedBox(
-                                                          width:
-                                                              normalizedWidth(
-                                                                  context, 20),
-                                                        ),
-                                                        ElevatedButton(
-                                                          onPressed: () async {
-                                                            // print("${u.id}");
-                                                            setState(() {
-                                                              house =
-                                                                  houseTextField
-                                                                      .text;
-                                                              floor =
-                                                                  floorTextField
-                                                                      .text;
-                                                              city =
-                                                                  cityTextField
-                                                                      .text;
-                                                              street =
-                                                                  streetTextField
-                                                                      .text;
-                                                              streetTextField
-                                                                  .clear();
-                                                              houseTextField
-                                                                  .clear();
-                                                              floorTextField
-                                                                  .clear();
-                                                              cityTextField
-                                                                  .clear();
-                                                            });
-                                                            Userdata u = context
-                                                                .read<
-                                                                    UserCubit>()
-                                                                .userData;
-                                                            userDataModal = Userdata(
-                                                                v: 0,
-                                                                username:
-                                                                    u.username,
-                                                                id: u.id,
-                                                                password:
-                                                                    u.password,
-                                                                email: u.email,
-                                                                address: Address(
-                                                                    city: city,
-                                                                    number: floor
-                                                                        as int,
-                                                                    geolocation:
-                                                                        Geolocation(),
-                                                                    street:
-                                                                        street,
-                                                                    zipcode: u
-                                                                        .address
-                                                                        ?.zipcode),
-                                                                name: u.name,
-                                                                phone: u.phone);
-                                                            await ApiService()
-                                                                .putUserData(
-                                                                    object:
-                                                                        userDataModal);
-                                                            // ignore: use_build_context_synchronously
-                                                            Navigator.pop(
-                                                                context);
-                                                          },
-                                                          child: const Text(
-                                                            'Save Address',
-                                                          ),
-                                                        ),
-                                                      ],
+                                                    ElevatedButton(
+                                                      onPressed: () {
+                                                        if (cityTextField.text
+                                                                .isNotEmpty &&
+                                                            houseTextField.text
+                                                                .isNotEmpty &&
+                                                            floorTextField.text
+                                                                .isNotEmpty &&
+                                                            streetTextField.text
+                                                                .isNotEmpty) {
+                                                          setState(() {
+                                                            house =
+                                                                houseTextField
+                                                                    .text;
+                                                            floor =
+                                                                floorTextField
+                                                                    .text;
+                                                            city = cityTextField
+                                                                .text;
+                                                            street =
+                                                                streetTextField
+                                                                    .text;
+                                                          });
+                                                          Userdata u = context
+                                                              .read<UserCubit>()
+                                                              .userData;
+                                                          userDataModal = Userdata(
+                                                              v: 0,
+                                                              username:
+                                                                  u.username,
+                                                              id: u.id,
+                                                              password:
+                                                                  u.password,
+                                                              email: u.email,
+                                                              address: Address(
+                                                                  city: city,
+                                                                  number:
+                                                                      int.parse(
+                                                                          floor),
+                                                                  geolocation: u
+                                                                      .address!
+                                                                      .geolocation,
+                                                                  street:
+                                                                      street,
+                                                                  zipcode:
+                                                                      floor),
+                                                              name: u.name,
+                                                              phone: u.phone);
+                                                          context
+                                                              .read<UserCubit>()
+                                                              .updateUser(
+                                                                  u: userDataModal);
+
+                                                          streetTextField
+                                                              .clear();
+                                                          houseTextField
+                                                              .clear();
+                                                          floorTextField
+                                                              .clear();
+                                                          cityTextField.clear();
+                                                          // ignore: use_build_context_synchronously
+                                                          Navigator.pop(
+                                                              context);
+                                                        } else {
+                                                          alertMessage();
+                                                        }
+                                                      },
+                                                      child: const Text(
+                                                        'Save Address',
+                                                      ),
                                                     ),
                                                   ],
                                                 ),
@@ -522,7 +475,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                         value:
                                             BlocProvider.of<UserCubit>(context),
                                         child: ProfileUpdate(
-                                            tempAddress: u.address!),
+                                          tempAddress: u.address!,
+                                        ),
                                       ),
                                     ),
                                   );
@@ -572,6 +526,17 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
       ),
     );
+  }
+
+  void alertMessage() {
+    Fluttertoast.showToast(
+        msg: "Fields can't be empty",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0);
   }
 
   Future removeLoginData() async {
