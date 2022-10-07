@@ -17,7 +17,8 @@ class CustomTheme {
       fontFamily: 'Roboto',
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.redAccent)),
+          backgroundColor: MaterialStateProperty.all(Colors.redAccent),
+        ),
       ),
       buttonTheme: ButtonThemeData(
         shape: RoundedRectangleBorder(
@@ -40,9 +41,10 @@ class CustomTheme {
       iconTheme: const IconThemeData(
         color: Colors.white,
       ),
-      // bottomAppBarColor: Colors.grey.shade900,
       inputDecorationTheme: const InputDecorationTheme(
-          focusColor: Colors.white, labelStyle: TextStyle(color: Colors.white)),
+        focusColor: Colors.white,
+        labelStyle: TextStyle(color: Colors.white),
+      ),
       bottomSheetTheme:
           BottomSheetThemeData(backgroundColor: Colors.grey.shade900),
       textTheme: const TextTheme(
@@ -52,10 +54,10 @@ class CustomTheme {
         subtitle1: TextStyle(color: Colors.white),
         button: TextStyle(color: Colors.white),
       ),
-
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.redAccent)),
+          backgroundColor: MaterialStateProperty.all(Colors.redAccent),
+        ),
       ),
       buttonTheme: ButtonThemeData(
         shape:
