@@ -11,8 +11,12 @@ class CartInitial extends CartState {}
 
 class CartLoaded extends CartState {
   final List<CartModel?> cartModel;
+  final List<ProductModel?> productData;
+  final List cartProductDataList;
 
   const CartLoaded({
     required this.cartModel,
+    required this.productData,
+    required this.cartProductDataList,
   });
 }

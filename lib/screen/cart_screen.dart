@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/utils/scaling.dart';
 import 'package:e_commerce_app/cubit/cart_cubit.dart';
-import 'package:e_commerce_app/cubit/product_cubit.dart';
 import 'package:e_commerce_app/screen/payment_screen.dart';
 
 class CartScreen extends StatefulWidget {
@@ -16,21 +15,12 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen>
     with AutomaticKeepAliveClientMixin {
-  List cartProductDataList = [];
   double totalAmount = 0.0;
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<CartCubit>(context).getUserCartData();
-    BlocBuilder<ProductCubit, ProductState>(builder: (context, state) {
-      if (state is! ProductLoaded) {
-        BlocProvider.of<ProductCubit>(context).getProductData();
-        return null as Widget;
-      }
-      return null as Widget;
-    });
+    BlocProvider.of<CartCubit>(context).getProductAndCartData();
     super.build(context);
-    cartProductDataList = [];
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -53,51 +43,12 @@ class _CartScreenState extends State<CartScreen>
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.75,
-                child: BlocBuilder<ProductCubit, ProductState>(
-                  builder: (context, state1) {
-                    if (state1 is ProductLoaded) {
-                      cartProductDataList = [];
-
-                      return BlocBuilder<CartCubit, CartState>(
-                          builder: (context, state2) {
-                        if (state2 is CartLoaded) {
-                          int cLen = state2.cartModel[0]?.products!.length ?? 0;
-                          for (var j = 0; j < cLen; j++) {
-                            for (var i = 0;
-                                i < state1.productModel!.length;
-                                i++) {
-                              if (state1.productModel![i].id ==
-                                  state2.cartModel[0]?.products![j].productId) {
-                                {
-                                  cartProductDataList.add({
-                                    'pdtImg': state1.productModel![i].image
-                                        .toString(),
-                                    'pdtTitle': state1.productModel![i].title
-                                        .toString(),
-                                    'pdtPrice': state1.productModel![i].price,
-                                    'crtPdtCount': state2
-                                        .cartModel[0]?.products![j].quantity,
-                                    "productId": state2
-                                        .cartModel[0]?.products![j].productId
-                                  });
-                                }
-                              }
-                            }
-                          }
-                        } else if (state2 is! CartLoaded) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                        return _customColumn(cartProductDataList);
-                      });
-                    } else if (state1 is! ProductLoaded) {
-                      return const Center(
-                        child: Text("FAILED DUE TO state1 is! ProductLoaded "),
-                      );
-                    } else {
-                      return const Text('state1 is! ProductLoaded');
+                child: BlocBuilder<CartCubit, CartState>(
+                  builder: (context, state) {
+                    if (state is CartLoaded) {
+                      return _customColumn(state.cartProductDataList);
                     }
+                    return const Center(child: CircularProgressIndicator());
                   },
                 ),
               ),

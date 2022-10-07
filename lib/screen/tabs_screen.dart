@@ -44,15 +44,8 @@ class _TabsState extends State<Tabs> {
                 value: BlocProvider.of<ProductCubit>(context),
                 child: const FavouritePage(),
               ),
-              MultiBlocProvider(
-                providers: [
-                  BlocProvider<ProductCubit>.value(
-                    value: BlocProvider.of<ProductCubit>(context),
-                  ),
-                  BlocProvider(
-                    create: (context) => CartCubit(),
-                  ),
-                ],
+              BlocProvider(
+                create: (context) => CartCubit(),
                 child: const CartScreen(),
               ),
               BlocProvider<UserCubit>.value(

@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/cubit/user_cubit.dart';
+import 'package:e_commerce_app/screen/tabs_screen.dart';
 import 'package:e_commerce_app/utils/scaling.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -249,7 +250,13 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                             context
                                 .read<UserCubit>()
                                 .updateUser(u: updatedProfileData);
-                            Navigator.pop(context);
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Tabs(tabIndex: 3),
+                              ),
+                              ModalRoute.withName('/'),
+                            );
                           } else {
                             setState(() {
                               _autovalidateMode = AutovalidateMode.always;

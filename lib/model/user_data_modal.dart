@@ -4,7 +4,6 @@ part 'user_data_modal.g.dart';
 
 @JsonSerializable()
 class Userdata {
-  Address? address;
 
   Userdata({
     this.address,
@@ -16,6 +15,7 @@ class Userdata {
     this.phone,
     this.v,
   });
+  Address? address;
   int? id;
   String? email;
   String? username;
