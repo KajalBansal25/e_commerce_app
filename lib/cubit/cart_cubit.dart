@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:e_commerce_app/constants/api_service.dart';
+import 'package:e_commerce_app/model/cart_model.dart';
 import 'package:equatable/equatable.dart';
-import '../model/cart_model.dart';
 
 part 'cart_state.dart';
 

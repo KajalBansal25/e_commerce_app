@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:e_commerce_app/cubit/product_cubit.dart';
 import 'package:e_commerce_app/screen/tabs_screen.dart';
 import 'package:flutter/material.dart';
@@ -21,8 +22,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
       top: true,
       child: Scaffold(
         body: Padding(
-          padding: EdgeInsets.fromLTRB(normalizedWidth(context, 8)!,
-              normalizedHeight(context, 16)!, normalizedWidth(context, 8)!, 0),
+          padding: EdgeInsets.fromLTRB(
+            normalizedWidth(context, 8)!,
+            normalizedHeight(context, 16)!,
+            normalizedWidth(context, 8)!,
+            0,
+          ),
           child: Column(
             children: [
               Row(
@@ -39,22 +44,39 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   Text(
                     widget.category.toString().toUpperCase(),
                     style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: normalizedWidth(context, 22)!),
+                      fontWeight: FontWeight.bold,
+                      fontSize: normalizedWidth(context, 22)!,
+                    ),
                   ),
-                  IconButton(
-                    padding: const EdgeInsets.all(0),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Tabs(
-                            tabIndex: 2,
-                          ),
-                        ),
-                      );
-                    },
-                    icon: const Icon(Icons.shopping_cart_outlined),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: BlocBuilder<ProductCubit, ProductState>(
+                      builder: (context, state) {
+                        if (state is ProductLoaded) {
+                          return Badge(
+                            badgeContent: Text(
+                              "${state.addToCartList!.length}",
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                            child: IconButton(
+                              padding: const EdgeInsets.all(0),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Tabs(
+                                      tabIndex: 2,
+                                    ),
+                                  ),
+                                );
+                              },
+                              icon: const Icon(Icons.shopping_cart_outlined),
+                            ),
+                          );
+                        }
+                        return const Text("");
+                      },
+                    ),
                   ),
                 ],
               ),

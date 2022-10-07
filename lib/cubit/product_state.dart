@@ -14,10 +14,9 @@ class ProductLoaded extends ProductState {
   final List<ProductModel>? productModel;
   final List<ProductModel>? favList;
   final List<ProductModel>? addToCartList;
-  final Map<String , dynamic>? categoriesData;
+  final Map<String, dynamic>? categoriesData;
 
-
-   const ProductLoaded({
+  const ProductLoaded({
     required this.productModel,
     required this.favList,
     required this.addToCartList,
@@ -43,13 +42,11 @@ class AddToCaUpdated extends ProductState {
     required this.productModel,
     required this.addToCaList,
   });
-
 }
-class ProductByCategory extends ProductState{
+
+class ProductByCategory extends ProductState {
   final List<ProductModel>? categoriesData;
   const ProductByCategory({
     required this.categoriesData,
   });
-
-
 }

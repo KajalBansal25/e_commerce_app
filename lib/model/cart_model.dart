@@ -40,7 +40,7 @@ class Product {
   Product({
     this.productId,
     this.quantity,
-     });
+  });
 
   int? productId;
   int? quantity;

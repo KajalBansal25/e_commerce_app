@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:e_commerce_app/constants/api_service.dart';
 import 'package:equatable/equatable.dart';
-
 import 'package:e_commerce_app/model/user_data_modal.dart';
 
 part 'user_state.dart';

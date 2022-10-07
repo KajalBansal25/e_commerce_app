@@ -182,8 +182,13 @@ class _CartScreenState extends State<CartScreen>
                                       child: const Text(
                                         'Size: M',
                                         style: TextStyle(
-                                            color: Color.fromRGBO(
-                                                180, 180, 180, 1.0)),
+                                          color: Color.fromRGBO(
+                                            180,
+                                            180,
+                                            180,
+                                            1.0,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                     SizedBox(
@@ -200,7 +205,6 @@ class _CartScreenState extends State<CartScreen>
                                   children: [
                                     IconButton(
                                       onPressed: () {
-                                        // print('${item["productId"]}');
                                         putUpdateCountApi(item["productId"],
                                             item["crtPdtCount"]);
                                       },
@@ -213,7 +217,11 @@ class _CartScreenState extends State<CartScreen>
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(
-                                          2.0, 0.0, 2.0, 0.0),
+                                        2.0,
+                                        0.0,
+                                        2.0,
+                                        0.0,
+                                      ),
                                       child:
                                           Text(item["crtPdtCount"].toString()),
                                     ),
@@ -246,8 +254,9 @@ class _CartScreenState extends State<CartScreen>
           children: [
             Padding(
               padding: EdgeInsets.symmetric(
-                  horizontal: normalizedHeight(context, 20.0)!,
-                  vertical: normalizedWidth(context, 10.0)!),
+                horizontal: normalizedHeight(context, 20.0)!,
+                vertical: normalizedWidth(context, 10.0)!,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -264,8 +273,9 @@ class _CartScreenState extends State<CartScreen>
                         return Text(
                           '\$ $totalAmount ',
                           style: TextStyle(
-                              fontSize: normalizedWidth(context, 15),
-                              fontWeight: FontWeight.bold),
+                            fontSize: normalizedWidth(context, 15),
+                            fontWeight: FontWeight.bold,
+                          ),
                         );
                       }
                       return const Text('Price::');

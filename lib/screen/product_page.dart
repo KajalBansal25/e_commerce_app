@@ -46,20 +46,32 @@ class _ProductPageState extends State<ProductPage> {
                       fontSize: normalizedWidth(context, 22),
                     ),
                   ),
-                  Badge(
-                    padding: const EdgeInsets.all(5),
-                    position: BadgePosition.center(),
-                    child: IconButton(
-                      padding: const EdgeInsets.all(0),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Tabs(tabIndex: 2),
-                          ),
-                        );
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: BlocBuilder<ProductCubit, ProductState>(
+                      builder: (context, state) {
+                        if (state is ProductLoaded) {
+                          return Badge(
+                            badgeContent: Text(
+                              "${context.read<ProductCubit>().addToCaList!.length}",
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                            child: IconButton(
+                              padding: const EdgeInsets.all(0),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Tabs(tabIndex: 2),
+                                  ),
+                                );
+                              },
+                              icon: const Icon(Icons.shopping_cart_outlined),
+                            ),
+                          );
+                        }
+                        return const Text("");
                       },
-                      icon: const Icon(Icons.shopping_cart_outlined),
                     ),
                   ),
                 ],

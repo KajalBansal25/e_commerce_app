@@ -13,10 +13,11 @@ class OrderDetailScreen extends StatelessWidget {
         Row(
           children: [
             IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(Icons.arrow_back_ios)),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(Icons.arrow_back_ios),
+            ),
             Text(
               'Orders',
               style: TextStyle(
@@ -31,21 +32,25 @@ class OrderDetailScreen extends StatelessWidget {
         ),
         Expanded(
           child: ListView.builder(
+            itemCount: 5,
             itemBuilder: ((context, index) => Card(
                   elevation: 5,
                   margin: EdgeInsets.fromLTRB(
-                      normalizedWidth(context, 16)!,
-                      normalizedHeight(context, 5)!,
-                      normalizedWidth(context, 16)!,
-                      normalizedHeight(context, 5)!),
+                    normalizedWidth(context, 16)!,
+                    normalizedHeight(context, 5)!,
+                    normalizedWidth(context, 16)!,
+                    normalizedHeight(context, 5)!,
+                  ),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25)),
+                    borderRadius: BorderRadius.circular(25),
+                  ),
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(
-                        normalizedWidth(context, 15)!,
-                        normalizedHeight(context, 15)!,
-                        normalizedWidth(context, 15)!,
-                        normalizedHeight(context, 15)!),
+                      normalizedWidth(context, 15)!,
+                      normalizedHeight(context, 15)!,
+                      normalizedWidth(context, 15)!,
+                      normalizedHeight(context, 15)!,
+                    ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,9 +58,10 @@ class OrderDetailScreen extends StatelessWidget {
                         Text(
                           'ID: 95 259105',
                           style: TextStyle(
-                              color: const Color.fromARGB(255, 152, 36, 188),
-                              fontSize: normalizedWidth(context, 20),
-                              fontWeight: FontWeight.bold),
+                            color: const Color.fromARGB(255, 152, 36, 188),
+                            fontSize: normalizedWidth(context, 20),
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -65,8 +71,9 @@ class OrderDetailScreen extends StatelessWidget {
                               style: TextStyle(color: Colors.grey),
                             ),
                             Text(
-                                style: TextStyle(color: Colors.grey),
-                                '25 Sep, 22'),
+                              style: TextStyle(color: Colors.grey),
+                              '25 Sep, 22',
+                            ),
                           ],
                         ),
                         Row(
@@ -75,18 +82,18 @@ class OrderDetailScreen extends StatelessWidget {
                             Text(
                               'Delhi',
                               style: TextStyle(
-                                  color:
-                                      const Color.fromARGB(255, 122, 36, 188),
-                                  fontSize: normalizedWidth(context, 20),
-                                  fontWeight: FontWeight.bold),
+                                color: const Color.fromARGB(255, 122, 36, 188),
+                                fontSize: normalizedWidth(context, 20),
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                             Text(
                               'Hisar',
                               style: TextStyle(
-                                  color:
-                                      const Color.fromARGB(255, 122, 36, 188),
-                                  fontSize: normalizedWidth(context, 20),
-                                  fontWeight: FontWeight.bold),
+                                color: const Color.fromARGB(255, 122, 36, 188),
+                                fontSize: normalizedWidth(context, 20),
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ],
                         ),
@@ -97,7 +104,6 @@ class OrderDetailScreen extends StatelessWidget {
                             Icon(Icons.access_alarm),
                             Icon(Icons.supervised_user_circle),
                           ],
-
                           // activeStep property set to activeStep variable defined above.
                           activeStep: index,
                           activeStepColor: Colors.blue,
@@ -108,16 +114,18 @@ class OrderDetailScreen extends StatelessWidget {
                         ),
                         Card(
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              side: const BorderSide(color: Colors.blueAccent)),
+                            borderRadius: BorderRadius.circular(15),
+                            side: const BorderSide(color: Colors.blueAccent),
+                          ),
                           child: Row(
                             children: [
                               Padding(
                                 padding: EdgeInsets.fromLTRB(
-                                    normalizedWidth(context, 16)!,
-                                    normalizedHeight(context, 16)!,
-                                    normalizedWidth(context, 16)!,
-                                    normalizedHeight(context, 16)!),
+                                  normalizedWidth(context, 16)!,
+                                  normalizedHeight(context, 16)!,
+                                  normalizedWidth(context, 16)!,
+                                  normalizedHeight(context, 16)!,
+                                ),
                                 child: Image.network(
                                   'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
                                   height: normalizedHeight(context, 50),
@@ -146,8 +154,9 @@ class OrderDetailScreen extends StatelessWidget {
                               const Expanded(child: SizedBox()),
                               ClipRRect(
                                 borderRadius: const BorderRadius.only(
-                                    topRight: Radius.circular(15),
-                                    bottomRight: Radius.circular(15)),
+                                  topRight: Radius.circular(15),
+                                  bottomRight: Radius.circular(15),
+                                ),
                                 child: Container(
                                   height: normalizedHeight(context, 82),
                                   width: normalizedWidth(context, 82),
@@ -156,8 +165,9 @@ class OrderDetailScreen extends StatelessWidget {
                                       child: Text(
                                     'Rs. 1500',
                                     style: TextStyle(
-                                        fontSize: normalizedWidth(context, 16),
-                                        fontWeight: FontWeight.bold),
+                                      fontSize: normalizedWidth(context, 16),
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   )),
                                 ),
                               )
@@ -168,7 +178,6 @@ class OrderDetailScreen extends StatelessWidget {
                     ),
                   ),
                 )),
-            itemCount: 5,
           ),
         ),
       ]),

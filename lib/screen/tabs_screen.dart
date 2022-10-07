@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:badges/badges.dart';
 import 'package:e_commerce_app/cubit/cart_cubit.dart';
 import 'package:e_commerce_app/cubit/user_cubit.dart';
 import 'package:e_commerce_app/screen/cart_screen.dart';
@@ -68,20 +69,46 @@ class _TabsState extends State<Tabs> {
             elevation: 100,
             currentIndex: tabIndex,
             onTap: _onItemTapped,
-            items: const [
-              BottomNavigationBarItem(
+            items: [
+              const BottomNavigationBarItem(
                 icon: Icon(Icons.home),
                 label: 'Home',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.favorite),
+                icon: BlocBuilder<ProductCubit, ProductState>(
+                  builder: (context, state) {
+                    if (state is ProductLoaded) {
+                      return Badge(
+                        badgeContent: Text(
+                          "${state.favList!.length}",
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                        child: const Icon(Icons.favorite),
+                      );
+                    }
+                    return const Text("");
+                  },
+                ),
                 label: 'Favourites',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_cart_outlined),
+                icon: BlocBuilder<ProductCubit, ProductState>(
+                  builder: (context, state) {
+                    if (state is ProductLoaded) {
+                      return Badge(
+                        badgeContent: Text(
+                          "${state.addToCartList!.length}",
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                        child: const Icon(Icons.shopping_cart_outlined),
+                      );
+                    }
+                    return const Text("");
+                  },
+                ),
                 label: 'Cart',
               ),
-              BottomNavigationBarItem(
+              const BottomNavigationBarItem(
                 icon: Icon(Icons.person),
                 label: 'Profile',
               ),

@@ -28,7 +28,7 @@ class Userdata {
       _$UserdataFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserdataToJson(this);
-  }
+}
 
 @JsonSerializable()
 class Address {
