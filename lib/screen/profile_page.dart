@@ -277,6 +277,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                                       CrossAxisAlignment.end,
                                                   children: [
                                                     TextFormField(
+                                                      maxLength: 10,
+                                                      keyboardType: TextInputType.number,
                                                       controller:
                                                           houseTextField,
                                                       textInputAction:
@@ -313,10 +315,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                                       ),
                                                     ),
                                                     TextFormField(
+                                                      maxLength: 6,
                                                       controller:
                                                           floorTextField,
                                                       textInputAction:
                                                           TextInputAction.next,
+                                                      keyboardType: TextInputType.number,
                                                       decoration:
                                                           const InputDecoration(
                                                         labelText: 'Zip Code',
@@ -363,7 +367,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                             address: Address(
                                                               city: city,
                                                               number: int.parse(
-                                                                  floor),
+                                                                  house),
                                                               geolocation: u
                                                                   .address!
                                                                   .geolocation,
