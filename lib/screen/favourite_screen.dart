@@ -20,17 +20,22 @@ class _FavouritePageState extends State<FavouritePage> {
       top: true,
       child: Scaffold(
         body: Padding(
-          padding: EdgeInsets.fromLTRB(normalizedWidth(context, 8)!,
-              normalizedHeight(context, 16)!, normalizedWidth(context, 8)!, 0),
+          padding: EdgeInsets.fromLTRB(
+            normalizedWidth(context, 8)!,
+            normalizedHeight(context, 16)!,
+            normalizedWidth(context, 8)!,
+            0,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
                 padding: EdgeInsets.fromLTRB(
-                    normalizedWidth(context, 8)!,
-                    normalizedHeight(context, 8)!,
-                    normalizedWidth(context, 8)!,
-                    normalizedHeight(context, 8)!),
+                  normalizedWidth(context, 8)!,
+                  normalizedHeight(context, 8)!,
+                  normalizedWidth(context, 8)!,
+                  normalizedHeight(context, 8)!,
+                ),
                 child: Text(
                   "Your Favourites",
                   style: TextStyle(

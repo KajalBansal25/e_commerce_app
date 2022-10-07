@@ -23,8 +23,8 @@ class ProductModel {
     this.category,
     this.image,
     this.rating,
-    this.isAddToCart=false,
-    this.isFavourite=false,
+    this.isAddToCart = false,
+    this.isFavourite = false,
   });
 
   int? id;
@@ -37,13 +37,10 @@ class ProductModel {
   bool? isFavourite;
   bool? isAddToCart;
 
-
   factory ProductModel.fromJson(Map<String, dynamic> json) =>
       _$ProductModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ProductModelToJson(this);
-
-
 }
 
 @JsonSerializable()

@@ -15,14 +15,4 @@ class CartLoaded extends CartState {
   const CartLoaded({
     required this.cartModel,
   });
-
 }
-
-
-// class CartInc extends CartState {
-//   final List<CartModel>? cartModel;
-//   const CartInc({
-//     required this.cartModel,
-// });
-//
-// }

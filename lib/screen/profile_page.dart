@@ -130,16 +130,18 @@ class _ProfilePageState extends State<ProfilePage> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       margin: EdgeInsets.symmetric(
-                          horizontal: normalizedWidth(context, 12)!,
-                          vertical: normalizedHeight(context, 12)!),
+                        horizontal: normalizedWidth(context, 12)!,
+                        vertical: normalizedHeight(context, 12)!,
+                      ),
                       child: SingleChildScrollView(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             Padding(
                               padding: EdgeInsets.symmetric(
-                                  horizontal: normalizedWidth(context, 18)!,
-                                  vertical: normalizedHeight(context, 18)!),
+                                horizontal: normalizedWidth(context, 18)!,
+                                vertical: normalizedHeight(context, 18)!,
+                              ),
                               child: Text(
                                 'Profile',
                                 style: TextStyle(
@@ -253,8 +255,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                   trailing: TextButton(
                                     style: ButtonStyle(
-                                        padding: MaterialStateProperty.all(
-                                            EdgeInsets.zero)),
+                                      padding: MaterialStateProperty.all(
+                                          EdgeInsets.zero),
+                                    ),
                                     onPressed: () {
                                       showModalBottomSheet(
                                           isScrollControlled: true,
@@ -281,8 +284,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                                           TextInputAction.next,
                                                       decoration:
                                                           const InputDecoration(
-                                                              labelText:
-                                                                  'House No.'),
+                                                        labelText: 'House No.',
+                                                      ),
                                                     ),
                                                     TextFormField(
                                                       controller:
@@ -291,8 +294,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                                           TextInputAction.done,
                                                       decoration:
                                                           const InputDecoration(
-                                                              labelText:
-                                                                  'Street'),
+                                                        labelText: 'Street',
+                                                      ),
                                                       validator: (value) {
                                                         if ((value == null ||
                                                             value.isEmpty)) {
@@ -307,8 +310,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                                           TextInputAction.next,
                                                       decoration:
                                                           const InputDecoration(
-                                                              labelText:
-                                                                  'City'),
+                                                        labelText: 'City',
+                                                      ),
                                                     ),
                                                     TextFormField(
                                                       controller:
@@ -317,8 +320,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                                           TextInputAction.next,
                                                       decoration:
                                                           const InputDecoration(
-                                                              labelText:
-                                                                  'Zip Code'),
+                                                        labelText: 'Zip Code',
+                                                      ),
                                                     ),
                                                     const SizedBox(
                                                       height: 10,
@@ -349,28 +352,28 @@ class _ProfilePageState extends State<ProfilePage> {
                                                           Userdata u = context
                                                               .read<UserCubit>()
                                                               .userData;
-                                                          userDataModal = Userdata(
-                                                              v: 0,
-                                                              username:
-                                                                  u.username,
-                                                              id: u.id,
-                                                              password:
-                                                                  u.password,
-                                                              email: u.email,
-                                                              address: Address(
-                                                                  city: city,
-                                                                  number:
-                                                                      int.parse(
-                                                                          floor),
-                                                                  geolocation: u
-                                                                      .address!
-                                                                      .geolocation,
-                                                                  street:
-                                                                      street,
-                                                                  zipcode:
-                                                                      floor),
-                                                              name: u.name,
-                                                              phone: u.phone);
+                                                          userDataModal =
+                                                              Userdata(
+                                                            v: 0,
+                                                            username:
+                                                                u.username,
+                                                            id: u.id,
+                                                            password:
+                                                                u.password,
+                                                            email: u.email,
+                                                            address: Address(
+                                                              city: city,
+                                                              number: int.parse(
+                                                                  floor),
+                                                              geolocation: u
+                                                                  .address!
+                                                                  .geolocation,
+                                                              street: street,
+                                                              zipcode: floor,
+                                                            ),
+                                                            name: u.name,
+                                                            phone: u.phone,
+                                                          );
                                                           context
                                                               .read<UserCubit>()
                                                               .updateUser(
@@ -383,7 +386,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                                           floorTextField
                                                               .clear();
                                                           cityTextField.clear();
-                                                          // ignore: use_build_context_synchronously
                                                           Navigator.pop(
                                                               context);
                                                         } else {

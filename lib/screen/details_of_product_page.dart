@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,8 +32,9 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
       choices.add(
         Container(
           padding: EdgeInsets.symmetric(
-              horizontal: normalizedWidth(context, 2)!,
-              vertical: normalizedHeight(context, 2)!),
+            horizontal: normalizedWidth(context, 2)!,
+            vertical: normalizedHeight(context, 2)!,
+          ),
           child: ChoiceChip(
             label: Text(
               item,
@@ -77,17 +79,27 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                     },
                     icon: const Icon(Icons.arrow_back_ios_rounded),
                   ),
-                  IconButton(
-                    onPressed: () {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Tabs(tabIndex: 2),
-                        ),
-                        ModalRoute.withName('/'),
-                      );
-                    },
-                    icon: const Icon(Icons.shopping_cart_outlined),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: Badge(
+                      badgeContent: Text(
+                        "${context.read<ProductCubit>().addToCaList!.length}",
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                      child: IconButton(
+                        padding: const EdgeInsets.all(0),
+                        onPressed: () {
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Tabs(tabIndex: 2),
+                            ),
+                            ModalRoute.withName('/'),
+                          );
+                        },
+                        icon: const Icon(Icons.shopping_cart_outlined),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -120,10 +132,11 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                       ),
                       Padding(
                         padding: EdgeInsets.only(
-                            top: normalizedHeight(context, 20)!,
-                            bottom: normalizedHeight(context, 5)!,
-                            right: normalizedHeight(context, 30)!,
-                            left: normalizedHeight(context, 30)!),
+                          top: normalizedHeight(context, 20)!,
+                          bottom: normalizedHeight(context, 5)!,
+                          right: normalizedHeight(context, 30)!,
+                          left: normalizedHeight(context, 30)!,
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -152,22 +165,25 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                       ),
                       Padding(
                         padding: EdgeInsets.only(
-                            left: normalizedWidth(context, 15)!,
-                            right: normalizedWidth(context, 15)!,
-                            top: normalizedHeight(context, 10)!),
+                          left: normalizedWidth(context, 15)!,
+                          right: normalizedWidth(context, 15)!,
+                          top: normalizedHeight(context, 10)!,
+                        ),
                         child: ExpansionTile(
                           title: Text(
                             'Description',
                             style: TextStyle(
-                                fontSize: normalizedWidth(context, 15),
-                                fontWeight: FontWeight.w500),
+                              fontSize: normalizedWidth(context, 15),
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                           children: <Widget>[
                             ListTile(
                               title: Text(
                                 '${widget.productModal.description}',
                                 style: const TextStyle(
-                                    fontWeight: FontWeight.w700),
+                                  fontWeight: FontWeight.w700,
+                                ),
                               ),
                             )
                           ],
@@ -179,7 +195,8 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                                   "women's clothing")
                           ? Padding(
                               padding: EdgeInsets.symmetric(
-                                  horizontal: normalizedWidth(context, 30)!),
+                                horizontal: normalizedWidth(context, 30)!,
+                              ),
                               child: const Text(
                                 'Size',
                                 style: TextStyle(fontWeight: FontWeight.bold),
@@ -187,19 +204,21 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                             )
                           : const Text(''),
                       Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: normalizedWidth(context, 25)!),
-                          child: (widget.productModal.category.toString() ==
-                                      "men's clothing" ||
-                                  widget.productModal.category.toString() ==
-                                      "women's clothing")
-                              ? SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Wrap(
-                                    children: _buildChoiceList(),
-                                  ),
-                                )
-                              : const Text('')),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: normalizedWidth(context, 25)!,
+                        ),
+                        child: (widget.productModal.category.toString() ==
+                                    "men's clothing" ||
+                                widget.productModal.category.toString() ==
+                                    "women's clothing")
+                            ? SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Wrap(
+                                  children: _buildChoiceList(),
+                                ),
+                              )
+                            : const Text(''),
+                      ),
                     ],
                   ),
                 ),
@@ -209,8 +228,9 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                   height: normalizedHeight(context, 35),
                   child: Padding(
                     padding: EdgeInsets.symmetric(
-                        horizontal: normalizedWidth(context, 16)!,
-                        vertical: normalizedHeight(context, 0)!),
+                      horizontal: normalizedWidth(context, 16)!,
+                      vertical: normalizedHeight(context, 0)!,
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -218,14 +238,17 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                             ? Container(
                                 height: normalizedHeight(context, 35),
                                 decoration: const BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20)),
-                                    color: Colors.redAccent),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                  color: Colors.redAccent,
+                                ),
                                 width: normalizedWidth(context, 65),
                                 child: Center(
                                   child: IconButton(
-                                    icon: const Icon(Icons.favorite_outline,
-                                        color: Colors.white),
+                                    icon: const Icon(
+                                      Icons.favorite_outline,
+                                      color: Colors.white,
+                                    ),
                                     onPressed: () {
                                       context
                                           .read<ProductCubit>()
@@ -242,14 +265,17 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                             : Container(
                                 height: normalizedHeight(context, 35),
                                 decoration: const BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20)),
-                                    color: Colors.redAccent),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                  color: Colors.redAccent,
+                                ),
                                 width: normalizedWidth(context, 65),
                                 child: Center(
                                   child: IconButton(
-                                    icon: const Icon(Icons.favorite,
-                                        color: Colors.white),
+                                    icon: const Icon(
+                                      Icons.favorite,
+                                      color: Colors.white,
+                                    ),
                                     onPressed: () {
                                       setState(() {
                                         BlocProvider.of<ProductCubit>(context)
@@ -267,13 +293,18 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                             ? ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                     padding: EdgeInsets.symmetric(
-                                        horizontal:
-                                            normalizedWidth(context, 80)!),
+                                      horizontal: normalizedWidth(context, 80)!,
+                                    ),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(
-                                          normalizedWidth(context, 60)!),
+                                        normalizedWidth(context, 60)!,
+                                      ),
                                     )),
                                 onPressed: () async {
+                                  context
+                                      .read<ProductCubit>()
+                                      .addToCaList!
+                                      .length;
                                   CartModel cart = CartModel(
                                     id: 11,
                                     userId: prodId,
@@ -306,11 +337,12 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                                 style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.grey,
                                     padding: EdgeInsets.symmetric(
-                                        horizontal:
-                                            normalizedWidth(context, 65)!),
+                                      horizontal: normalizedWidth(context, 65)!,
+                                    ),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(
-                                          normalizedWidth(context, 60)!),
+                                        normalizedWidth(context, 60)!,
+                                      ),
                                     )),
                                 onPressed: () {
                                   setState(() {
@@ -336,6 +368,4 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
       ),
     );
   }
-
-  onFavButtonClick(index) {}
 }
