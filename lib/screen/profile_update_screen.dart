@@ -2,7 +2,6 @@ import 'package:e_commerce_app/cubit/user_cubit.dart';
 import 'package:e_commerce_app/utils/scaling.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:e_commerce_app/model/user_data_modal.dart';
 
 class ProfileUpdate extends StatefulWidget {
@@ -58,9 +57,10 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
           autovalidateMode: _autovalidateMode,
           child: Padding(
             padding: EdgeInsets.only(
-                top: normalizedHeight(context, 10)!,
-                left: normalizedWidth(context, 20)!,
-                right: normalizedWidth(context, 20)!),
+              top: normalizedHeight(context, 10)!,
+              left: normalizedWidth(context, 20)!,
+              right: normalizedWidth(context, 20)!,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -173,8 +173,8 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                       if (value == null || value.isEmpty) {
                         return 'Please enter some text';
                       } else if (!RegExp(
-                              r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
-                          .hasMatch(value)) {
+                        r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
+                      ).hasMatch(value)) {
                         return 'Please enter a valid email Address';
                       }
                       return null;
@@ -202,9 +202,10 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                           ),
                         ),
                         borderSide: BorderSide(
-                            color: Colors.black,
-                            style: BorderStyle.solid,
-                            width: normalizedWidth(context, 2)!),
+                          color: Colors.black,
+                          style: BorderStyle.solid,
+                          width: normalizedWidth(context, 2)!,
+                        ),
                       ),
                     ),
                     validator: (value) {

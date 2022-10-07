@@ -42,8 +42,9 @@ class _ProductImagePreviewScreenState extends State<ProductImagePreviewScreen> {
               fit: BoxFit.fitHeight,
             ),
             border: Border.all(
-                width: normalizedWidth(context, 2)!,
-                color: currentIndex == index ? Colors.blue : Colors.grey),
+              width: normalizedWidth(context, 2)!,
+              color: currentIndex == index ? Colors.blue : Colors.grey,
+            ),
           ),
         ),
       );
@@ -62,10 +63,11 @@ class _ProductImagePreviewScreenState extends State<ProductImagePreviewScreen> {
               Row(
                 children: [
                   IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: const Icon(Icons.arrow_back_ios_new))
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.arrow_back_ios_new),
+                  )
                 ],
               ),
               CarouselSlider(
@@ -76,7 +78,9 @@ class _ProductImagePreviewScreenState extends State<ProductImagePreviewScreen> {
                       width: MediaQuery.of(context).size.width * 0.9,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: NetworkImage(index), fit: BoxFit.contain),
+                          image: NetworkImage(index),
+                          fit: BoxFit.contain,
+                        ),
                       ),
                     );
                   });

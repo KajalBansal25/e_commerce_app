@@ -1,5 +1,4 @@
 import 'package:fluttertoast/fluttertoast.dart';
-
 import 'login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
