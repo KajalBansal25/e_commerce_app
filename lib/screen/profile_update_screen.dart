@@ -186,6 +186,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                     vertical: normalizedHeight(context, 8)!,
                   ),
                   child: TextFormField(
+                    maxLength: 10,
                     controller: phoneNoUpdate,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
