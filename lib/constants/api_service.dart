@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:e_commerce_app/model/cart_model.dart';
+import 'package:e_commerce_app/model/product_model.dart';
+import 'package:e_commerce_app/model/user_data_modal.dart';
 import 'api_constants.dart';
-import '../model/cart_model.dart';
-import '../model/product_model.dart';
-import '../model/user_data_modal.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
