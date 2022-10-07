@@ -14,35 +14,34 @@ class AppRouter {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(
-            builder: (_) => Tabs(
-                  tabIndex: 0,
-                ));
+          builder: (_) => Tabs(
+            tabIndex: 0,
+          ),
+        );
       case '/all_products':
         return MaterialPageRoute(builder: (_) => const ProductPage());
-      // case '/single_product':
-      //   return MaterialPageRoute(
-      //       builder: (_) => CustomDetailPage(
-      //             prodId: arguments.toString(),
-      //             productModal: arguments as ProductModel,
-      //           ));
       case '/product_image_screen':
         return MaterialPageRoute(
-            builder: (_) => const ProductImagePreviewScreen());
+          builder: (_) => const ProductImagePreviewScreen(),
+        );
       case '/cart':
         return MaterialPageRoute(
-            builder: (_) => Tabs(
-                  tabIndex: 2,
-                ));
+          builder: (_) => Tabs(
+            tabIndex: 2,
+          ),
+        );
       case '/favourite':
         return MaterialPageRoute(
-            builder: (_) => Tabs(
-                  tabIndex: 1,
-                ));
+          builder: (_) => Tabs(
+            tabIndex: 1,
+          ),
+        );
       case '/profile':
         return MaterialPageRoute(
-            builder: (_) => Tabs(
-                  tabIndex: 3,
-                ));
+          builder: (_) => Tabs(
+            tabIndex: 3,
+          ),
+        );
       case '/profile_update':
         return MaterialPageRoute(builder: (_) => const ProfileUpdate());
       case '/payment':
@@ -51,10 +50,12 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const OrderDetailScreen());
       case '/single_order_screen':
         return MaterialPageRoute(
-            builder: (_) => const SingleOrderDetailScreen());
+          builder: (_) => const SingleOrderDetailScreen(),
+        );
       case '/category':
         return MaterialPageRoute(
-            builder: (_) => CategoryScreen(category: arguments.toString()));
+          builder: (_) => CategoryScreen(category: arguments.toString()),
+        );
       default:
         return null;
     }
