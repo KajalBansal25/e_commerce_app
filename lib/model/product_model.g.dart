@@ -1,12 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'single_product_modal.dart';
+part of 'product_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ProductModal _$ProductModalFromJson(Map<String, dynamic> json) => ProductModal(
+ProductListModel _$ProductListModelFromJson(Map<String, dynamic> json) =>
+    ProductListModel(
+      products: (json['products'] as List<dynamic>?)
+          ?.map((e) => ProductModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$ProductListModelToJson(ProductListModel instance) =>
+    <String, dynamic>{
+      'products': instance.products,
+    };
+
+ProductModel _$ProductModelFromJson(Map<String, dynamic> json) => ProductModel(
       id: json['id'] as int?,
       title: json['title'] as String?,
       price: (json['price'] as num?)?.toDouble(),
@@ -16,9 +28,11 @@ ProductModal _$ProductModalFromJson(Map<String, dynamic> json) => ProductModal(
       rating: json['rating'] == null
           ? null
           : Rating.fromJson(json['rating'] as Map<String, dynamic>),
+      isAddToCart: json['isAddToCart'] as bool? ?? false,
+      isFavourite: json['isFavourite'] as bool? ?? false,
     );
 
-Map<String, dynamic> _$ProductModalToJson(ProductModal instance) =>
+Map<String, dynamic> _$ProductModelToJson(ProductModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
@@ -27,6 +41,8 @@ Map<String, dynamic> _$ProductModalToJson(ProductModal instance) =>
       'category': instance.category,
       'image': instance.image,
       'rating': instance.rating,
+      'isFavourite': instance.isFavourite,
+      'isAddToCart': instance.isAddToCart,
     };
 
 Rating _$RatingFromJson(Map<String, dynamic> json) => Rating(

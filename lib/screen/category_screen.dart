@@ -1,10 +1,10 @@
 import 'package:badges/badges.dart';
-import 'package:e_commerce_app/main.dart';
+import 'package:e_commerce_app/cubit/product_cubit.dart';
+import 'package:e_commerce_app/screen/tabs_screen.dart';
 import 'package:flutter/material.dart';
-import '../widgets/product_card.dart';
-import '../constants/api_service.dart';
-import '../model/product_model.dart';
-import 'package:e_commerce_app/utils/Scaling.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:e_commerce_app/widgets/product_card.dart';
+import 'package:e_commerce_app/utils/scaling.dart';
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({Key? key, required this.category}) : super(key: key);
@@ -14,90 +14,109 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
-  late List<ProductModel>? _productModel = [];
-  @override
-  void initState() {
-    super.initState();
-    _getData();
-  }
-
-  void _getData() async {
-    _productModel =
-        (await ApiService().getProductsByCategory(widget.category))!;
-    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
-  }
-
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<ProductCubit>(context)
+        .getProductByCategories(widget.category);
     return SafeArea(
       top: true,
       child: Scaffold(
-          body: _productModel == null || _productModel!.isEmpty
-              ? const Center(child: CircularProgressIndicator())
-              : Padding(
-                  padding: EdgeInsets.fromLTRB(
-                      normalizedWidth(context, 8)!,
-                      normalizedHeight(context, 16)!,
-                      normalizedWidth(context, 8)!,
-                      0),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              Navigator.pop(
-                                context,
-                              );
-                            },
-                            icon: const Icon(Icons.arrow_back_ios_rounded),
-                          ),
-                          Text(
-                            widget.category.toString().toUpperCase(),
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: normalizedWidth(context, 22)!),
-                          ),
-                          Badge(
-                            padding: EdgeInsets.fromLTRB(
-                                normalizedWidth(context, 8)!,
-                                normalizedHeight(context, 16)!,
-                                normalizedWidth(context, 8)!,
-                                normalizedHeight(context, 16)!),
-                            position: BadgePosition.center(),
-                            // stackFit: ,
+        body: Padding(
+          padding: EdgeInsets.fromLTRB(
+            normalizedWidth(context, 8)!,
+            normalizedHeight(context, 16)!,
+            normalizedWidth(context, 8)!,
+            0,
+          ),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(
+                        context,
+                      );
+                    },
+                    icon: const Icon(Icons.arrow_back_ios_rounded),
+                  ),
+                  Text(
+                    widget.category.toString().toUpperCase(),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: normalizedWidth(context, 22)!,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: BlocBuilder<ProductCubit, ProductState>(
+                      builder: (context, state) {
+                        if (state is ProductLoaded) {
+                          return Badge(
+                            badgeContent: Text(
+                              "${state.addToCartList!.length}",
+                              style: const TextStyle(color: Colors.white),
+                            ),
                             child: IconButton(
                               padding: const EdgeInsets.all(0),
                               onPressed: () {
                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => MyApp()));
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Tabs(
+                                      tabIndex: 2,
+                                    ),
+                                  ),
+                                );
                               },
                               icon: const Icon(Icons.shopping_cart_outlined),
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: normalizedHeight(context, 20),
-                      ),
-                      Expanded(
-                        child: productCard(
-                          productModel: _productModel,
-                          onFavButtonClick: (int index) {
-                            setState(() {
-                              _productModel![index].favourite();
-                            });
-                            return null;
-                          },
-                          parentContext: context,
-                        ),
-                      )
-                    ],
+                          );
+                        }
+                        return const Text("");
+                      },
+                    ),
                   ),
-                )),
+                ],
+              ),
+              SizedBox(
+                height: normalizedHeight(context, 20),
+              ),
+              Expanded(
+                child: BlocBuilder<ProductCubit, ProductState>(
+                  builder: (context, state) {
+                    if (state is ProductLoaded) {
+                      return productCard(
+                        parentContext: context,
+                        productModel: state.categoriesData![widget.category],
+                        onFavButtonClick: (int index) {
+                          setState(() {
+                            BlocProvider.of<ProductCubit>(context)
+                                .updateFavouriteList((state)
+                                    .categoriesData![widget.category][index]);
+                            context.read<ProductCubit>().getProductData();
+                          });
+                          return null;
+                        },
+                        onAddToCaButtonClick: (int index) {
+                          setState(() {
+                            BlocProvider.of<ProductCubit>(context)
+                                .updateAddToCaList((state)
+                                    .categoriesData![widget.category][index]);
+                          });
+                          return null;
+                        },
+                      );
+                    }
+                    return const Text("data");
+                  },
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

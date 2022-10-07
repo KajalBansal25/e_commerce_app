@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/utils/Scaling.dart';
+import 'package:e_commerce_app/utils/scaling.dart';
 import 'package:flutter/material.dart';
 
 class SingleOrderDetailScreen extends StatefulWidget {
@@ -62,8 +62,9 @@ class _SingleOrderDetailScreenState extends State<SingleOrderDetailScreen> {
             children: [
               Padding(
                 padding: EdgeInsets.symmetric(
-                    horizontal: normalizedWidth(context, 15)!,
-                    vertical: normalizedHeight(context, 15)!),
+                  horizontal: normalizedWidth(context, 15)!,
+                  vertical: normalizedHeight(context, 15)!,
+                ),
                 child: const Text('Order ID - OD111111111111111'),
               ),
               Divider(
@@ -72,8 +73,9 @@ class _SingleOrderDetailScreenState extends State<SingleOrderDetailScreen> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
-                    horizontal: normalizedWidth(context, 15)!,
-                    vertical: normalizedHeight(context, 15)!),
+                  horizontal: normalizedWidth(context, 15)!,
+                  vertical: normalizedHeight(context, 15)!,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -81,11 +83,13 @@ class _SingleOrderDetailScreenState extends State<SingleOrderDetailScreen> {
                       width: normalizedWidth(context, 250),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children:  [
+                        children: [
                           Text(
                             'Product Detail',
                             style: TextStyle(
-                                fontSize: normalizedWidth(context, 19), fontWeight: FontWeight.bold),
+                              fontSize: normalizedWidth(context, 19),
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           const Text('Color'),
                           SizedBox(
@@ -107,14 +111,16 @@ class _SingleOrderDetailScreenState extends State<SingleOrderDetailScreen> {
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: normalizedWidth(context, 5)!,
-                          vertical: normalizedHeight(context, 5)!),
+                        horizontal: normalizedWidth(context, 5)!,
+                        vertical: normalizedHeight(context, 5)!,
+                      ),
                       child: SizedBox(
                         height: normalizedHeight(context, 80),
                         width: normalizedWidth(context, 60),
                         child: const Image(
                           image: NetworkImage(
-                              "https://fakestoreapi.com/img/51eg55uWmdL._AC_UX679_.jpg"),
+                            "https://fakestoreapi.com/img/51eg55uWmdL._AC_UX679_.jpg",
+                          ),
                         ),
                       ),
                     ),

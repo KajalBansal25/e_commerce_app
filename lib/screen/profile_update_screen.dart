@@ -1,12 +1,14 @@
+import 'package:e_commerce_app/cubit/user_cubit.dart';
+import 'package:e_commerce_app/utils/scaling.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-
-import '../model/user_data_modal.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:e_commerce_app/model/user_data_modal.dart';
 
 class ProfileUpdate extends StatefulWidget {
+  final Address? tempAddress;
   const ProfileUpdate({
     Key? key,
+    this.tempAddress,
   }) : super(key: key);
 
   @override
@@ -15,15 +17,8 @@ class ProfileUpdate extends StatefulWidget {
 
 class _ProfileUpdateState extends State<ProfileUpdate> {
   Name tempName = Name();
-  late Future<String?> updatedProfileData;
-
-  Address tempAddress = Address(
-      city: 'Jaipur',
-      street: 'Rajpur',
-      zipcode: '112200',
-      number: 5,
-      geolocation: Geolocation(lat: '-37.3159', long: '81.1496'));
-
+  Userdata updatedProfileData = Userdata();
+  get tempAddress => widget.tempAddress;
   Userdata userDataModal = Userdata();
 
   final _formUpdateKey = GlobalKey<FormState>();
@@ -36,13 +31,15 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
 
   @override
   void initState() {
-    // _getDataCall();
-    print('I am On Update Screen');
     super.initState();
   }
 
   @override
   void dispose() {
+    emailUpdate.dispose();
+    phoneNoUpdate.dispose();
+    firstNameUpdate.dispose();
+    lastNameUpdate.dispose();
     super.dispose();
   }
 
@@ -59,54 +56,42 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
           key: _formUpdateKey,
           autovalidateMode: _autovalidateMode,
           child: Padding(
-            padding: const EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0),
+            padding: EdgeInsets.only(
+              top: normalizedHeight(context, 10)!,
+              left: normalizedWidth(context, 20)!,
+              right: normalizedWidth(context, 20)!,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(
-                  height: 30.0,
+                SizedBox(
+                  height: normalizedHeight(context, 30),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                  padding: EdgeInsets.symmetric(
+                    vertical: normalizedHeight(context, 8)!,
+                  ),
                   child: TextFormField(
                     controller: firstNameUpdate,
                     textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(
-                      label: Text('First Name'),
-                      contentPadding: EdgeInsets.all(15.0),
+                    decoration: InputDecoration(
+                      label: const Text('First Name'),
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: normalizedWidth(context, 15)!,
+                        vertical: normalizedHeight(context, 15)!,
+                      ),
                       border: OutlineInputBorder(
-                          gapPadding: 1.0,
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(
-                              color: Colors.black,
-                              style: BorderStyle.solid,
-                              width: 2.0)),
-                    ),
-                    validator: (value) {
-                      if ((value == null || value.isEmpty)) {
-                        return 'Please enter some text';
-                      } else if (!RegExp("^[A-Za-z]").hasMatch(value)) {
-                        return 'Please Enter a valid Name';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                  child: TextFormField(
-                    controller: lastNameUpdate,
-                    textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(
-                      label: Text('Last Name'),
-                      contentPadding: EdgeInsets.all(15.0),
-                      border: OutlineInputBorder(
-                        gapPadding: 1.0,
-                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        gapPadding: normalizedHeight(context, 1)!,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(
+                            normalizedWidth(context, 10)!,
+                          ),
+                        ),
                         borderSide: BorderSide(
-                            color: Colors.black,
-                            style: BorderStyle.solid,
-                            width: 2.0),
+                          color: Colors.black,
+                          style: BorderStyle.solid,
+                          width: normalizedWidth(context, 2)!,
+                        ),
                       ),
                     ),
                     validator: (value) {
@@ -120,29 +105,76 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                  padding: EdgeInsets.symmetric(
+                    vertical: normalizedHeight(context, 8)!,
+                  ),
+                  child: TextFormField(
+                    controller: lastNameUpdate,
+                    textInputAction: TextInputAction.next,
+                    decoration: InputDecoration(
+                      label: const Text('Last Name'),
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: normalizedWidth(context, 15)!,
+                        vertical: normalizedHeight(context, 15)!,
+                      ),
+                      border: OutlineInputBorder(
+                        gapPadding: normalizedHeight(context, 1)!,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(
+                            normalizedWidth(context, 10)!,
+                          ),
+                        ),
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                          style: BorderStyle.solid,
+                          width: normalizedWidth(context, 2)!,
+                        ),
+                      ),
+                    ),
+                    validator: (value) {
+                      if ((value == null || value.isEmpty)) {
+                        return 'Please enter some text';
+                      } else if (!RegExp("^[A-Za-z]").hasMatch(value)) {
+                        return 'Please Enter a valid Name';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: normalizedHeight(context, 8)!,
+                  ),
                   child: TextFormField(
                     controller: emailUpdate,
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(
-                      label: Text('Email'),
-                      contentPadding: EdgeInsets.all(15.0),
+                    decoration: InputDecoration(
+                      label: const Text('Email'),
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: normalizedWidth(context, 15)!,
+                        vertical: normalizedHeight(context, 15)!,
+                      ),
                       border: OutlineInputBorder(
-                          gapPadding: 1.0,
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(
-                              color: Colors.black,
-                              style: BorderStyle.solid,
-                              width: 2.0)),
+                        gapPadding: normalizedHeight(context, 1)!,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(
+                            normalizedWidth(context, 10)!,
+                          ),
+                        ),
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                          style: BorderStyle.solid,
+                          width: normalizedWidth(context, 2)!,
+                        ),
+                      ),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        // print(value);
                         return 'Please enter some text';
                       } else if (!RegExp(
-                              r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
-                          .hasMatch(value)) {
+                        r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
+                      ).hasMatch(value)) {
                         return 'Please enter a valid email Address';
                       }
                       return null;
@@ -150,20 +182,31 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                  padding: EdgeInsets.symmetric(
+                    vertical: normalizedHeight(context, 8)!,
+                  ),
                   child: TextFormField(
+                    maxLength: 10,
                     controller: phoneNoUpdate,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      label: Text('Mobile No'),
-                      contentPadding: EdgeInsets.all(15.0),
+                    decoration: InputDecoration(
+                      label: const Text('Mobile No'),
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: normalizedWidth(context, 15)!,
+                        vertical: normalizedHeight(context, 15)!,
+                      ),
                       border: OutlineInputBorder(
-                        gapPadding: 1.0,
-                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        gapPadding: normalizedHeight(context, 1)!,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(
+                            normalizedWidth(context, 10)!,
+                          ),
+                        ),
                         borderSide: BorderSide(
-                            color: Colors.black,
-                            style: BorderStyle.solid,
-                            width: 2.0),
+                          color: Colors.black,
+                          style: BorderStyle.solid,
+                          width: normalizedWidth(context, 2)!,
+                        ),
                       ),
                     ),
                     validator: (value) {
@@ -177,23 +220,36 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  padding: EdgeInsets.symmetric(
+                    vertical: normalizedHeight(context, 16)!,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       ElevatedButton(
                         onPressed: () {
                           if (_formUpdateKey.currentState!.validate()) {
-                            updatedProfileData = send();
-
+                            updatedProfileData = Userdata(
+                              phone: phoneNoUpdate.text,
+                              name: Name(
+                                firstname: firstNameUpdate.text,
+                                lastname: lastNameUpdate.text,
+                              ),
+                              address: tempAddress,
+                              email: emailUpdate.text,
+                              password: '',
+                              id: 23,
+                              username: firstNameUpdate.text,
+                              v: 0,
+                            );
                             emailUpdate.clear();
                             phoneNoUpdate.clear();
                             firstNameUpdate.clear();
                             lastNameUpdate.clear();
-                            print(
-                                'Bye Update Screen ${updatedProfileData.toString()}');
-                            Navigator.pop(
-                                context, 'https://fakestoreapi.com/users/7');
+                            context
+                                .read<UserCubit>()
+                                .updateUser(u: updatedProfileData);
+                            Navigator.pop(context);
                           } else {
                             setState(() {
                               _autovalidateMode = AutovalidateMode.always;
@@ -214,36 +270,5 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
         ),
       ),
     );
-  }
-
-  Future<String?> send() async {
-    var name = jsonEncode(
-        Name(firstname: firstNameUpdate.text, lastname: lastNameUpdate.text)
-            .toJson());
-    userDataModal = Userdata(
-      email: emailUpdate.text,
-      phone: phoneNoUpdate.text,
-      username: 'hello007',
-      password: 'temp@password',
-      address: tempAddress,
-      name:
-          Name(firstname: firstNameUpdate.text, lastname: lastNameUpdate.text),
-    );
-
-    try {
-      var url = Uri.parse('https://fakestoreapi.com/users/7');
-      var tempBody = userDataModal.toJson();
-      tempBody['name'] = name;
-      var response = await http.put(url,
-          headers: {
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(tempBody));
-      print(response.body);
-      return response.body;
-    } catch (e) {
-      print('try and catch : ${e.toString()}');
-    }
-    return null;
   }
 }
