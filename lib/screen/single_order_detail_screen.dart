@@ -51,15 +51,28 @@ class _SingleOrderDetailScreenState extends State<SingleOrderDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Order Detail'),
-        elevation: 0,
-      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              Row(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.arrow_back_ios),
+                  ),
+                  Text(
+                    'Single Order Detail',
+                    style: TextStyle(
+                      fontSize: normalizedWidth(context, 22)!,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                ],
+              ),
               Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: normalizedWidth(context, 15)!,
@@ -100,7 +113,7 @@ class _SingleOrderDetailScreenState extends State<SingleOrderDetailScreen> {
                             height: normalizedHeight(context, 8),
                           ),
                           Text(
-                            '\$ 140',
+                            '\$ 150',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: normalizedWidth(context, 24),
@@ -119,7 +132,7 @@ class _SingleOrderDetailScreenState extends State<SingleOrderDetailScreen> {
                         width: normalizedWidth(context, 60),
                         child: const Image(
                           image: NetworkImage(
-                            "https://fakestoreapi.com/img/51eg55uWmdL._AC_UX679_.jpg",
+                            "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
                           ),
                         ),
                       ),
