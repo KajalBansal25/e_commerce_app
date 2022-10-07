@@ -62,8 +62,9 @@ class _SingleOrderDetailScreenState extends State<SingleOrderDetailScreen> {
             children: [
               Padding(
                 padding: EdgeInsets.symmetric(
-                    horizontal: normalizedWidth(context, 15)!,
-                    vertical: normalizedHeight(context, 15)!),
+                  horizontal: normalizedWidth(context, 15)!,
+                  vertical: normalizedHeight(context, 15)!,
+                ),
                 child: const Text('Order ID - OD111111111111111'),
               ),
               Divider(
@@ -72,8 +73,9 @@ class _SingleOrderDetailScreenState extends State<SingleOrderDetailScreen> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
-                    horizontal: normalizedWidth(context, 15)!,
-                    vertical: normalizedHeight(context, 15)!),
+                  horizontal: normalizedWidth(context, 15)!,
+                  vertical: normalizedHeight(context, 15)!,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -85,8 +87,9 @@ class _SingleOrderDetailScreenState extends State<SingleOrderDetailScreen> {
                           Text(
                             'Product Detail',
                             style: TextStyle(
-                                fontSize: normalizedWidth(context, 19),
-                                fontWeight: FontWeight.bold),
+                              fontSize: normalizedWidth(context, 19),
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           const Text('Color'),
                           SizedBox(
@@ -108,14 +111,16 @@ class _SingleOrderDetailScreenState extends State<SingleOrderDetailScreen> {
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: normalizedWidth(context, 5)!,
-                          vertical: normalizedHeight(context, 5)!),
+                        horizontal: normalizedWidth(context, 5)!,
+                        vertical: normalizedHeight(context, 5)!,
+                      ),
                       child: SizedBox(
                         height: normalizedHeight(context, 80),
                         width: normalizedWidth(context, 60),
                         child: const Image(
                           image: NetworkImage(
-                              "https://fakestoreapi.com/img/51eg55uWmdL._AC_UX679_.jpg"),
+                            "https://fakestoreapi.com/img/51eg55uWmdL._AC_UX679_.jpg",
+                          ),
                         ),
                       ),
                     ),

@@ -81,8 +81,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
         resizeToAvoidBottomInset: false,
         body: Padding(
           padding: EdgeInsets.symmetric(
-              vertical: normalizedHeight(context, 0)!,
-              horizontal: normalizedWidth(context, 8)!),
+            vertical: normalizedHeight(context, 0)!,
+            horizontal: normalizedWidth(context, 8)!,
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,31 +91,37 @@ class _PaymentScreenState extends State<PaymentScreen> {
               Row(
                 children: [
                   IconButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Tabs(tabIndex: 2)));
-                      },
-                      icon: const Icon(Icons.arrow_back_ios),
-                      iconSize: normalizedWidth(context, 20)),
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Tabs(tabIndex: 2),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.arrow_back_ios),
+                    iconSize: normalizedWidth(context, 20),
+                  ),
                   Text(
                     'Payment',
                     style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: normalizedWidth(context, 22)),
+                      fontWeight: FontWeight.bold,
+                      fontSize: normalizedWidth(context, 22),
+                    ),
                   ),
                 ],
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
-                    vertical: normalizedHeight(context, 8)!,
-                    horizontal: normalizedWidth(context, 8)!),
+                  vertical: normalizedHeight(context, 8)!,
+                  horizontal: normalizedWidth(context, 8)!,
+                ),
                 child: Text(
                   'Address',
                   style: TextStyle(
-                      fontSize: normalizedWidth(context, 20),
-                      fontWeight: FontWeight.bold),
+                    fontSize: normalizedWidth(context, 20),
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               Card(
@@ -126,8 +133,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 child: Row(children: [
                   Padding(
                     padding: EdgeInsets.symmetric(
-                        vertical: normalizedHeight(context, 8)!,
-                        horizontal: normalizedWidth(context, 8)!),
+                      vertical: normalizedHeight(context, 8)!,
+                      horizontal: normalizedWidth(context, 8)!,
+                    ),
                     child: ClipRRect(
                       borderRadius:
                           BorderRadius.circular(normalizedWidth(context, 15)!),
@@ -141,8 +149,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(
-                        vertical: normalizedHeight(context, 8)!,
-                        horizontal: normalizedWidth(context, 8)!),
+                      vertical: normalizedHeight(context, 8)!,
+                      horizontal: normalizedWidth(context, 8)!,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -150,8 +159,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         Text(
                           'Home',
                           style: TextStyle(
-                              fontSize: normalizedWidth(context, 16)!,
-                              fontWeight: FontWeight.bold),
+                            fontSize: normalizedWidth(context, 16)!,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         Text(
                           '$house,$floor',
@@ -168,113 +178,110 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           style: const TextStyle(color: Colors.grey),
                         ),
                         TextButton(
-                            style: ButtonStyle(
-                                padding:
-                                    MaterialStateProperty.all(EdgeInsets.zero)),
-                            onPressed: () {
-                              showModalBottomSheet(
-                                  isScrollControlled: true,
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: SingleChildScrollView(
-                                        padding:
-                                            MediaQuery.of(context).viewInsets,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
-                                          children: [
-                                            TextFormField(
-                                              controller: houseTextField,
-                                              textInputAction:
-                                                  TextInputAction.next,
-                                              decoration: const InputDecoration(
-                                                  labelText: 'House No.'),
+                          style: ButtonStyle(
+                            padding: MaterialStateProperty.all(EdgeInsets.zero),
+                          ),
+                          onPressed: () {
+                            showModalBottomSheet(
+                                isScrollControlled: true,
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: SingleChildScrollView(
+                                      padding:
+                                          MediaQuery.of(context).viewInsets,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          TextFormField(
+                                            controller: houseTextField,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            decoration: const InputDecoration(
+                                              labelText: 'House No.',
                                             ),
-                                            TextFormField(
-                                              controller: floorTextField,
-                                              textInputAction:
-                                                  TextInputAction.next,
-                                              decoration: const InputDecoration(
-                                                  labelText:
-                                                      'Floor (Optional)'),
+                                          ),
+                                          TextFormField(
+                                            controller: floorTextField,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            decoration: const InputDecoration(
+                                              labelText: 'Floor (Optional)',
                                             ),
-                                            TextFormField(
-                                              controller: cityTextField,
-                                              textInputAction:
-                                                  TextInputAction.next,
-                                              decoration: const InputDecoration(
-                                                  labelText: 'City'),
+                                          ),
+                                          TextFormField(
+                                            controller: cityTextField,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            decoration: const InputDecoration(
+                                              labelText: 'City',
                                             ),
-                                            TextFormField(
-                                              controller: countryTextField,
-                                              textInputAction:
-                                                  TextInputAction.done,
-                                              decoration: const InputDecoration(
-                                                  labelText: 'Country'),
+                                          ),
+                                          TextFormField(
+                                            controller: countryTextField,
+                                            textInputAction:
+                                                TextInputAction.done,
+                                            decoration: const InputDecoration(
+                                              labelText: 'Country',
                                             ),
-                                            SizedBox(
-                                              height:
-                                                  normalizedHeight(context, 10),
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                TextButton(
-                                                    style: ButtonStyle(
-                                                        padding:
-                                                            MaterialStateProperty
-                                                                .all(EdgeInsets
-                                                                    .zero)),
-                                                    onPressed: () {
-                                                      _determinePosition();
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: const Text(
-                                                        'Use Current Location')),
-                                                SizedBox(
-                                                  width: normalizedWidth(
-                                                      context, 20),
+                                          ),
+                                          SizedBox(
+                                            height:
+                                                normalizedHeight(context, 10),
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              TextButton(
+                                                style: ButtonStyle(
+                                                  padding:
+                                                      MaterialStateProperty.all(
+                                                          EdgeInsets.zero),
                                                 ),
-                                                ElevatedButton(
-                                                    onPressed: () {
-                                                      setState(() {
-                                                        house =
-                                                            houseTextField.text;
-                                                        floor =
-                                                            floorTextField.text;
-                                                        city =
-                                                            cityTextField.text;
-                                                        country =
-                                                            countryTextField
-                                                                .text;
-                                                        countryTextField
-                                                            .clear();
-                                                        houseTextField.clear();
-                                                        floorTextField.clear();
-                                                        cityTextField.clear();
-                                                      });
-                                                      Navigator.pop(context);
-                                                    },
-                                                    // style: ButtonStyle(
-                                                    //     backgroundColor:
-                                                    //         MaterialStateProperty
-                                                    //             .all(Colors
-                                                    //                 .black),
-                                                    // ),
-                                                    child: const Text(
-                                                        'Save Address')),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
+                                                onPressed: () {
+                                                  _determinePosition();
+                                                  Navigator.pop(context);
+                                                },
+                                                child: const Text(
+                                                  'Use Current Location',
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: normalizedWidth(
+                                                    context, 20),
+                                              ),
+                                              ElevatedButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    house = houseTextField.text;
+                                                    floor = floorTextField.text;
+                                                    city = cityTextField.text;
+                                                    country =
+                                                        countryTextField.text;
+                                                    countryTextField.clear();
+                                                    houseTextField.clear();
+                                                    floorTextField.clear();
+                                                    cityTextField.clear();
+                                                  });
+                                                  Navigator.pop(context);
+                                                },
+                                                child: const Text(
+                                                  'Save Address',
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
                                       ),
-                                    );
-                                  });
-                            },
-                            child: const Text('Change Address'))
+                                    ),
+                                  );
+                                });
+                          },
+                          child: const Text('Change Address'),
+                        )
                       ],
                     ),
                   )
@@ -282,13 +289,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
-                    vertical: normalizedHeight(context, 8)!,
-                    horizontal: normalizedWidth(context, 8)!),
+                  vertical: normalizedHeight(context, 8)!,
+                  horizontal: normalizedWidth(context, 8)!,
+                ),
                 child: Text(
                   'Payment Method',
                   style: TextStyle(
-                      fontSize: normalizedWidth(context, 16),
-                      fontWeight: FontWeight.bold),
+                    fontSize: normalizedWidth(context, 16),
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               Card(
@@ -299,13 +308,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 child: Row(children: [
                   Padding(
                     padding: EdgeInsets.symmetric(
-                        vertical: normalizedHeight(context, 8)!,
-                        horizontal: normalizedWidth(context, 8)!),
+                      vertical: normalizedHeight(context, 8)!,
+                      horizontal: normalizedWidth(context, 8)!,
+                    ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: Image.asset(
-                        // color: Colors.grey,
-
                         'assets/images/Mastercard-Logo.png',
                         fit: BoxFit.fitWidth,
                         height: normalizedHeight(context, 90),
@@ -315,16 +323,18 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(
-                        vertical: normalizedHeight(context, 8)!,
-                        horizontal: normalizedWidth(context, 8)!),
+                      vertical: normalizedHeight(context, 8)!,
+                      horizontal: normalizedWidth(context, 8)!,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'MasterCard',
                           style: TextStyle(
-                              fontSize: normalizedWidth(context, 16),
-                              fontWeight: FontWeight.bold),
+                            fontSize: normalizedWidth(context, 16),
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         const Text(
                           '**** **** **** 7852',
@@ -343,8 +353,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       borderRadius: BorderRadius.circular(15.0),
                     ),
                     child: IconButton(
-                      icon: const Icon(Icons.arrow_forward_ios,
-                          color: Colors.white),
+                      icon: const Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.white,
+                      ),
                       onPressed: () {
                         showModalBottomSheet(
                             context: context,
@@ -356,16 +368,18 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                   children: [
                                     Padding(
                                       padding: EdgeInsets.fromLTRB(
-                                          normalizedWidth(context, 30)!,
-                                          normalizedHeight(context, 8)!,
-                                          0,
-                                          normalizedHeight(context, 8)!),
+                                        normalizedWidth(context, 30)!,
+                                        normalizedHeight(context, 8)!,
+                                        0,
+                                        normalizedHeight(context, 8)!,
+                                      ),
                                       child: Text(
                                         'Choose Your Payment Method',
                                         style: TextStyle(
-                                            fontSize:
-                                                normalizedWidth(context, 20),
-                                            fontWeight: FontWeight.bold),
+                                          fontSize:
+                                              normalizedWidth(context, 20),
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
                                     ListTile(
@@ -440,8 +454,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   Text(
                     '\$ 799',
                     style: TextStyle(
-                        fontSize: normalizedWidth(context, 16),
-                        fontWeight: FontWeight.bold),
+                      fontSize: normalizedWidth(context, 16),
+                      fontWeight: FontWeight.bold,
+                    ),
                   )
                 ],
               ),
@@ -457,13 +472,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   Text(
                     '\$ 100',
                     style: TextStyle(
-                        fontSize: normalizedWidth(context, 16),
-                        fontWeight: FontWeight.bold),
+                      fontSize: normalizedWidth(context, 16),
+                      fontWeight: FontWeight.bold,
+                    ),
                   )
                 ],
               ),
               const Divider(
-                // height: 10,
                 color: Colors.black,
                 indent: 2,
                 endIndent: 2,
@@ -482,8 +497,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   Text(
                     '\$ 899',
                     style: TextStyle(
-                        fontSize: normalizedWidth(context, 16),
-                        fontWeight: FontWeight.bold),
+                      fontSize: normalizedWidth(context, 16),
+                      fontWeight: FontWeight.bold,
+                    ),
                   )
                 ],
               ),
@@ -491,8 +507,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 height: normalizedHeight(context, 20),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(normalizedWidth(context, 20)!, 0,
-                    normalizedWidth(context, 20)!, 0),
+                padding: EdgeInsets.fromLTRB(
+                  normalizedWidth(context, 20)!,
+                  0,
+                  normalizedWidth(context, 20)!,
+                  0,
+                ),
                 child: ElevatedButton(
                   style: ButtonStyle(
                     elevation: MaterialStateProperty.all(10),
@@ -518,7 +538,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                   controller: houseTextField,
                                   textInputAction: TextInputAction.next,
                                   decoration: const InputDecoration(
-                                      labelText: 'Enter Coupon Code'),
+                                    labelText: 'Enter Coupon Code',
+                                  ),
                                 ),
                                 SizedBox(
                                   height: normalizedHeight(context, 10),
@@ -565,8 +586,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 height: normalizedHeight(context, 10),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(normalizedWidth(context, 20)!, 0,
-                    normalizedWidth(context, 20)!, 0),
+                padding: EdgeInsets.fromLTRB(
+                  normalizedWidth(context, 20)!,
+                  0,
+                  normalizedWidth(context, 20)!,
+                  0,
+                ),
                 child: ElevatedButton(
                   style: ButtonStyle(
                     elevation: MaterialStateProperty.all(10),
