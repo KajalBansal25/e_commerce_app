@@ -81,24 +81,31 @@ class _CustomDetailPageState extends State<CustomDetailPage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(right: 8.0),
-                    child: Badge(
-                      badgeContent: Text(
-                        "${context.read<ProductCubit>().addToCaList!.length}",
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                      child: IconButton(
-                        padding: const EdgeInsets.all(0),
-                        onPressed: () {
-                          Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Tabs(tabIndex: 2),
+                    child: BlocBuilder<ProductCubit, ProductState>(
+                      builder: (context, state) {
+                        if (state is ProductLoaded) {
+                          return Badge(
+                            badgeContent: Text(
+                              "${state.addToCartList!.length}",
+                              style: const TextStyle(color: Colors.white),
                             ),
-                            ModalRoute.withName('/'),
+                            child: IconButton(
+                              padding: const EdgeInsets.all(0),
+                              onPressed: () {
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Tabs(tabIndex: 2),
+                                  ),
+                                  ModalRoute.withName('/'),
+                                );
+                              },
+                              icon: const Icon(Icons.shopping_cart_outlined),
+                            ),
                           );
-                        },
-                        icon: const Icon(Icons.shopping_cart_outlined),
-                      ),
+                        }
+                        return const Text("");
+                      },
                     ),
                   ),
                 ],

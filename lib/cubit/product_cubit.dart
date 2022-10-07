@@ -85,6 +85,13 @@ class ProductCubit extends Cubit<ProductState> {
       addToCartIds!.add(item.id!);
       productModel![index].isAddToCart = true;
     }
+    emit(FavouriteUpdated(productModel: productModel, favList: favouriteList));
+
+    emit(ProductLoaded(
+        productModel: productModel,
+        favList: favouriteList,
+        addToCartList: addToCaList,
+        categoriesData: categoriesData));
   }
 
   void updateFavouriteListFromDetailScreen(ProductModel favItem) {

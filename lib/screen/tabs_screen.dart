@@ -75,22 +75,36 @@ class _TabsState extends State<Tabs> {
                 label: 'Home',
               ),
               BottomNavigationBarItem(
-                icon: Badge(
-                  badgeContent: Text(
-                    "${context.read<ProductCubit>().favouriteList!.length}",
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                  child: const Icon(Icons.favorite),
+                icon: BlocBuilder<ProductCubit, ProductState>(
+                  builder: (context, state) {
+                    if (state is ProductLoaded) {
+                      return Badge(
+                        badgeContent: Text(
+                          "${state.favList!.length}",
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                        child: const Icon(Icons.favorite),
+                      );
+                    }
+                    return const Text("");
+                  },
                 ),
                 label: 'Favourites',
               ),
               BottomNavigationBarItem(
-                icon: Badge(
-                  badgeContent: Text(
-                    "${context.read<ProductCubit>().addToCaList!.length}",
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                  child: const Icon(Icons.shopping_cart_outlined),
+                icon: BlocBuilder<ProductCubit, ProductState>(
+                  builder: (context, state) {
+                    if (state is ProductLoaded) {
+                      return Badge(
+                        badgeContent: Text(
+                          "${state.addToCartList!.length}",
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                        child: const Icon(Icons.shopping_cart_outlined),
+                      );
+                    }
+                    return const Text("");
+                  },
                 ),
                 label: 'Cart',
               ),
